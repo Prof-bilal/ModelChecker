@@ -1,0 +1,198 @@
+{
+  "meta": {
+    "id": "core",
+    "version": "1.0.0",
+    "$comment": "Phase 1 fixture: 3 of the 30 cases defined in docs/benchmarks.md. Expanded to the full 30 in Phase 4 (PHASES.md). Cases are definitions, not measurements (docs/benchmarks.md honesty note)."
+  },
+  "cases": [
+    {
+      "case_id": "so-001",
+      "capability": "structured_output",
+      "version": "1",
+      "input": {
+        "prompt": "Extract the invoice details from the following text into JSON.\n\nText: Invoice INV-2031 from Northwind Traders, dated 2026-08-14, total 1250.00 GBP, due 2026-09-13."
+      },
+      "scoring": "json_schema@1",
+      "scoring_params": {
+        "schema": {
+          "type": "object",
+          "properties": {
+            "invoice_id": { "type": "string" },
+            "vendor": { "type": "string" },
+            "total": { "type": "number" },
+            "due_date": { "type": "string", "format": "date" }
+          },
+          "required": ["invoice_id", "vendor", "total", "due_date"],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "case_id": "tc-001",
+      "capability": "tool_calling",
+      "version": "1",
+      "input": {
+        "prompt": "What's the weather like in Lisbon right now? Use one of the available tools."
+      },
+      "scoring": "tool_call_match@1",
+      "scoring_params": {
+        "expected_tool": "get_weather"
+      },
+      "tools": [
+        {
+          "type": "function",
+          "function": {
+            "name": "get_weather",
+            "description": "Get current weather for a city",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "location": { "type": "string" },
+                "unit": { "type": "string", "enum": ["celsius", "fahrenheit"] }
+              },
+              "required": ["location"],
+              "additionalProperties": false
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "get_time",
+            "description": "Get the current time in a timezone",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "timezone": { "type": "string" }
+              },
+              "required": ["timezone"],
+              "additionalProperties": false
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "search_web",
+            "description": "Search the web",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "query": { "type": "string" }
+              },
+              "required": ["query"],
+              "additionalProperties": false
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "send_message",
+            "description": "Send a chat message to a person",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "recipient": { "type": "string" },
+                "body": { "type": "string" }
+              },
+              "required": ["recipient", "body"],
+              "additionalProperties": false
+            }
+          }
+        }
+      ]
+    },
+    {
+      "case_id": "tc-003",
+      "capability": "tool_calling",
+      "version": "1",
+      "input": {
+        "prompt": "Email the Q3 report to Sam before end of day."
+      },
+      "scoring": "tool_call_match@1",
+      "scoring_params": {
+        "expected_tool": "send_email"
+      },
+      "tools": [
+        {
+          "type": "function",
+          "function": {
+            "name": "send_email",
+            "description": "Send an email to a recipient",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "recipient": { "type": "string" },
+                "subject": { "type": "string" },
+                "body": { "type": "string" }
+              },
+              "required": ["recipient", "subject"],
+              "additionalProperties": false
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "create_document",
+            "description": "Create a new document",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "title": { "type": "string" },
+                "content": { "type": "string" }
+              },
+              "required": ["title"],
+              "additionalProperties": false
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "list_contacts",
+            "description": "List known contacts",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": [],
+              "additionalProperties": false
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "search_files",
+            "description": "Search files by name",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "query": { "type": "string" }
+              },
+              "required": ["query"],
+              "additionalProperties": false
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "schedule_meeting",
+            "description": "Schedule a calendar meeting",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "title": { "type": "string" },
+                "when": { "type": "string" }
+              },
+              "required": ["title", "when"],
+              "additionalProperties": false
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

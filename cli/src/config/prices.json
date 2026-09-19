@@ -1,0 +1,644 @@
+{
+  "$comment": "Dated price snapshot (EVALUATIONS.md §9, D15). Prices are USD per 1k tokens. Rows are per gateway: the same underlying model can carry different prices on different gateways (observed 2026-09-19, e.g. GLM 5.3 Flash $0.15/$0.50 on OpenCode Zen and Command Code vs $0.09/$0.30 on OpenRouter), so estimates reflect the gateway you target. OpenRouter passes through provider token rates but charges a 5.5% fee on credit purchases, which is NOT included in these rows. free_promo rows are gateway promotions that can end without notice; a zero here is a promotion, not a missing price (missing prices are unpriced, never zero).",
+  "currency": "USD",
+  "updated": "2026-09-19",
+  "provider_prefixes": {
+    "claude-": "anthropic"
+  },
+  "prices": {
+    "openai/gpt-4o": {
+      "input_per_1k": 0.0025,
+      "output_per_1k": 0.01,
+      "currency": "USD",
+      "date": "2026-09-19",
+      "source": "https://developers.openai.com/api/docs/models/gpt-4o (Text tokens, Per 1M tokens: Input $2.50, Output $10.00)"
+    },
+    "openai/gpt-4o-mini": {
+      "input_per_1k": 0.00015,
+      "output_per_1k": 0.0006,
+      "currency": "USD",
+      "date": "2026-09-19",
+      "source": "https://developers.openai.com/api/docs/pricing — GPT-4o Mini standard $0.15 input / $0.60 output per 1M tokens"
+    },
+    "anthropic/claude-fable-5-1": {
+      "input_per_1k": 0.01,
+      "output_per_1k": 0.05,
+      "currency": "USD",
+      "date": "2026-09-19",
+      "source": "https://platform.claude.com/docs/en/models/overview — Claude Fable 5.1: $10 input / $50 output per MTok; id per model-ids-and-versions (claude-{name}-{major}[-{minor}])"
+    },
+    "anthropic/claude-opus-5": {
+      "input_per_1k": 0.005,
+      "output_per_1k": 0.025,
+      "currency": "USD",
+      "date": "2026-09-19",
+      "source": "https://platform.claude.com/docs/en/models/overview — Claude Opus 5: $5 input / $25 output per MTok"
+    },
+    "anthropic/claude-sonnet-5": {
+      "input_per_1k": 0.002,
+      "output_per_1k": 0.01,
+      "currency": "USD",
+      "date": "2026-09-19",
+      "source": "https://platform.claude.com/docs/en/models/overview — Claude Sonnet 5: $2 input / $10 output per MTok"
+    },
+    "anthropic/claude-haiku-4-5": {
+      "input_per_1k": 0.001,
+      "output_per_1k": 0.005,
+      "currency": "USD",
+      "date": "2026-09-19",
+      "source": "https://platform.claude.com/docs/en/models/overview — Claude Haiku 4.5: $1 input / $5 output per MTok"
+    },
+    "openrouter/unbiased-pareto": {
+      "input_per_1k": 0.0025,
+      "output_per_1k": 0.0075,
+      "currency": "USD",
+      "date": "2026-09-19",
+      "source": "https://unbiased.ai/pricing/ — Pareto rate card: $2.50/Mtok input, $7.50/Mtok output (cross-checked against openrouter.ai/api/v1/models/unbiased/pareto/endpoints, 2026-09-19; served as the former stealth model Union Alpha)"
+    },
+
+    "opencode/big-pickle": {
+      "input_per_1k": 0,
+      "output_per_1k": 0,
+      "currency": "USD",
+      "free_promo": true,
+      "date": "2026-09-19",
+      "source": "https://opencode.ai/docs/zen/ — Big Pickle: Free (promotion; can end without notice)"
+    },
+    "opencode/mimo-v2.5-free": {
+      "input_per_1k": 0,
+      "output_per_1k": 0,
+      "currency": "USD",
+      "free_promo": true,
+      "date": "2026-09-19",
+      "source": "https://opencode.ai/docs/zen/ — MiMo-V2.5 Free: Free for a limited time"
+    },
+    "opencode/ling-3.0-flash-fin-free": {
+      "input_per_1k": 0,
+      "output_per_1k": 0,
+      "currency": "USD",
+      "free_promo": true,
+      "date": "2026-09-19",
+      "source": "https://opencode.ai/docs/zen/ — Ling 3.0 Flash Fin Free: Free (promotion)"
+    },
+    "opencode/nemotron-3-ultra-free": {
+      "input_per_1k": 0,
+      "output_per_1k": 0,
+      "currency": "USD",
+      "free_promo": true,
+      "date": "2026-09-19",
+      "source": "https://opencode.ai/docs/zen/ — Nemotron 3 Ultra Free: Free (promotion)"
+    },
+    "opencode/nemotron-3.5-lightning-free": {
+      "input_per_1k": 0,
+      "output_per_1k": 0,
+      "currency": "USD",
+      "free_promo": true,
+      "date": "2026-09-19",
+      "source": "https://opencode.ai/docs/zen/ — Nemotron 3.5 Lightning Free: Free (promotion)"
+    },
+    "opencode/muse-spark-1.3-contributor-free": {
+      "input_per_1k": 0,
+      "output_per_1k": 0,
+      "currency": "USD",
+      "free_promo": true,
+      "date": "2026-09-19",
+      "source": "https://opencode.ai/docs/zen/ — Muse Spark 1.3 Contributor Free: Free (promotion)"
+    },
+    "opencode/glm-5.3-flash": {
+      "input_per_1k": 0.00015,
+      "output_per_1k": 0.0005,
+      "currency": "USD",
+      "date": "2026-09-19",
+      "source": "https://opencode.ai/docs/zen/ — GLM 5.3 Flash: $0.15 input / $0.50 output per 1M tokens"
+    },
+    "opencode/glm-5.3": {
+      "input_per_1k": 0.0014,
+      "output_per_1k": 0.0044,
+      "currency": "USD",
+      "date": "2026-09-19",
+      "source": "https://opencode.ai/docs/zen/ — GLM 5.3: $1.40 input / $4.40 output per 1M tokens"
+    },
+    "opencode/glm-5.2": {
+      "input_per_1k": 0.0014,
+      "output_per_1k": 0.0044,
+      "currency": "USD",
+      "date": "2026-09-19",
+      "source": "https://opencode.ai/docs/zen/ — GLM 5.2: $1.40 input / $4.40 output per 1M tokens"
+    },
+    "opencode/glm-5.1": {
+      "input_per_1k": 0.0014,
+      "output_per_1k": 0.0044,
+      "currency": "USD",
+      "date": "2026-09-19",
+      "source": "https://opencode.ai/docs/zen/ — GLM 5.1: $1.40 input / $4.40 output per 1M tokens"
+    },
+    "opencode/glm-5": {
+      "input_per_1k": 0.001,
+      "output_per_1k": 0.0032,
+      "currency": "USD",
+      "date": "2026-09-19",
+      "source": "https://opencode.ai/docs/zen/ — GLM 5: $1.00 input / $3.20 output per 1M tokens"
+    },
+    "opencode/kimi-k2.5": {
+      "input_per_1k": 0.0006,
+      "output_per_1k": 0.003,
+      "currency": "USD",
+      "date": "2026-09-19",
+      "source": "https://opencode.ai/docs/zen/ — Kimi K2.5: $0.60 input / $3.00 output per 1M tokens"
+    },
+    "opencode/kimi-k2.6": {
+      "input_per_1k": 0.00095,
+      "output_per_1k": 0.004,
+      "currency": "USD",
+      "date": "2026-09-19",
+      "source": "https://opencode.ai/docs/zen/ — Kimi K2.6: $0.95 input / $4.00 output per 1M tokens"
+    },
+    "opencode/kimi-k2.7-code": {
+      "input_per_1k": 0.00095,
+      "output_per_1k": 0.004,
+      "currency": "USD",
+      "date": "2026-09-19",
+      "source": "https://opencode.ai/docs/zen/ — Kimi K2.7 Code: $0.95 input / $4.00 output per 1M tokens"
+    },
+    "opencode/kimi-k3": {
+      "input_per_1k": 0.003,
+      "output_per_1k": 0.015,
+      "currency": "USD",
+      "date": "2026-09-19",
+      "source": "https://opencode.ai/docs/zen/ — Kimi K3: $3.00 input / $15.00 output per 1M tokens"
+    },
+    "opencode/minimax-m2.5": {
+      "input_per_1k": 0.0003,
+      "output_per_1k": 0.0012,
+      "currency": "USD",
+      "date": "2026-09-19",
+      "source": "https://opencode.ai/docs/zen/ — MiniMax M2.5: $0.30 input / $1.20 output per 1M tokens"
+    },
+    "opencode/minimax-m2.7": {
+      "input_per_1k": 0.0003,
+      "output_per_1k": 0.0012,
+      "currency": "USD",
+      "date": "2026-09-19",
+      "source": "https://opencode.ai/docs/zen/ — MiniMax M2.7: $0.30 input / $1.20 output per 1M tokens"
+    },
+    "opencode/minimax-m3": {
+      "input_per_1k": 0.0003,
+      "output_per_1k": 0.0012,
+      "currency": "USD",
+      "date": "2026-09-19",
+      "source": "https://opencode.ai/docs/zen/ — MiniMax M3: $0.30 input / $1.20 output per 1M tokens"
+    },
+    "opencode/deepseek-v4-flash": {
+      "input_per_1k": 0.00014,
+      "output_per_1k": 0.00028,
+      "currency": "USD",
+      "date": "2026-09-19",
+      "source": "https://opencode.ai/docs/zen/ — DeepSeek V4 Flash: $0.14 input / $0.28 output per 1M tokens"
+    },
+    "opencode/deepseek-v4.1-flash": {
+      "input_per_1k": 0.0003,
+      "output_per_1k": 0.0012,
+      "currency": "USD",
+      "date": "2026-09-19",
+      "source": "https://opencode.ai/docs/zen/ — DeepSeek V4.1 Flash: $0.30 input / $1.20 output per 1M tokens"
+    },
+    "opencode/deepseek-v4-pro": {
+      "input_per_1k": 0.00174,
+      "output_per_1k": 0.00348,
+      "currency": "USD",
+      "date": "2026-09-19",
+      "source": "https://opencode.ai/docs/zen/ — DeepSeek V4 Pro: $1.74 input / $3.48 output per 1M tokens"
+    },
+    "opencode/qwen3.8-flash": {
+      "input_per_1k": 0.00015,
+      "output_per_1k": 0.00047,
+      "currency": "USD",
+      "date": "2026-09-19",
+      "source": "https://opencode.ai/docs/zen/ — Qwen3.8 Flash: $0.15 input / $0.47 output per 1M tokens"
+    },
+    "opencode/qwen3.7-max": {
+      "input_per_1k": 0.0025,
+      "output_per_1k": 0.0075,
+      "currency": "USD",
+      "date": "2026-09-19",
+      "source": "https://opencode.ai/docs/zen/ — Qwen3.7 Max: $2.50 input / $7.50 output per 1M tokens"
+    },
+    "opencode/qwen3.7-plus": {
+      "input_per_1k": 0.0004,
+      "output_per_1k": 0.0016,
+      "currency": "USD",
+      "date": "2026-09-19",
+      "source": "https://opencode.ai/docs/zen/ — Qwen3.7 Plus: $0.40 input / $1.60 output per 1M tokens"
+    },
+    "opencode/claude-opus-5": {
+      "input_per_1k": 0.005,
+      "output_per_1k": 0.025,
+      "currency": "USD",
+      "date": "2026-09-19",
+      "source": "https://opencode.ai/docs/zen/ — Claude Opus 5: $5.00 input / $25.00 output per 1M tokens"
+    },
+    "opencode/claude-sonnet-5": {
+      "input_per_1k": 0.002,
+      "output_per_1k": 0.01,
+      "currency": "USD",
+      "date": "2026-09-19",
+      "source": "https://opencode.ai/docs/zen/ — Claude Sonnet 5: $2.00 input / $10.00 output per 1M tokens"
+    },
+    "opencode/claude-haiku-4-5": {
+      "input_per_1k": 0.001,
+      "output_per_1k": 0.005,
+      "currency": "USD",
+      "date": "2026-09-19",
+      "source": "https://opencode.ai/docs/zen/ — Claude Haiku 4.5: $1.00 input / $5.00 output per 1M tokens"
+    },
+    "opencode/gpt-5.5": {
+      "input_per_1k": 0.005,
+      "output_per_1k": 0.03,
+      "currency": "USD",
+      "date": "2026-09-19",
+      "source": "https://opencode.ai/docs/zen/ — GPT 5.5 (≤272K): $5.00 input / $30.00 output per 1M tokens"
+    },
+    "opencode/gpt-5.4": {
+      "input_per_1k": 0.0025,
+      "output_per_1k": 0.015,
+      "currency": "USD",
+      "date": "2026-09-19",
+      "source": "https://opencode.ai/docs/zen/ — GPT 5.4 (≤272K): $2.50 input / $15.00 output per 1M tokens"
+    },
+    "opencode/gpt-5.4-mini": {
+      "input_per_1k": 0.00075,
+      "output_per_1k": 0.0045,
+      "currency": "USD",
+      "date": "2026-09-19",
+      "source": "https://opencode.ai/docs/zen/ — GPT 5.4 Mini: $0.75 input / $4.50 output per 1M tokens"
+    },
+    "opencode/gpt-5.6-terra": {
+      "input_per_1k": 0.002,
+      "output_per_1k": 0.012,
+      "currency": "USD",
+      "date": "2026-09-19",
+      "source": "https://opencode.ai/docs/zen/ — GPT 5.6 Terra (≤272K): $2.00 input / $12.00 output per 1M tokens"
+    },
+    "opencode/gpt-5.6-luna": {
+      "input_per_1k": 0.0002,
+      "output_per_1k": 0.0012,
+      "currency": "USD",
+      "date": "2026-09-19",
+      "source": "https://opencode.ai/docs/zen/ — GPT 5.6 Luna (≤272K): $0.20 input / $1.20 output per 1M tokens"
+    },
+    "opencode/gemini-3.8-flash": {
+      "input_per_1k": 0.0015,
+      "output_per_1k": 0.0075,
+      "currency": "USD",
+      "date": "2026-09-19",
+      "source": "https://opencode.ai/docs/zen/ — Gemini 3.8 Flash: $1.50 input / $7.50 output per 1M tokens"
+    },
+    "opencode/grok-4.6": {
+      "input_per_1k": 0.002,
+      "output_per_1k": 0.006,
+      "currency": "USD",
+      "date": "2026-09-19",
+      "source": "https://opencode.ai/docs/zen/ — Grok 4.6 (≤200K): $2.00 input / $6.00 output per 1M tokens"
+    },
+
+    "commandcode/glm-5.3-flash": {
+      "input_per_1k": 0.00015,
+      "output_per_1k": 0.0005,
+      "currency": "USD",
+      "date": "2026-09-19",
+      "source": "https://commandcode.ai/docs/resources/pricing-limits — GLM-5.3 Flash: $0.15 in / $0.50 out per 1M"
+    },
+    "commandcode/glm-5.3-flashx": {
+      "input_per_1k": 0.00037,
+      "output_per_1k": 0.00125,
+      "currency": "USD",
+      "date": "2026-09-19",
+      "source": "https://commandcode.ai/docs/resources/pricing-limits — GLM-5.3 FlashX: $0.37 in / $1.25 out per 1M"
+    },
+    "commandcode/glm-5.3": {
+      "input_per_1k": 0.0014,
+      "output_per_1k": 0.0044,
+      "currency": "USD",
+      "date": "2026-09-19",
+      "source": "https://commandcode.ai/docs/resources/pricing-limits — GLM-5.3: $1.40 in / $4.40 out per 1M"
+    },
+    "commandcode/glm-5": {
+      "input_per_1k": 0.001,
+      "output_per_1k": 0.0032,
+      "currency": "USD",
+      "date": "2026-09-19",
+      "source": "https://commandcode.ai/docs/resources/pricing-limits — GLM-5: $1.00 in / $3.20 out per 1M"
+    },
+    "commandcode/kimi-k2.5": {
+      "input_per_1k": 0.0006,
+      "output_per_1k": 0.003,
+      "currency": "USD",
+      "date": "2026-09-19",
+      "source": "https://commandcode.ai/docs/resources/pricing-limits — Kimi K2.5: $0.60 in / $3.00 out per 1M"
+    },
+    "commandcode/kimi-k2.6": {
+      "input_per_1k": 0.00095,
+      "output_per_1k": 0.004,
+      "currency": "USD",
+      "date": "2026-09-19",
+      "source": "https://commandcode.ai/docs/resources/pricing-limits — Kimi K2.6: $0.95 in / $4.00 out per 1M"
+    },
+    "commandcode/kimi-k2.7-code": {
+      "input_per_1k": 0.00095,
+      "output_per_1k": 0.004,
+      "currency": "USD",
+      "date": "2026-09-19",
+      "source": "https://commandcode.ai/docs/resources/pricing-limits — Kimi K2.7 Code: $0.95 in / $4.00 out per 1M"
+    },
+    "commandcode/kimi-k3": {
+      "input_per_1k": 0.003,
+      "output_per_1k": 0.015,
+      "currency": "USD",
+      "date": "2026-09-19",
+      "source": "https://commandcode.ai/docs/resources/pricing-limits — Kimi K3: $3.00 in / $15.00 out per 1M"
+    },
+    "commandcode/minimax-m2.5": {
+      "input_per_1k": 0.0003,
+      "output_per_1k": 0.0012,
+      "currency": "USD",
+      "date": "2026-09-19",
+      "source": "https://commandcode.ai/docs/resources/pricing-limits — MiniMax M2.5: $0.30 in / $1.20 out per 1M"
+    },
+    "commandcode/minimax-m2.7": {
+      "input_per_1k": 0.0003,
+      "output_per_1k": 0.0012,
+      "currency": "USD",
+      "date": "2026-09-19",
+      "source": "https://commandcode.ai/docs/resources/pricing-limits — MiniMax M2.7: $0.30 in / $1.20 out per 1M"
+    },
+    "commandcode/minimax-m3": {
+      "input_per_1k": 0.0006,
+      "output_per_1k": 0.0024,
+      "currency": "USD",
+      "date": "2026-09-19",
+      "source": "https://commandcode.ai/docs/resources/pricing-limits — MiniMax M3-50% promo: $0.60→$0.30 in / $2.40→$1.20 out per 1M; regular rates recorded"
+    },
+    "commandcode/deepseek-v4-flash": {
+      "input_per_1k": 0.00015,
+      "output_per_1k": 0.0006,
+      "currency": "USD",
+      "date": "2026-09-19",
+      "source": "https://commandcode.ai/docs/resources/pricing-limits — DeepSeek V4 Flash (latest): $0.15 in / $0.60 out per 1M off-peak (peak $0.30/$1.20)"
+    },
+    "commandcode/deepseek-v4.1-flash": {
+      "input_per_1k": 0.00015,
+      "output_per_1k": 0.0006,
+      "currency": "USD",
+      "date": "2026-09-19",
+      "source": "https://commandcode.ai/docs/resources/pricing-limits — DeepSeek V4.1 Flash: $0.15 in / $0.60 out per 1M off-peak (peak $0.30/$1.20)"
+    },
+    "commandcode/deepseek-v4-pro": {
+      "input_per_1k": 0.00066,
+      "output_per_1k": 0.00198,
+      "currency": "USD",
+      "date": "2026-09-19",
+      "source": "https://commandcode.ai/docs/resources/pricing-limits — DeepSeek V4 Pro (latest): $0.66 in / $1.98 out per 1M off-peak (peak $1.32/$3.96)"
+    },
+    "commandcode/qwen3.8-flash": {
+      "input_per_1k": 0.00016,
+      "output_per_1k": 0.00047,
+      "currency": "USD",
+      "date": "2026-09-19",
+      "source": "https://commandcode.ai/docs/resources/pricing-limits — Qwen 3.8 Flash: $0.16 in / $0.47 out per 1M"
+    },
+    "commandcode/qwen3.7-max": {
+      "input_per_1k": 0.0025,
+      "output_per_1k": 0.0075,
+      "currency": "USD",
+      "date": "2026-09-19",
+      "source": "https://commandcode.ai/docs/resources/pricing-limits — Qwen 3.7 Max: $2.50 in / $7.50 out per 1M"
+    },
+    "commandcode/qwen3.7-plus": {
+      "input_per_1k": 0.0004,
+      "output_per_1k": 0.0016,
+      "currency": "USD",
+      "date": "2026-09-19",
+      "source": "https://commandcode.ai/docs/resources/pricing-limits — Qwen 3.7 Plus: $0.40 in / $1.60 out per 1M"
+    },
+    "commandcode/claude-opus-5": {
+      "input_per_1k": 0.005,
+      "output_per_1k": 0.025,
+      "currency": "USD",
+      "date": "2026-09-19",
+      "source": "https://commandcode.ai/docs/resources/pricing-limits — Claude Opus 5: $5.00 in / $25.00 out per 1M"
+    },
+    "commandcode/claude-sonnet-5": {
+      "input_per_1k": 0.002,
+      "output_per_1k": 0.01,
+      "currency": "USD",
+      "date": "2026-09-19",
+      "source": "https://commandcode.ai/docs/resources/pricing-limits — Claude Sonnet 5: $2.00 in / $10.00 out per 1M"
+    },
+    "commandcode/claude-haiku-4-5": {
+      "input_per_1k": 0.001,
+      "output_per_1k": 0.005,
+      "currency": "USD",
+      "date": "2026-09-19",
+      "source": "https://commandcode.ai/docs/resources/pricing-limits — Claude Haiku 4.5: $1.00 in / $5.00 out per 1M"
+    },
+    "commandcode/gpt-5.6-terra": {
+      "input_per_1k": 0.002,
+      "output_per_1k": 0.012,
+      "currency": "USD",
+      "date": "2026-09-19",
+      "source": "https://commandcode.ai/docs/resources/pricing-limits — GPT-5.6 Terra: $2.00 in / $12.00 out per 1M"
+    },
+    "commandcode/gpt-5.6-luna": {
+      "input_per_1k": 0.0002,
+      "output_per_1k": 0.0012,
+      "currency": "USD",
+      "date": "2026-09-19",
+      "source": "https://commandcode.ai/docs/resources/pricing-limits — GPT-5.6 Luna: $0.20 in / $1.20 out per 1M"
+    },
+    "commandcode/gpt-5.5": {
+      "input_per_1k": 0.005,
+      "output_per_1k": 0.03,
+      "currency": "USD",
+      "date": "2026-09-19",
+      "source": "https://commandcode.ai/docs/resources/pricing-limits — GPT-5.5: $5.00 in / $30.00 out per 1M"
+    },
+    "commandcode/gpt-5.4": {
+      "input_per_1k": 0.0025,
+      "output_per_1k": 0.015,
+      "currency": "USD",
+      "date": "2026-09-19",
+      "source": "https://commandcode.ai/docs/resources/pricing-limits — GPT-5.4: $2.50 in / $15.00 out per 1M"
+    },
+    "commandcode/gpt-5.4-mini": {
+      "input_per_1k": 0.00075,
+      "output_per_1k": 0.0045,
+      "currency": "USD",
+      "date": "2026-09-19",
+      "source": "https://commandcode.ai/docs/resources/pricing-limits — GPT-5.4 Mini: $0.75 in / $4.50 out per 1M"
+    },
+    "commandcode/gemini-3.8-flash": {
+      "input_per_1k": 0.0015,
+      "output_per_1k": 0.0075,
+      "currency": "USD",
+      "date": "2026-09-19",
+      "source": "https://commandcode.ai/docs/resources/pricing-limits — Gemini 3.8 Flash: $1.50 in / $7.50 out per 1M"
+    },
+    "commandcode/grok-4.6": {
+      "input_per_1k": 0.002,
+      "output_per_1k": 0.006,
+      "currency": "USD",
+      "date": "2026-09-19",
+      "source": "https://commandcode.ai/docs/resources/pricing-limits — Grok 4.6: $2.00 in / $6.00 out per 1M"
+    },
+    "commandcode/grok-4.5": {
+      "input_per_1k": 0.002,
+      "output_per_1k": 0.006,
+      "currency": "USD",
+      "date": "2026-09-19",
+      "source": "https://commandcode.ai/docs/resources/pricing-limits — Grok 4.5: $2.00 in / $6.00 out per 1M"
+    },
+    "commandcode/laguna-s-2.1": {
+      "input_per_1k": 0,
+      "output_per_1k": 0,
+      "currency": "USD",
+      "free_promo": true,
+      "date": "2026-09-19",
+      "source": "https://commandcode.ai/docs/resources/pricing-limits — Laguna S 2.1 FREE: free while capacity lasts"
+    },
+    "commandcode/ling-3.0-flash-sante-free": {
+      "input_per_1k": 0,
+      "output_per_1k": 0,
+      "currency": "USD",
+      "free_promo": true,
+      "date": "2026-09-19",
+      "source": "https://commandcode.ai/docs/resources/pricing-limits — Ling 3.0 Flash Sante FREE: free, up to 100 requests/day, while it lasts"
+    },
+
+    "openrouter/deepseek-v4-flash": {
+      "input_per_1k": 0.0000473,
+      "output_per_1k": 0.0000946,
+      "currency": "USD",
+      "date": "2026-09-19",
+      "source": "https://openrouter.ai/api/v1/models (deepseek/deepseek-v4-flash: $0.0473/M in, $0.0946/M out)"
+    },
+    "openrouter/deepseek-v4.1-flash": {
+      "input_per_1k": 0.00015,
+      "output_per_1k": 0.0006,
+      "currency": "USD",
+      "date": "2026-09-19",
+      "source": "https://openrouter.ai/api/v1/models (deepseek/deepseek-v4.1-flash: $0.15/M in, $0.60/M out)"
+    },
+    "openrouter/deepseek-v4-pro": {
+      "input_per_1k": 0.0005744,
+      "output_per_1k": 0.0011487,
+      "currency": "USD",
+      "date": "2026-09-19",
+      "source": "https://openrouter.ai/api/v1/models (deepseek/deepseek-v4-pro: $0.5744/M in, $1.1487/M out)"
+    },
+    "openrouter/glm-5.3-flash": {
+      "input_per_1k": 0.00009,
+      "output_per_1k": 0.0003,
+      "currency": "USD",
+      "date": "2026-09-19",
+      "source": "https://openrouter.ai/api/v1/models (z-ai/glm-5.3-flash: $0.09/M in, $0.30/M out)"
+    },
+    "openrouter/glm-5.3": {
+      "input_per_1k": 0.00091,
+      "output_per_1k": 0.00286,
+      "currency": "USD",
+      "date": "2026-09-19",
+      "source": "https://openrouter.ai/api/v1/models (z-ai/glm-5.3: $0.91/M in, $2.86/M out)"
+    },
+    "openrouter/kimi-k2.5": {
+      "input_per_1k": 0.00045,
+      "output_per_1k": 0.00225,
+      "currency": "USD",
+      "date": "2026-09-19",
+      "source": "https://openrouter.ai/api/v1/models (moonshotai/kimi-k2.5: $0.45/M in, $2.25/M out)"
+    },
+    "openrouter/kimi-k3": {
+      "input_per_1k": 0.0020695,
+      "output_per_1k": 0.0115892,
+      "currency": "USD",
+      "date": "2026-09-19",
+      "source": "https://openrouter.ai/api/v1/models (moonshotai/kimi-k3: $2.0695/M in, $11.5892/M out)"
+    },
+    "openrouter/minimax-m2.5": {
+      "input_per_1k": 0.00027,
+      "output_per_1k": 0.00108,
+      "currency": "USD",
+      "date": "2026-09-19",
+      "source": "https://openrouter.ai/api/v1/models (minimax/minimax-m2.5: $0.27/M in, $1.08/M out)"
+    },
+    "openrouter/minimax-m3": {
+      "input_per_1k": 0.0003,
+      "output_per_1k": 0.0012,
+      "currency": "USD",
+      "date": "2026-09-19",
+      "source": "https://openrouter.ai/api/v1/models (minimax/minimax-m3: $0.30/M in, $1.20/M out)"
+    },
+    "openrouter/qwen3.7-max": {
+      "input_per_1k": 0.001475,
+      "output_per_1k": 0.004425,
+      "currency": "USD",
+      "date": "2026-09-19",
+      "source": "https://openrouter.ai/api/v1/models (qwen/qwen3.7-max: $1.475/M in, $4.425/M out)"
+    },
+    "openrouter/qwen3.7-plus": {
+      "input_per_1k": 0.00032,
+      "output_per_1k": 0.00128,
+      "currency": "USD",
+      "date": "2026-09-19",
+      "source": "https://openrouter.ai/api/v1/models (qwen/qwen3.7-plus: $0.32/M in, $1.28/M out)"
+    },
+    "openrouter/qwen3.8-flash": {
+      "input_per_1k": 0.00015,
+      "output_per_1k": 0.00047,
+      "currency": "USD",
+      "date": "2026-09-19",
+      "source": "https://openrouter.ai/api/v1/models (qwen/qwen3.8-flash: $0.15/M in, $0.47/M out)"
+    },
+    "openrouter/gemini-3.8-flash": {
+      "input_per_1k": 0.00075,
+      "output_per_1k": 0.00375,
+      "currency": "USD",
+      "date": "2026-09-19",
+      "source": "https://openrouter.ai/api/v1/models (google/gemini-3.8-flash: $0.75/M in, $3.75/M out)"
+    },
+    "openrouter/grok-4.6": {
+      "input_per_1k": 0.002,
+      "output_per_1k": 0.006,
+      "currency": "USD",
+      "date": "2026-09-19",
+      "source": "https://openrouter.ai/api/v1/models (x-ai/grok-4.6: $2.00/M in, $6.00/M out)"
+    },
+    "openrouter/gpt-5.6-terra": {
+      "input_per_1k": 0.002,
+      "output_per_1k": 0.012,
+      "currency": "USD",
+      "date": "2026-09-19",
+      "source": "https://openrouter.ai/api/v1/models (openai/gpt-5.6-terra: $2.00/M in, $12.00/M out)"
+    },
+    "openrouter/gpt-5.6-luna": {
+      "input_per_1k": 0.0002,
+      "output_per_1k": 0.0012,
+      "currency": "USD",
+      "date": "2026-09-19",
+      "source": "https://openrouter.ai/api/v1/models (openai/gpt-5.6-luna: $0.20/M in, $1.20/M out)"
+    },
+    "openrouter/gpt-5.5": {
+      "input_per_1k": 0.005,
+      "output_per_1k": 0.03,
+      "currency": "USD",
+      "date": "2026-09-19",
+      "source": "https://openrouter.ai/api/v1/models (openai/gpt-5.5: $5.00/M in, $30.00/M out)"
+    },
+    "openrouter/gpt-5.4": {
+      "input_per_1k": 0.0025,
+      "output_per_1k": 0.015,
+      "currency": "USD",
+      "date": "2026-09-19",
+      "source": "https://openrouter.ai/api/v1/models (openai/gpt-5.4: $2.50/M in, $15.00/M out)"
+    }
+  }
+}

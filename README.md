@@ -1,36 +1,82 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ModelCheck
 
-## Getting Started
+**Measure what a model change does to the capability you ship — and show the evidence.**
 
-First, run the development server:
+AI models change constantly. Leaderboards and vendor announcements do not tell you
+whether a new model is better *for your workload*. ModelCheck runs a small,
+versioned, deterministic evaluation against a model you choose, compares it with
+your current one, and produces a portable report where every number links back to
+the raw model output and the rule that scored it.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+```text
+model changes → run against a capability → delta vs your baseline → decide
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Status — read this first
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+**The product does not exist yet.** This repository currently contains:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- a **Next.js landing page** (`app/`, `components/`)
+- a **complete product and engineering specification** (the documents below)
+- **no CLI, no API route, no database, no evaluation engine, and no test runner**
 
-## Learn More
+ModelCheck has produced **zero measurements**. Every figure shown on the landing
+page is labelled illustrative. No number in this repository is a result.
 
-To learn more about Next.js, take a look at the following resources:
+## Where to start
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+| You want to know | Read |
+|---|---|
+| What we are building and why | [PRD.md](./PRD.md) |
+| What is being built **right now** (and what is not) | [MVP.md](./MVP.md) |
+| Positioning, principles, product voice | [PRODUCT.md](./PRODUCT.md) |
+| How the system is structured | [ARCHITECTURE.md](./ARCHITECTURE.md) |
+| How evaluation, scoring and trust work | [EVALUATIONS.md](./EVALUATIONS.md) |
+| What the V1 suite actually contains | [docs/benchmarks.md](./docs/benchmarks.md) |
+| The evidence behind every claim | [docs/research.md](./docs/research.md) |
+| Why things are the way they are | [docs/decisions.md](./docs/decisions.md) |
+| Security and data handling | [SECURITY.md](./SECURITY.md) |
+| Testing | [TESTING.md](./TESTING.md) |
+| Code conventions | [CODESTYLE.md](./CODESTYLE.md) |
+| What happens after the MVP | [ROADMAP.md](./ROADMAP.md) |
+| **Working in this repo as an AI agent** | **[AGENTS.md](./AGENTS.md)** |
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Current verdict: BUILD WITH CHANGES
 
-## Deploy on Vercel
+The problem is real and the timing is good, but the product as originally framed
+was self-undermining: a fixed capability suite *is* a benchmark, which is the
+commodity this product exists to replace. The corrected framing is a **decision
+artefact** — a delta against a pinned baseline — not a scorecard. See
+[docs/decisions.md](./docs/decisions.md) for the reasoning and the four unresolved
+contradictions currently recorded.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Running the landing page
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+npm install
+npm run dev      # http://localhost:3000
+```
+
+```bash
+npm run build    # production build
+npm run lint     # eslint (eslint-config-next)
+npx tsc --noEmit # type check
+```
+
+Stack: Next.js 16.3.5 (App Router), React 19.2.8, Tailwind CSS v4, TypeScript
+(strict). Design tokens live in `app/globals.css` and are defined in the design
+contract; components consume tokens only.
+
+## What this is not
+
+Not a leaderboard. Not an evaluation framework or SDK. Not an observability
+platform. Not a model router. Not a dashboard. Each of these is a deliberate
+rejection with a recorded reason in [PRODUCT.md](./PRODUCT.md) and
+[docs/decisions.md](./docs/decisions.md).
+
+## Contributing
+
+Read [AGENTS.md](./AGENTS.md) first — it is the entry point for both human and AI
+contributors, and it defines the source-of-truth order and the hard rules. The
+short version: check [MVP.md](./MVP.md) before building anything, never invent a
+number, and never present an unbuilt capability as shipped.
