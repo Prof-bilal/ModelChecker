@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ModelCheck report — mock/golden-model — suite core 1.0.0</title>
+<style>
+:root { color-scheme: light; }
+* { box-sizing: border-box; }
+body { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; margin: 0; background: #fafafa; color: #171717; line-height: 1.5; }
+main { max-width: 60rem; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
+h1 { font-size: 1.4rem; margin: 0 0 0.25rem; }
+h2 { font-size: 1.05rem; margin: 2rem 0 0.5rem; border-bottom: 1px solid #e5e5e5; padding-bottom: 0.3rem; }
+.sub { color: #525252; font-size: 0.85rem; margin: 0 0 1.5rem; }
+table { border-collapse: collapse; width: 100%; font-size: 0.85rem; background: #fff; }
+th, td { text-align: left; padding: 0.4rem 0.6rem; border: 1px solid #e5e5e5; vertical-align: top; }
+th { background: #f5f5f5; font-weight: 600; }
+td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+.status { display: inline-block; padding: 0.1rem 0.5rem; border-radius: 999px; font-size: 0.75rem; font-weight: 600; background: #fef9c3; }
+.status-completed { background: #dcfce7; }
+.status-completed_with_gaps { background: #fef9c3; }
+.status-failed, .status-aborted { background: #fee2e2; }
+.badge { display: inline-block; padding: 0.05rem 0.45rem; border-radius: 999px; font-size: 0.72rem; font-weight: 600; }
+.outcome-pass { background: #dcfce7; }
+.outcome-fail { background: #fee2e2; }
+.outcome-partial { background: #fef9c3; }
+.outcome-request_error, .outcome-timeout, .outcome-scoring_error { background: #ffedd5; }
+.outcome-other { background: #f5f5f5; }
+.note { color: #525252; font-size: 0.8rem; margin: 0.4rem 0 0; }
+details { background: #fff; border: 1px solid #e5e5e5; margin-bottom: 0.4rem; }
+summary { cursor: pointer; padding: 0.45rem 0.6rem; font-size: 0.85rem; display: flex; gap: 0.6rem; align-items: baseline; flex-wrap: wrap; }
+summary .case-id { font-weight: 600; font-family: ui-monospace, monospace; }
+summary .score { color: #525252; font-size: 0.78rem; }
+.raw { margin: 0; padding: 0.75rem; background: #fafafa; border-top: 1px solid #e5e5e5; font-size: 0.75rem; overflow-x: auto; white-space: pre-wrap; word-break: break-word; font-family: ui-monospace, "SF Mono", Menlo, monospace; }
+.case-body { padding: 0.5rem 0.75rem 0.75rem; font-size: 0.8rem; }
+.case-body .reason { color: #7c2d12; margin: 0.25rem 0 0.5rem; }
+ul.limitations { font-size: 0.82rem; color: #404040; padding-left: 1.2rem; }
+ul.limitations li { margin-bottom: 0.25rem; }
+dl.params { display: grid; grid-template-columns: max-content 1fr; gap: 0.15rem 1rem; font-size: 0.82rem; margin: 0; }
+dl.params dt { color: #737373; }
+dl.params dd { margin: 0; font-variant-numeric: tabular-nums; }
+</style>
+</head>
+<body>
+<main>
+  <h1>ModelCheck report</h1>
+  <p class="sub">Model <strong>mock/golden-model</strong> (resolved: golden-model-2026-09-01) · suite <strong>core 1.0.0</strong> · 2026-09-19T12:00:00Z → 2026-09-19T12:01:30Z UTC · status <span class="status status-completed_with_gaps">completed_with_gaps</span> · run <code>20260919T120000Z-mock-golden</code></p>
+
+  <h2>Capabilities</h2>
+<table>
+    <thead>
+      <tr>
+        <th>Capability</th>
+        <th class="num">Scored / planned</th>
+        <th class="num">Pass</th>
+        <th class="num">Fail</th>
+        <th class="num">Partial</th>
+        <th class="num">Req errors</th>
+        <th class="num">Score errors</th>
+        <th class="num">Timeouts</th>
+        <th class="num">Coverage</th>
+        <th class="num">p50–p95 latency</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>structured_output</td>
+        <td class="num">3/4</td>
+        <td class="num">2</td>
+        <td class="num">1</td>
+        <td class="num">0</td>
+        <td class="num">1</td>
+        <td class="num">0</td>
+        <td class="num">0</td>
+        <td class="num">75%</td>
+        <td class="num">not_available</td>
+      </tr>
+      <tr>
+        <td>tool_calling</td>
+        <td class="num">1/3</td>
+        <td class="num">1</td>
+        <td class="num">0</td>
+        <td class="num">0</td>
+        <td class="num">0</td>
+        <td class="num">0</td>
+        <td class="num">1</td>
+        <td class="num">33.3%</td>
+        <td class="num">not_available</td>
+      </tr>
+    </tbody>
+  </table>
+  <p class="note">Capabilities not listed above were not tested. They are not zero.</p>
+
+  <h2>Cost</h2>
+  <p class="note">Basis: <strong>estimated</strong> — estimated from provider-returned token counts × the dated price table (not a bill). Price table: <code>cli/src/config/prices.json (dated snapshot)</code></p>
+  <table>
+    <tbody>
+      <tr><th>Total (estimated)</th><td class="num">$0.000800</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Latency</h2>
+  <table>
+    <tbody>
+      <tr><th>p50</th><td class="num">644 ms</td></tr>
+      <tr><th>p95</th><td class="num">not_available</td></tr>
+      <tr><th>n</th><td class="num">4</td></tr>
+    </tbody>
+  </table>
+  <p class="note">p95 is only reported over ≥20 samples; below that it is not_available.</p>
+
+  <h2>Parameters</h2>
+  <dl class="params">
+    <dt>temperature</dt><dd>provider_default</dd>
+    <dt>max_output_tokens</dt><dd>provider_default</dd>
+    <dt>seed</dt><dd>unsupported</dd>
+    <dt>streaming</dt><dd>false</dd>
+    <dt>timeout_ms</dt><dd>60000</dd>
+    <dt>max_retries</dt><dd>2</dd>
+    <dt>concurrency</dt><dd>3</dd>
+  </dl>
+
+  <h2>Cases <span class="score">(6)</span> <button type="button" onclick="toggleAll(true)">expand all</button> <button type="button" onclick="toggleAll(false)">collapse all</button></h2>
+    <details class="case">
+      <summary><span class="case-id">so-001</span> <span class="badge outcome-pass">pass</span><span class="score">score 1 · 812 ms · 1 attempt(s) · est. $0.000200</span></summary>
+      <div class="case-body">
+        <p class="note">Scoring rule: json_schema@1 · raw provider response (inert text):</p>
+<pre class="raw">{
+  &quot;id&quot;: &quot;chatcmpl-fixture-1&quot;,
+  &quot;choices&quot;: [
+    {
+      &quot;message&quot;: {
+        &quot;content&quot;: &quot;{}&quot;
+      }
+    }
+  ]
+}</pre>
+      </div>
+    </details>
+    <details class="case">
+      <summary><span class="case-id">so-002</span> <span class="badge outcome-pass">pass</span><span class="score">score 1 · 644 ms · 1 attempt(s) · est. $0.000200</span></summary>
+      <div class="case-body">
+        <p class="note">Scoring rule: json_schema@1 · raw provider response (inert text):</p>
+<pre class="raw">{
+  &quot;id&quot;: &quot;chatcmpl-fixture-2&quot;,
+  &quot;choices&quot;: [
+    {
+      &quot;message&quot;: {
+        &quot;content&quot;: &quot;{}&quot;
+      }
+    }
+  ]
+}</pre>
+      </div>
+    </details>
+    <details class="case">
+      <summary><span class="case-id">so-003</span> <span class="badge outcome-fail">fail</span> <span class="score">Response body is not valid JSON.</span><span class="score">score 0 · 501 ms · 1 attempt(s) · est. $0.000200</span></summary>
+      <div class="case-body">
+        <p class="reason">Reason: Response body is not valid JSON.</p>
+        <p class="note">Scoring rule: json_schema@1 · raw provider response (inert text):</p>
+<pre class="raw">{
+  &quot;id&quot;: &quot;chatcmpl-fixture-3&quot;,
+  &quot;choices&quot;: [
+    {
+      &quot;message&quot;: {
+        &quot;content&quot;: &quot;I cannot comply.&quot;
+      }
+    }
+  ]
+}</pre>
+      </div>
+    </details>
+    <details class="case">
+      <summary><span class="case-id">so-004</span> <span class="badge outcome-request_error">request error</span> <span class="score">error class: rate_limit</span> <span class="score">Provider rate limit hit (429).</span><span class="score">not scored · 153 ms · 3 attempt(s)</span></summary>
+      <div class="case-body">
+        <p class="reason">Reason: Provider rate limit hit (429).</p>
+        <p class="note">Scoring rule: json_schema@1 · raw provider response (inert text):</p>
+<pre class="raw">null</pre>
+      </div>
+    </details>
+    <details class="case">
+      <summary><span class="case-id">tc-001</span> <span class="badge outcome-pass">pass</span><span class="score">score 1 · 977 ms · 1 attempt(s) · est. $0.000200</span></summary>
+      <div class="case-body">
+        <p class="note">Scoring rule: tool_call_match@1 · raw provider response (inert text):</p>
+<pre class="raw">{
+  &quot;id&quot;: &quot;chatcmpl-fixture-5&quot;,
+  &quot;choices&quot;: [
+    {
+      &quot;message&quot;: {
+        &quot;content&quot;: null
+      }
+    }
+  ]
+}</pre>
+      </div>
+    </details>
+    <details class="case">
+      <summary><span class="case-id">tc-002</span> <span class="badge outcome-timeout">timeout</span> <span class="score">error class: timeout</span> <span class="score">Provider did not respond within the timeout.</span><span class="score">not scored · 60000 ms · 1 attempt(s)</span></summary>
+      <div class="case-body">
+        <p class="reason">Reason: Provider did not respond within the timeout.</p>
+        <p class="note">Scoring rule: tool_call_match@1 · raw provider response (inert text):</p>
+<pre class="raw">null</pre>
+      </div>
+    </details>
+
+  <h2>Limitations</h2>
+  <ul class="limitations">
+    <li>Results are based on 4 case(s) in this run. A one-case difference is roughly 25 points.</li>
+    <li>This suite is a fixed set of cases. It does not represent your production traffic.</li>
+    <li>Provider outputs may vary between requests. Reproducing this run reproduces the procedure, not necessarily the outputs.</li>
+    <li>Capabilities not listed were not tested. They are not zero.</li>
+    <li>This suite does not control for training-data contamination.</li>
+    <li>Latency and cost reflect this provider, endpoint and parameter set.</li>
+    <li>This result describes this model version at this time. Provider aliases can change what a model name serves.</li>
+  </ul>
+</main>
+<script>
+// Only behaviour: expand/collapse all. No network, no storage.
+function toggleAll(open) {
+  document.querySelectorAll("details.case").forEach(function (d) { d.open = open; });
+}
+</script>
+</body>
+</html>

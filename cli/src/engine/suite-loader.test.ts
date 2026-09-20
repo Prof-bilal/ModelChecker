@@ -15,10 +15,18 @@ test("valid suite loads with meta, cases and content hash", async () => {
 
   assert.equal(suite.id, "core");
   assert.equal(suite.version, "1.0.0");
-  assert.equal(suite.cases.length, 3);
+  // The full V1 suite: 30 cases (15 structured_output + 15 tool_calling),
+  // per docs/benchmarks.md §1.
+  assert.equal(suite.cases.length, 30);
 
   const ids = suite.cases.map((c) => c.case_id);
-  assert.deepEqual(ids, ["so-001", "tc-001", "tc-003"]);
+  assert.equal(ids[0], "so-001");
+  assert.ok(ids.includes("tc-001"));
+  assert.equal(new Set(ids).size, 30, "case ids must be unique");
+  for (let i = 1; i <= 15; i += 1) {
+    assert.ok(ids.includes(`so-${String(i).padStart(3, "0")}`), `so-${String(i).padStart(3, "0")} missing`);
+    assert.ok(ids.includes(`tc-${String(i).padStart(3, "0")}`), `tc-${String(i).padStart(3, "0")} missing`);
+  }
 
   const capabilities = new Set(suite.cases.map((c) => c.capability));
   assert.ok(capabilities.has("structured_output"));
@@ -36,9 +44,14 @@ test("tool_calling cases declare tools; structured_output case does not require 
   assert.ok(so.scoring_params.schema);
 
   const tc = suite.cases.filter((c) => c.scoring === "tool_call_match@1");
-  assert.equal(tc.length, 2);
+  assert.equal(tc.length, 15);
   for (const c of tc) {
     assert.ok(Array.isArray(c.tools) && c.tools.length >= 3, `${c.case_id} must declare tools`);
+  }
+  const soAll = suite.cases.filter((c) => c.scoring === "json_schema@1");
+  assert.equal(soAll.length, 15);
+  for (const c of soAll) {
+    assert.ok(c.tools === undefined, `${c.case_id} is a structured_output case and must not declare tools`);
   }
 });
 

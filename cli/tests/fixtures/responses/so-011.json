@@ -1,0 +1,17 @@
+{
+  "_synthetic": "Hand-authored test fixture, not a recorded provider response (D5, TESTING.md §4). Exercises so-011's refusal-with-valid-shape: the unavailable fields are null, everything else is present.",
+  "id": "chatcmpl-synthetic-so-011",
+  "object": "chat.completion",
+  "model": "gpt-4o",
+  "choices": [
+    {
+      "index": 0,
+      "finish_reason": "stop",
+      "message": {
+        "role": "assistant",
+        "content": "{\"name\": \"Amara Okafor\", \"department\": \"radiology\", \"start_month\": \"March\", \"start_year\": 2019, \"middle_name\": null, \"salary\": null}"
+      }
+    }
+  ],
+  "usage": { "prompt_tokens": 132, "completion_tokens": 48 }
+}

@@ -1,0 +1,8 @@
+{
+  "_synthetic": "Error-scenario fixture: rate limit shape with Retry-After equivalent (D5, TESTING.md §4).",
+  "error": {
+    "status": 429,
+    "message": "Rate limit reached: too many requests per minute.",
+    "retry_after_ms": 10
+  }
+}

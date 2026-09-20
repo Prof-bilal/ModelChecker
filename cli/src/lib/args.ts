@@ -17,6 +17,7 @@ const OPTIONS = {
   "spend-limit": { type: "string" },
   "base-url": { type: "string" },
   "api-key-env": { type: "string" },
+  adapter: { type: "string" },
   json: { type: "boolean" },
   help: { type: "boolean", short: "h" },
 } as const;
@@ -40,6 +41,8 @@ Options:
   --base-url <url>       Provider API base URL (for OpenRouter-compatible endpoints)
   --api-key-env <name>   Name of the environment variable holding the API key
                          (never pass the key itself)
+  --adapter <name>       Adapter to use: openai-compatible (default), anthropic,
+                         or mock (fixture-backed, offline testing)
   --json                 Emit machine-readable output
   -h, --help             Show this help message`;
 

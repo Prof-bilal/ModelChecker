@@ -1,0 +1,71 @@
+{
+  "schemaVersion": 1,
+  "name": "using-git-worktrees",
+  "description": "Isolate parallel agent changes and reduce cross-task contamination. Source: https://github.com/obra/superpowers/tree/main/skills/using-git-worktrees",
+  "toolVersion": "1.0.0",
+  "repository": "https://github.com/obra/superpowers/tree/main/skills/using-git-worktrees",
+  "license": "See repository",
+  "categories": [
+    "Developer Productivity",
+    "Agent Tools"
+  ],
+  "supportedAgents": [],
+  "documentation": "https://github.com/obra/superpowers/tree/main/skills/using-git-worktrees",
+  "compatibility": {
+    "os": [],
+    "runtimes": [],
+    "agents": [],
+    "mcp": false,
+    "architecture": [],
+    "permissions": [],
+    "note": null
+  },
+  "installation": {
+    "type": "skill",
+    "package": "https://github.com/obra/superpowers",
+    "source": null,
+    "checksum": null,
+    "versionRange": null,
+    "note": "skills/using-git-worktrees"
+  },
+  "configuration": {
+    "type": "none",
+    "applied": [],
+    "agents": [],
+    "note": null
+  },
+  "security": {
+    "status": "unverified",
+    "trust": "unverified",
+    "lastReview": "2026-09-19T14:45:24.609Z",
+    "note": "Not yet reviewed by CodeAtlas. Explicit user override recorded."
+  },
+  "provenance": {
+    "source": "skill",
+    "sourceRef": "https://github.com/obra/superpowers",
+    "method": "skill",
+    "command": [
+      "git",
+      "clone",
+      "--depth",
+      "1",
+      "https://github.com/obra/superpowers",
+      "/home/abdullah/Music/ModelChecker/web/cli/.codeatlas/skills/using-git-worktrees"
+    ],
+    "recordedAt": "2026-09-19T14:45:24.609Z"
+  },
+  "verification": {
+    "status": "verified",
+    "checksum": null,
+    "note": "found /home/abdullah/Music/ModelChecker/web/cli/.codeatlas/skills/using-git-worktrees/skills/using-git-worktrees/SKILL.md"
+  },
+  "integrationState": {
+    "status": "installed",
+    "expectedPath": null,
+    "foundPath": "/home/abdullah/Music/ModelChecker/web/cli/.codeatlas/skills/using-git-worktrees/skills/using-git-worktrees/SKILL.md",
+    "checkedAt": "2026-09-19T14:45:24.609Z",
+    "note": "found /home/abdullah/Music/ModelChecker/web/cli/.codeatlas/skills/using-git-worktrees/skills/using-git-worktrees/SKILL.md"
+  },
+  "installedAt": "2026-09-19T14:45:29.197Z",
+  "updatedAt": "2026-09-19T14:45:29.197Z"
+}

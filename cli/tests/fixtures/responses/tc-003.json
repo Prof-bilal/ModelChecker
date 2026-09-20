@@ -1,0 +1,30 @@
+{
+  "_synthetic": "Hand-authored test fixture, not a recorded provider response (D5, TESTING.md §4).",
+  "id": "chatcmpl-synthetic-tc-003",
+  "object": "chat.completion",
+  "model": "gpt-4o",
+  "choices": [
+    {
+      "index": 0,
+      "finish_reason": "tool_calls",
+      "message": {
+        "role": "assistant",
+        "content": null,
+        "tool_calls": [
+          {
+            "id": "call_synthetic_3",
+            "type": "function",
+            "function": {
+              "name": "send_email",
+              "arguments": "{\"recipient\": \"sam@example.com\", \"subject\": \"Q3 report\"}"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 165,
+    "completion_tokens": 31
+  }
+}

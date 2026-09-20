@@ -1,0 +1,18 @@
+{
+  "_synthetic": "Hand-authored test fixture, not a recorded provider response (D5, TESTING.md §4). Exercises tc-002's no-tool-required path: compliance is answering in text without calling anything.",
+  "id": "chatcmpl-synthetic-tc-002",
+  "object": "chat.completion",
+  "model": "gpt-4o",
+  "choices": [
+    {
+      "index": 0,
+      "finish_reason": "stop",
+      "message": {
+        "role": "assistant",
+        "content": "The capital of Portugal is Lisbon, usually abbreviated as LIS in addresses.",
+        "tool_calls": []
+      }
+    }
+  ],
+  "usage": { "prompt_tokens": 84, "completion_tokens": 20 }
+}

@@ -1,0 +1,71 @@
+{
+  "schemaVersion": 1,
+  "name": "react-best-practices",
+  "description": "Keep generated React changes aligned with framework conventions. Source: https://github.com/vercel-labs/agent-skills/tree/main/skills/react-best-practices",
+  "toolVersion": "1.0.0",
+  "repository": "https://github.com/vercel-labs/agent-skills/tree/main/skills/react-best-practices",
+  "license": "See repository",
+  "categories": [
+    "AI Quality",
+    "Developer Productivity"
+  ],
+  "supportedAgents": [],
+  "documentation": "https://github.com/vercel-labs/agent-skills/tree/main/skills/react-best-practices",
+  "compatibility": {
+    "os": [],
+    "runtimes": [],
+    "agents": [],
+    "mcp": false,
+    "architecture": [],
+    "permissions": [],
+    "note": null
+  },
+  "installation": {
+    "type": "skill",
+    "package": "https://github.com/vercel-labs/agent-skills",
+    "source": null,
+    "checksum": null,
+    "versionRange": null,
+    "note": "skills/react-best-practices"
+  },
+  "configuration": {
+    "type": "none",
+    "applied": [],
+    "agents": [],
+    "note": null
+  },
+  "security": {
+    "status": "unverified",
+    "trust": "unverified",
+    "lastReview": "2026-09-19T14:45:29.201Z",
+    "note": "Not yet reviewed by CodeAtlas. Explicit user override recorded."
+  },
+  "provenance": {
+    "source": "skill",
+    "sourceRef": "https://github.com/vercel-labs/agent-skills",
+    "method": "skill",
+    "command": [
+      "git",
+      "clone",
+      "--depth",
+      "1",
+      "https://github.com/vercel-labs/agent-skills",
+      "/home/abdullah/Music/ModelChecker/web/cli/.codeatlas/skills/react-best-practices"
+    ],
+    "recordedAt": "2026-09-19T14:45:29.201Z"
+  },
+  "verification": {
+    "status": "unverified",
+    "checksum": null,
+    "note": "found /home/abdullah/Music/ModelChecker/web/cli/.codeatlas/skills/react-best-practices/skills/react-best-practices/SKILL.md, but skill validation failed: frontmatter name \"vercel-react-best-practices\" != directory \"react-best-practices\""
+  },
+  "integrationState": {
+    "status": "installed",
+    "expectedPath": null,
+    "foundPath": "/home/abdullah/Music/ModelChecker/web/cli/.codeatlas/skills/react-best-practices/skills/react-best-practices/SKILL.md",
+    "checkedAt": "2026-09-19T14:45:29.201Z",
+    "note": "found /home/abdullah/Music/ModelChecker/web/cli/.codeatlas/skills/react-best-practices/skills/react-best-practices/SKILL.md, but skill validation failed: frontmatter name \"vercel-react-best-practices\" != directory \"react-best-practices\""
+  },
+  "installedAt": "2026-09-19T14:45:32.782Z",
+  "updatedAt": "2026-09-19T14:45:32.782Z"
+}

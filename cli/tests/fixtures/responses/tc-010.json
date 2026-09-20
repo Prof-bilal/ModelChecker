@@ -1,0 +1,27 @@
+{
+  "_synthetic": "Hand-authored test fixture, not a recorded provider response (D5, TESTING.md §4). Exercises tc-010's ambiguity: resolves to the most recently referenced project ('cascade'), one of the two accepted behaviours.",
+  "id": "chatcmpl-synthetic-tc-010",
+  "object": "chat.completion",
+  "model": "gpt-4o",
+  "choices": [
+    {
+      "index": 0,
+      "finish_reason": "tool_calls",
+      "message": {
+        "role": "assistant",
+        "content": null,
+        "tool_calls": [
+          {
+            "id": "call_synthetic_tc010",
+            "type": "function",
+            "function": {
+              "name": "cancel_project",
+              "arguments": "{\"project_name\": \"cascade\"}"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "usage": { "prompt_tokens": 112, "completion_tokens": 18 }
+}

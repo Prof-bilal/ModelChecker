@@ -1,0 +1,27 @@
+{
+  "_synthetic": "Hand-authored test fixture, not a recorded provider response (D5, TESTING.md §4). Exercises tc-015's decoy tool: 'shipment_tracker' sounds relevant (shipment appears in the text) but cannot translate — the correct tool is translate_text.",
+  "id": "chatcmpl-synthetic-tc-015",
+  "object": "chat.completion",
+  "model": "gpt-4o",
+  "choices": [
+    {
+      "index": 0,
+      "finish_reason": "tool_calls",
+      "message": {
+        "role": "assistant",
+        "content": null,
+        "tool_calls": [
+          {
+            "id": "call_synthetic_tc015",
+            "type": "function",
+            "function": {
+              "name": "shipment_tracker",
+              "arguments": "{\"tracking_id\": \"shipment\"}"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "usage": { "prompt_tokens": 94, "completion_tokens": 18 }
+}

@@ -1,0 +1,17 @@
+{
+  "_synthetic": "Hand-authored test fixture, not a recorded provider response (D5, TESTING.md §4). Exercises so-003's numeric discipline: 1250 must be an integer, 3.5 a number.",
+  "id": "chatcmpl-synthetic-so-003",
+  "object": "chat.completion",
+  "model": "gpt-4o",
+  "choices": [
+    {
+      "index": 0,
+      "finish_reason": "stop",
+      "message": {
+        "role": "assistant",
+        "content": "{\"order_id\": \"PO-8841\", \"units\": 1250, \"unit_price\": 3.50}"
+      }
+    }
+  ],
+  "usage": { "prompt_tokens": 96, "completion_tokens": 38 }
+}

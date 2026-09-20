@@ -1,0 +1,17 @@
+{
+  "_synthetic": "Hand-authored test fixture, not a recorded provider response (D5, TESTING.md §4). Exercises so-010's length ceiling: the summary is within 120 characters and mentions the battery.",
+  "id": "chatcmpl-synthetic-so-010",
+  "object": "chat.completion",
+  "model": "gpt-4o",
+  "choices": [
+    {
+      "index": 0,
+      "finish_reason": "stop",
+      "message": {
+        "role": "assistant",
+        "content": "{\"summary\": \"A decisive keyboard with a battery that lasted eleven weeks of daily use.\"}"
+      }
+    }
+  ],
+  "usage": { "prompt_tokens": 128, "completion_tokens": 28 }
+}

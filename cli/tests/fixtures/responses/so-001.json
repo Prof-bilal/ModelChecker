@@ -1,0 +1,20 @@
+{
+  "_synthetic": "Hand-authored test fixture, not a recorded provider response (D5, TESTING.md §4).",
+  "id": "chatcmpl-synthetic-so-001",
+  "object": "chat.completion",
+  "model": "gpt-4o",
+  "choices": [
+    {
+      "index": 0,
+      "finish_reason": "stop",
+      "message": {
+        "role": "assistant",
+        "content": "{\"invoice_id\": \"INV-2031\", \"vendor\": \"Northwind Traders\", \"total\": 1250.00, \"due_date\": \"2026-09-13\"}"
+      }
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 92,
+    "completion_tokens": 48
+  }
+}

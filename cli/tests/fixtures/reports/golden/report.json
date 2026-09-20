@@ -1,0 +1,189 @@
+{
+  "schema_version": "1.0.0",
+  "modelcheck_version": "0.1.0",
+  "run_id": "20260919T120000Z-mock-golden",
+  "run_label": "golden",
+  "status": "completed_with_gaps",
+  "started_at_utc": "2026-09-19T12:00:00Z",
+  "finished_at_utc": "2026-09-19T12:01:30Z",
+  "provider": "mock",
+  "endpoint_base_url": "mock://fixtures",
+  "requested_model": "mock/golden-model",
+  "resolved_model": "golden-model-2026-09-01",
+  "suite_id": "core",
+  "suite_version": "1.0.0",
+  "suite_content_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "planned_count": 7,
+  "repeats_per_case": 1,
+  "parameters": {
+    "temperature": "provider_default",
+    "max_output_tokens": "provider_default",
+    "seed": "unsupported",
+    "streaming": false,
+    "timeout_ms": 60000,
+    "max_retries": 2,
+    "concurrency": 3
+  },
+  "cases": [
+    {
+      "case_id": "so-001",
+      "capability": "structured_output",
+      "outcome": "pass",
+      "score": 1,
+      "scoring_rule": "json_schema@1",
+      "raw_response": {
+        "id": "chatcmpl-fixture-1",
+        "choices": [
+          {
+            "message": {
+              "content": "{}"
+            }
+          }
+        ]
+      },
+      "input_tokens": 92,
+      "output_tokens": 48,
+      "latency_ms": 812,
+      "attempts": 1,
+      "estimated_cost_usd": 0.0002
+    },
+    {
+      "case_id": "so-002",
+      "capability": "structured_output",
+      "outcome": "pass",
+      "score": 1,
+      "scoring_rule": "json_schema@1",
+      "raw_response": {
+        "id": "chatcmpl-fixture-2",
+        "choices": [
+          {
+            "message": {
+              "content": "{}"
+            }
+          }
+        ]
+      },
+      "input_tokens": 88,
+      "output_tokens": 41,
+      "latency_ms": 644,
+      "attempts": 1,
+      "estimated_cost_usd": 0.0002
+    },
+    {
+      "case_id": "so-003",
+      "capability": "structured_output",
+      "outcome": "fail",
+      "score": 0,
+      "scoring_rule": "json_schema@1",
+      "raw_response": {
+        "id": "chatcmpl-fixture-3",
+        "choices": [
+          {
+            "message": {
+              "content": "I cannot comply."
+            }
+          }
+        ]
+      },
+      "reason": "Response body is not valid JSON.",
+      "input_tokens": 101,
+      "output_tokens": 12,
+      "latency_ms": 501,
+      "attempts": 1,
+      "estimated_cost_usd": 0.0002
+    },
+    {
+      "case_id": "so-004",
+      "capability": "structured_output",
+      "outcome": "request_error",
+      "score": null,
+      "scoring_rule": "json_schema@1",
+      "raw_response": null,
+      "error_class": "rate_limit",
+      "reason": "Provider rate limit hit (429).",
+      "latency_ms": 153,
+      "attempts": 3
+    },
+    {
+      "case_id": "tc-001",
+      "capability": "tool_calling",
+      "outcome": "pass",
+      "score": 1,
+      "scoring_rule": "tool_call_match@1",
+      "raw_response": {
+        "id": "chatcmpl-fixture-5",
+        "choices": [
+          {
+            "message": {
+              "content": null
+            }
+          }
+        ]
+      },
+      "input_tokens": 140,
+      "output_tokens": 33,
+      "latency_ms": 977,
+      "attempts": 1,
+      "estimated_cost_usd": 0.0002
+    },
+    {
+      "case_id": "tc-002",
+      "capability": "tool_calling",
+      "outcome": "timeout",
+      "score": null,
+      "scoring_rule": "tool_call_match@1",
+      "raw_response": null,
+      "error_class": "timeout",
+      "reason": "Provider did not respond within the timeout.",
+      "latency_ms": 60000,
+      "attempts": 1
+    }
+  ],
+  "capabilities": [
+    {
+      "capability": "structured_output",
+      "planned": 4,
+      "settled": 4,
+      "scored": 3,
+      "pass": 2,
+      "fail": 1,
+      "partial": 0,
+      "request_errors": 1,
+      "scoring_errors": 0,
+      "timeouts": 0,
+      "coverage": 0.75
+    },
+    {
+      "capability": "tool_calling",
+      "planned": 3,
+      "settled": 2,
+      "scored": 1,
+      "pass": 1,
+      "fail": 0,
+      "partial": 0,
+      "request_errors": 0,
+      "scoring_errors": 0,
+      "timeouts": 1,
+      "coverage": 0.3333333333333333
+    }
+  ],
+  "cost": {
+    "total_usd": 0.0008,
+    "basis": "estimated",
+    "price_table_ref": "cli/src/config/prices.json (dated snapshot)"
+  },
+  "latency": {
+    "p50_ms": 644,
+    "p95_ms": "not_available",
+    "n": 4
+  },
+  "limitations": [
+    "Results are based on 4 case(s) in this run. A one-case difference is roughly 25 points.",
+    "This suite is a fixed set of cases. It does not represent your production traffic.",
+    "Provider outputs may vary between requests. Reproducing this run reproduces the procedure, not necessarily the outputs.",
+    "Capabilities not listed were not tested. They are not zero.",
+    "This suite does not control for training-data contamination.",
+    "Latency and cost reflect this provider, endpoint and parameter set.",
+    "This result describes this model version at this time. Provider aliases can change what a model name serves."
+  ]
+}

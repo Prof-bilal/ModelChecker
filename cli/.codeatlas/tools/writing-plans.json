@@ -1,0 +1,71 @@
+{
+  "schemaVersion": 1,
+  "name": "writing-plans",
+  "description": "Convert vague work into sequenced, reviewable packets. Source: https://github.com/obra/superpowers/tree/main/skills/writing-plans",
+  "toolVersion": "1.0.0",
+  "repository": "https://github.com/obra/superpowers/tree/main/skills/writing-plans",
+  "license": "See repository",
+  "categories": [
+    "Developer Productivity",
+    "Agent Tools"
+  ],
+  "supportedAgents": [],
+  "documentation": "https://github.com/obra/superpowers/tree/main/skills/writing-plans",
+  "compatibility": {
+    "os": [],
+    "runtimes": [],
+    "agents": [],
+    "mcp": false,
+    "architecture": [],
+    "permissions": [],
+    "note": null
+  },
+  "installation": {
+    "type": "skill",
+    "package": "https://github.com/obra/superpowers",
+    "source": null,
+    "checksum": null,
+    "versionRange": null,
+    "note": "skills/writing-plans"
+  },
+  "configuration": {
+    "type": "none",
+    "applied": [],
+    "agents": [],
+    "note": null
+  },
+  "security": {
+    "status": "unverified",
+    "trust": "unverified",
+    "lastReview": "2026-09-19T14:45:16.695Z",
+    "note": "Not yet reviewed by CodeAtlas. Explicit user override recorded."
+  },
+  "provenance": {
+    "source": "skill",
+    "sourceRef": "https://github.com/obra/superpowers",
+    "method": "skill",
+    "command": [
+      "git",
+      "clone",
+      "--depth",
+      "1",
+      "https://github.com/obra/superpowers",
+      "/home/abdullah/Music/ModelChecker/web/cli/.codeatlas/skills/writing-plans"
+    ],
+    "recordedAt": "2026-09-19T14:45:16.695Z"
+  },
+  "verification": {
+    "status": "verified",
+    "checksum": null,
+    "note": "found /home/abdullah/Music/ModelChecker/web/cli/.codeatlas/skills/writing-plans/skills/writing-plans/SKILL.md"
+  },
+  "integrationState": {
+    "status": "installed",
+    "expectedPath": null,
+    "foundPath": "/home/abdullah/Music/ModelChecker/web/cli/.codeatlas/skills/writing-plans/skills/writing-plans/SKILL.md",
+    "checkedAt": "2026-09-19T14:45:16.695Z",
+    "note": "found /home/abdullah/Music/ModelChecker/web/cli/.codeatlas/skills/writing-plans/skills/writing-plans/SKILL.md"
+  },
+  "installedAt": "2026-09-19T14:45:20.690Z",
+  "updatedAt": "2026-09-19T14:45:20.690Z"
+}

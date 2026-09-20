@@ -1,0 +1,17 @@
+{
+  "_synthetic": "Hand-authored test fixture, not a recorded provider response (D5, TESTING.md §4). Exercises so-005's nested object structure.",
+  "id": "chatcmpl-synthetic-so-005",
+  "object": "chat.completion",
+  "model": "gpt-4o",
+  "choices": [
+    {
+      "index": 0,
+      "finish_reason": "stop",
+      "message": {
+        "role": "assistant",
+        "content": "{\"order_id\": \"ORD-552\", \"total\": 89.90, \"carrier\": \"DHL\", \"customer\": {\"name\": \"Jonas Weber\", \"address\": {\"street\": \"Ahornweg 12\", \"postcode\": \"04109\", \"city\": \"Leipzig\", \"country\": \"Germany\"}}}"
+      }
+    }
+  ],
+  "usage": { "prompt_tokens": 122, "completion_tokens": 84 }
+}

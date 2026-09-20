@@ -6,6 +6,9 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 import type { ScoringRule, SuiteCase, SuiteMeta } from "../types.js";
+import { SuiteLoadError } from "../lib/errors.js";
+
+export { SuiteLoadError } from "../lib/errors.js";
 
 const SCORING_RULES: readonly ScoringRule[] = ["json_schema@1", "tool_call_match@1"];
 
@@ -60,8 +63,6 @@ function stableStringify(value: unknown): string {
 export function suiteContentHash(suite: unknown): string {
   return createHash("sha256").update(canonicalJson(suite)).digest("hex");
 }
-
-export class SuiteLoadError extends Error {}
 
 function fail(message: string): never {
   // Message shape: object, reason, next step (CODESTYLE.md §2.4).

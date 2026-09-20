@@ -1,0 +1,7 @@
+{
+  "_synthetic": "Error-scenario fixture: auth failure shape (D5, TESTING.md §4).",
+  "error": {
+    "status": 401,
+    "message": "Incorrect API key provided."
+  }
+}

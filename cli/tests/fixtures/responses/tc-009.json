@@ -1,0 +1,27 @@
+{
+  "_synthetic": "Hand-authored test fixture, not a recorded provider response (D5, TESTING.md §4). Exercises tc-009's numeric-vs-string discipline: amount must be a number, currency a string.",
+  "id": "chatcmpl-synthetic-tc-009",
+  "object": "chat.completion",
+  "model": "gpt-4o",
+  "choices": [
+    {
+      "index": 0,
+      "finish_reason": "tool_calls",
+      "message": {
+        "role": "assistant",
+        "content": null,
+        "tool_calls": [
+          {
+            "id": "call_synthetic_tc009",
+            "type": "function",
+            "function": {
+              "name": "record_payment",
+              "arguments": "{\"invoice_id\": \"INV-2031\", \"amount\": \"1250.00\", \"currency\": \"GBP\"}"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "usage": { "prompt_tokens": 104, "completion_tokens": 28 }
+}

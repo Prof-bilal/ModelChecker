@@ -1,0 +1,17 @@
+{
+  "_synthetic": "Hand-authored test fixture, not a recorded provider response (D5, TESTING.md §4). Exercises so-013's additionalProperties:false: the fixture adds the classic 'helpful' extra field and must fail.",
+  "id": "chatcmpl-synthetic-so-013",
+  "object": "chat.completion",
+  "model": "gpt-4o",
+  "choices": [
+    {
+      "index": 0,
+      "finish_reason": "stop",
+      "message": {
+        "role": "assistant",
+        "content": "{\"sensor_id\": \"B-7\", \"location\": \"greenhouse 3\", \"celsius\": 21.4, \"reading_time\": \"06:00\", \"confidence\": 0.98}"
+      }
+    }
+  ],
+  "usage": { "prompt_tokens": 112, "completion_tokens": 42 }
+}

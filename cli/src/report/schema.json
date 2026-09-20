@@ -1,0 +1,172 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://modelcheck.dev/schemas/report-1.0.0.json",
+  "$comment": "Schema for report.json (EVALUATIONS.md §5, the reproducibility manifest). A run missing any required field is invalid and must not be rendered as complete. Validated by cli/src/report/write-json.ts at write time.",
+  "title": "ModelCheck report",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "modelcheck_version",
+    "run_id",
+    "status",
+    "started_at_utc",
+    "finished_at_utc",
+    "provider",
+    "endpoint_base_url",
+    "requested_model",
+    "resolved_model",
+    "suite_id",
+    "suite_version",
+    "suite_content_hash",
+    "planned_count",
+    "repeats_per_case",
+    "parameters",
+    "cases",
+    "capabilities",
+    "cost",
+    "latency",
+    "limitations"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": { "const": "1.0.0" },
+    "modelcheck_version": { "type": "string", "minLength": 1 },
+    "run_id": { "type": "string", "pattern": "^[\\w.-]+$" },
+    "run_label": { "type": "string", "minLength": 1 },
+    "status": { "enum": ["completed", "completed_with_gaps", "failed", "aborted"] },
+    "started_at_utc": { "$ref": "#/$defs/iso8601" },
+    "finished_at_utc": { "$ref": "#/$defs/iso8601" },
+    "provider": { "type": "string", "minLength": 1 },
+    "endpoint_base_url": { "type": "string", "minLength": 1 },
+    "requested_model": { "type": "string", "minLength": 1 },
+    "resolved_model": { "type": "string", "minLength": 1 },
+    "provider_request_ids": { "type": "array", "items": { "type": "string" } },
+    "suite_id": { "type": "string", "minLength": 1 },
+    "suite_version": { "type": "string", "minLength": 1 },
+    "suite_content_hash": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "planned_count": { "type": "integer", "minimum": 1 },
+    "repeats_per_case": { "type": "integer", "minimum": 1 },
+    "parameters": { "$ref": "#/$defs/parameters" },
+    "cases": { "type": "array", "items": { "$ref": "#/$defs/caseResult" } },
+    "capabilities": { "type": "array", "items": { "$ref": "#/$defs/capabilityAggregate" } },
+    "cost": { "$ref": "#/$defs/cost" },
+    "latency": { "$ref": "#/$defs/latency" },
+    "limitations": {
+      "type": "array",
+      "minItems": 7,
+      "items": { "type": "string", "minLength": 1 }
+    }
+  },
+  "$defs": {
+    "iso8601": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?Z$"
+    },
+    "parameters": {
+      "type": "object",
+      "required": [
+        "temperature",
+        "max_output_tokens",
+        "seed",
+        "streaming",
+        "timeout_ms",
+        "max_retries",
+        "concurrency"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "temperature": { "type": ["number", "string"], "enumDescription": "number, or the exact string \"provider_default\"" },
+        "max_output_tokens": { "type": ["integer", "string"] },
+        "seed": { "type": ["integer", "string"] },
+        "streaming": { "type": "boolean" },
+        "timeout_ms": { "type": "integer", "minimum": 1 },
+        "max_retries": { "type": "integer", "minimum": 0 },
+        "concurrency": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "caseResult": {
+      "type": "object",
+      "required": [
+        "case_id",
+        "capability",
+        "outcome",
+        "score",
+        "scoring_rule",
+        "raw_response",
+        "latency_ms",
+        "attempts"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "case_id": { "type": "string", "pattern": "^[\\w-]+$" },
+        "capability": { "type": "string", "minLength": 1 },
+        "outcome": {
+          "enum": ["pass", "fail", "partial", "request_error", "scoring_error", "skipped", "timeout", "not_run"]
+        },
+        "score": { "type": ["number", "null"] },
+        "scoring_rule": { "type": "string", "minLength": 1 },
+        "raw_response": true,
+        "error_class": {
+          "enum": ["auth", "rate_limit", "timeout", "server", "network", "refusal", "malformed"]
+        },
+        "reason": { "type": "string" },
+        "input_tokens": { "type": "integer", "minimum": 0 },
+        "output_tokens": { "type": "integer", "minimum": 0 },
+        "latency_ms": { "type": "number", "minimum": 0 },
+        "attempts": { "type": "integer", "minimum": 1 },
+        "estimated_cost_usd": { "type": ["number", "string"] }
+      }
+    },
+    "capabilityAggregate": {
+      "type": "object",
+      "required": [
+        "capability",
+        "planned",
+        "settled",
+        "scored",
+        "pass",
+        "fail",
+        "partial",
+        "request_errors",
+        "scoring_errors",
+        "timeouts",
+        "coverage"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "capability": { "type": "string", "minLength": 1 },
+        "planned": { "type": "integer", "minimum": 0 },
+        "settled": { "type": "integer", "minimum": 0 },
+        "scored": { "type": "integer", "minimum": 0 },
+        "pass": { "type": "integer", "minimum": 0 },
+        "fail": { "type": "integer", "minimum": 0 },
+        "partial": { "type": "integer", "minimum": 0 },
+        "request_errors": { "type": "integer", "minimum": 0 },
+        "scoring_errors": { "type": "integer", "minimum": 0 },
+        "timeouts": { "type": "integer", "minimum": 0 },
+        "coverage": { "type": "number", "minimum": 0, "maximum": 1 },
+        "interval": true
+      }
+    },
+    "cost": {
+      "type": "object",
+      "required": ["total_usd", "basis", "price_table_ref"],
+      "additionalProperties": false,
+      "properties": {
+        "total_usd": { "type": ["number", "string"] },
+        "basis": { "enum": ["estimated", "unpriced"] },
+        "price_table_ref": { "type": "string", "minLength": 1 }
+      }
+    },
+    "latency": {
+      "type": "object",
+      "required": ["p50_ms", "p95_ms", "n"],
+      "additionalProperties": false,
+      "properties": {
+        "p50_ms": { "type": "number", "minimum": 0 },
+        "p95_ms": { "type": ["number", "string"] },
+        "n": { "type": "integer", "minimum": 0 }
+      }
+    }
+  }
+}

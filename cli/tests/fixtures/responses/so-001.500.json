@@ -1,0 +1,7 @@
+{
+  "_synthetic": "Error-scenario fixture: server outage shape (D5, TESTING.md §4).",
+  "error": {
+    "status": 500,
+    "message": "The server had an error while processing your request."
+  }
+}

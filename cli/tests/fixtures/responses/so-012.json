@@ -1,0 +1,17 @@
+{
+  "_synthetic": "Hand-authored test fixture, not a recorded provider response (D5, TESTING.md §4). Exercises so-012's conflicting constraints: unknown delivery date must be null, not a guess.",
+  "id": "chatcmpl-synthetic-so-012",
+  "object": "chat.completion",
+  "model": "gpt-4o",
+  "choices": [
+    {
+      "index": 0,
+      "finish_reason": "stop",
+      "message": {
+        "role": "assistant",
+        "content": "{\"shipment_id\": \"SHP-3301\", \"departed_on\": \"2026-07-02\", \"delivered_on\": null}"
+      }
+    }
+  ],
+  "usage": { "prompt_tokens": 118, "completion_tokens": 30 }
+}

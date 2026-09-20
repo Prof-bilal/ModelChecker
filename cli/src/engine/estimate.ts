@@ -4,6 +4,7 @@ import { createRequire } from "node:module";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
+import { SpendLimitError } from "../lib/errors.js";
 import type { PlannedRun } from "../types.js";
 
 /** Average token assumptions for estimation only. Adjusted against real usage
@@ -22,7 +23,7 @@ export interface PriceEntry {
   free_promo?: boolean;
 }
 
-interface PriceTable {
+export interface PriceTable {
   currency: string;
   updated: string;
   provider_prefixes?: Record<string, string>;
@@ -32,8 +33,6 @@ interface PriceTable {
 export type CostEstimate =
   | { basis: "estimated"; total_usd: number; price: PriceEntry; price_table_ref: string }
   | { basis: "unpriced"; total_usd: "unpriced"; price_table_ref: string };
-
-export class SpendLimitError extends Error {}
 
 export const PRICE_TABLE_REF = "cli/src/config/prices.json (dated snapshot)";
 
@@ -111,6 +110,30 @@ export function assertWithinSpendLimit(estimate: CostEstimate, spendLimit: numbe
       `Estimated spend $${estimate.total_usd.toFixed(4)} exceeds the spend limit of $${spendLimit.toFixed(2)}. Lower --repeat, pick a cheaper model, or raise --spend-limit.`,
     );
   }
+}
+
+/** Per-case estimated cost from the token counts the *provider returned*
+ * (EVALUATIONS.md §8.1 basis rule) × the dated price row. When the provider
+ * did not report usage, cost is `unpriced` for that case — never assumed from
+ * the pre-flight token assumptions, and never zero (Hard Rule 2). */
+export function caseCost(
+  price: PriceEntry | undefined,
+  usage: { input_tokens?: number; output_tokens?: number } | undefined,
+): number | "unpriced" {
+  if (price === undefined) {
+    return "unpriced";
+  }
+  if (
+    usage === undefined ||
+    typeof usage.input_tokens !== "number" ||
+    typeof usage.output_tokens !== "number"
+  ) {
+    return "unpriced";
+  }
+  const cost =
+    (usage.input_tokens / 1_000) * price.input_per_1k +
+    (usage.output_tokens / 1_000) * price.output_per_1k;
+  return Math.round(cost * 1e6) / 1e6;
 }
 
 export function formatEstimateLine(estimate: CostEstimate, model: string): string {

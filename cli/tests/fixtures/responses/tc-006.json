@@ -1,0 +1,27 @@
+{
+  "_synthetic": "Hand-authored test fixture, not a recorded provider response (D5, TESTING.md §4). Exercises tc-006's enum constraint with the documented synonym failure: 'urgent' is not a declared member.",
+  "id": "chatcmpl-synthetic-tc-006",
+  "object": "chat.completion",
+  "model": "gpt-4o",
+  "choices": [
+    {
+      "index": 0,
+      "finish_reason": "tool_calls",
+      "message": {
+        "role": "assistant",
+        "content": null,
+        "tool_calls": [
+          {
+            "id": "call_synthetic_tc006",
+            "type": "function",
+            "function": {
+              "name": "update_ticket",
+              "arguments": "{\"ticket_id\": \"TCK-2291\", \"priority\": \"urgent\"}"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "usage": { "prompt_tokens": 92, "completion_tokens": 24 }
+}

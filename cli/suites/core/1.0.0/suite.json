@@ -2,7 +2,7 @@
   "meta": {
     "id": "core",
     "version": "1.0.0",
-    "$comment": "Phase 1 fixture: 3 of the 30 cases defined in docs/benchmarks.md. Expanded to the full 30 in Phase 4 (PHASES.md). Cases are definitions, not measurements (docs/benchmarks.md honesty note)."
+    "$comment": "The full 30-case V1 suite from docs/benchmarks.md §2–3 (15 structured_output + 15 tool_calling). Cases are definitions, not measurements (docs/benchmarks.md honesty note)."
   },
   "cases": [
     {
@@ -23,6 +23,335 @@
             "due_date": { "type": "string", "format": "date" }
           },
           "required": ["invoice_id", "vendor", "total", "due_date"],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "case_id": "so-002",
+      "capability": "structured_output",
+      "version": "1",
+      "input": {
+        "prompt": "Extract the user profile into JSON.\n\nText: Maria Chen has been a customer since 2021. Her account email is maria.chen@example.com and her phone is +44 20 7946 0958.\n\nSchema notes: fields 'loyalty_tier', 'preferred_contact' and 'birthday' are optional; no data for them is provided. Do not invent values for optional fields."
+      },
+      "scoring": "json_schema@1",
+      "scoring_params": {
+        "schema": {
+          "type": "object",
+          "properties": {
+            "name": { "type": "string" },
+            "customer_since": { "type": "integer" },
+            "email": { "type": "string" },
+            "phone": { "type": "string" },
+            "loyalty_tier": { "type": "string" },
+            "preferred_contact": { "type": "string" },
+            "birthday": { "type": "string", "format": "date" }
+          },
+          "required": ["name", "customer_since", "email", "phone"],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "case_id": "so-003",
+      "capability": "structured_output",
+      "version": "1",
+      "input": {
+        "prompt": "Extract the order figures into JSON.\n\nText: The warehouse shipped 1,250 units at £3.50 per unit on order PO-8841."
+      },
+      "scoring": "json_schema@1",
+      "scoring_params": {
+        "schema": {
+          "type": "object",
+          "properties": {
+            "order_id": { "type": "string" },
+            "units": { "type": "integer" },
+            "unit_price": { "type": "number" }
+          },
+          "required": ["order_id", "units", "unit_price"],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "case_id": "so-004",
+      "capability": "structured_output",
+      "version": "1",
+      "input": {
+        "prompt": "Classify the support ticket into JSON.\n\nText: Customer writes: \"The app crashes every time I try to attach a photo since the last update.\"\n\nThe 'category' field must be exactly one of: \"bug\", \"feature_request\", \"billing\", \"account\", \"other\"."
+      },
+      "scoring": "json_schema@1",
+      "scoring_params": {
+        "schema": {
+          "type": "object",
+          "properties": {
+            "category": { "type": "string", "enum": ["bug", "feature_request", "billing", "account", "other"] }
+          },
+          "required": ["category"],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "case_id": "so-005",
+      "capability": "structured_output",
+      "version": "1",
+      "input": {
+        "prompt": "Extract the order record into nested JSON.\n\nText: Order ORD-552 was placed by customer Jonas Weber, who lives at Ahornweg 12, 04109 Leipzig, Germany. The order total is 89.90 EUR and it ships via DHL."
+      },
+      "scoring": "json_schema@1",
+      "scoring_params": {
+        "schema": {
+          "type": "object",
+          "properties": {
+            "order_id": { "type": "string" },
+            "total": { "type": "number" },
+            "carrier": { "type": "string" },
+            "customer": {
+              "type": "object",
+              "properties": {
+                "name": { "type": "string" },
+                "address": {
+                  "type": "object",
+                  "properties": {
+                    "street": { "type": "string" },
+                    "postcode": { "type": "string" },
+                    "city": { "type": "string" },
+                    "country": { "type": "string" }
+                  },
+                  "required": ["street", "postcode", "city", "country"],
+                  "additionalProperties": false
+                }
+              },
+              "required": ["name", "address"],
+              "additionalProperties": false
+            }
+          },
+          "required": ["order_id", "total", "carrier", "customer"],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "case_id": "so-006",
+      "capability": "structured_output",
+      "version": "1",
+      "input": {
+        "prompt": "Extract the line items into JSON as an array.\n\nText: The quote lists three line items: 2x USB-C cable at 9.99 each, 1x 65W charger at 24.50, and 4x braided lightning cable at 12.00 each."
+      },
+      "scoring": "json_schema@1",
+      "scoring_params": {
+        "schema": {
+          "type": "object",
+          "properties": {
+            "items": {
+              "type": "array",
+              "minItems": 3,
+              "maxItems": 3,
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": { "type": "string" },
+                  "quantity": { "type": "integer" },
+                  "unit_price": { "type": "number" }
+                },
+                "required": ["name", "quantity", "unit_price"],
+                "additionalProperties": false
+              }
+            }
+          },
+          "required": ["items"],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "case_id": "so-007",
+      "capability": "structured_output",
+      "version": "1",
+      "input": {
+        "prompt": "Extract the matching records into JSON as an array.\n\nText: We searched the archive for letters written in 1673 by the correspondence office. No letters from that year exist in the archive."
+      },
+      "scoring": "json_schema@1",
+      "scoring_params": {
+        "schema": {
+          "type": "object",
+          "properties": {
+            "records": { "type": "array" }
+          },
+          "required": ["records"],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "case_id": "so-008",
+      "capability": "structured_output",
+      "version": "1",
+      "input": {
+        "prompt": "Extract the log entry into JSON.\n\nText: The config line reads: path = \"C:\\Users\\dev\\tmp\" (quoted exactly, with a trailing newline after it).\n\nThe 'value' field must contain the text between the quotes exactly as written, including the backslashes."
+      },
+      "scoring": "json_schema@1",
+      "scoring_params": {
+        "schema": {
+          "type": "object",
+          "properties": {
+            "key": { "type": "string" },
+            "value": { "type": "string" }
+          },
+          "required": ["key", "value"],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "case_id": "so-009",
+      "capability": "structured_output",
+      "version": "1",
+      "input": {
+        "prompt": "Extract the book titles into JSON.\n\nText: The shelf holds \"L'Étranger\" by Albert Camus (★ its most-marked edition) and \"El túnel\" by Ernesto Sabato."
+      },
+      "scoring": "json_schema@1",
+      "scoring_params": {
+        "schema": {
+          "type": "object",
+          "properties": {
+            "titles": { "type": "array", "items": { "type": "string" } }
+          },
+          "required": ["titles"],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "case_id": "so-010",
+      "capability": "structured_output",
+      "version": "1",
+      "input": {
+        "prompt": "Summarise the review into JSON.\n\nText: This keyboard changed how I work. The key travel is short but decisive, the backlight has three useful brightness levels, and the battery lasted eleven weeks of daily use before needing a charge. My only complaint is the proprietary cable.\n\nThe 'summary' field must be at most 120 characters and must mention the battery."
+      },
+      "scoring": "json_schema@1",
+      "scoring_params": {
+        "schema": {
+          "type": "object",
+          "properties": {
+            "summary": { "type": "string", "maxLength": 120 }
+          },
+          "required": ["summary"],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "case_id": "so-011",
+      "capability": "structured_output",
+      "version": "1",
+      "input": {
+        "prompt": "Extract the personnel record into JSON.\n\nText: Dr. Amara Okafor joined the radiology department in March 2019. Her current salary is not published and we do not have her middle name on file.\n\nSchema notes: 'middle_name' and 'salary' have no data available; use exactly null for fields whose value is not available, and include every field."
+      },
+      "scoring": "json_schema@1",
+      "scoring_params": {
+        "schema": {
+          "type": "object",
+          "properties": {
+            "name": { "type": "string" },
+            "department": { "type": "string" },
+            "start_month": { "type": "string" },
+            "start_year": { "type": "integer" },
+            "middle_name": { "type": ["string", "null"] },
+            "salary": { "type": ["number", "null"] }
+          },
+          "required": ["name", "department", "start_month", "start_year", "middle_name", "salary"],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "case_id": "so-012",
+      "capability": "structured_output",
+      "version": "1",
+      "input": {
+        "prompt": "Extract the shipment record into JSON.\n\nText: Shipment SHP-3301 left the Rotterdam depot on 2026-07-02. The delivery date is not known yet; the shipment is still in transit.\n\nSchema notes: 'delivered_on' must be included; when the delivery date is unknown, use exactly null rather than guessing a date."
+      },
+      "scoring": "json_schema@1",
+      "scoring_params": {
+        "schema": {
+          "type": "object",
+          "properties": {
+            "shipment_id": { "type": "string" },
+            "departed_on": { "type": "string", "format": "date" },
+            "delivered_on": { "type": ["string", "null"], "format": "date" }
+          },
+          "required": ["shipment_id", "departed_on", "delivered_on"],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "case_id": "so-013",
+      "capability": "structured_output",
+      "version": "1",
+      "input": {
+        "prompt": "Extract the sensor reading into JSON.\n\nText: Sensor B-7 in greenhouse 3 reported 21.4 degrees Celsius at 06:00. Calibration is up to date.\n\nThe schema forbids extra fields. Do not add commentary, reasoning, confidence or any key not declared."
+      },
+      "scoring": "json_schema@1",
+      "scoring_params": {
+        "schema": {
+          "type": "object",
+          "properties": {
+            "sensor_id": { "type": "string" },
+            "location": { "type": "string" },
+            "celsius": { "type": "number" },
+            "reading_time": { "type": "string" }
+          },
+          "required": ["sensor_id", "location", "celsius", "reading_time"],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "case_id": "so-014",
+      "capability": "structured_output",
+      "version": "1",
+      "input": {
+        "prompt": "Extract the meeting details into JSON. Output exactly one JSON value and nothing else: no code fences, no explanation, no preamble.\n\nText: The platform review is set for Tuesday 14 October 2026 at 14:30 in room K2, chaired by Ingrid Halvorsen."
+      },
+      "scoring": "json_schema@1",
+      "scoring_params": {
+        "schema": {
+          "type": "object",
+          "properties": {
+            "meeting": { "type": "string" },
+            "date": { "type": "string" },
+            "time": { "type": "string" },
+            "room": { "type": "string" },
+            "chair": { "type": "string" }
+          },
+          "required": ["meeting", "date", "time", "room", "chair"],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "case_id": "so-015",
+      "capability": "structured_output",
+      "version": "1",
+      "input": {
+        "prompt": "Extract the article tags into JSON as an ordered array.\n\nText: The editor tagged the piece: first 'energy', then 'policy', and finally 'europe'. Keep the tags in the order listed."
+      },
+      "scoring": "json_schema@1",
+      "scoring_params": {
+        "schema": {
+          "type": "object",
+          "properties": {
+            "tags": {
+              "type": "array",
+              "minItems": 3,
+              "maxItems": 3,
+              "items": { "type": "string", "enum": ["energy", "policy", "europe", "markets", "tech"] }
+            }
+          },
+          "required": ["tags"],
           "additionalProperties": false
         }
       }
@@ -97,6 +426,81 @@
                 "body": { "type": "string" }
               },
               "required": ["recipient", "body"],
+              "additionalProperties": false
+            }
+          }
+        }
+      ]
+    },
+    {
+      "case_id": "tc-002",
+      "capability": "tool_calling",
+      "version": "1",
+      "input": {
+        "prompt": "Without calling any tool: what is the capital of Portugal, and how is it usually abbreviated in addresses?"
+      },
+      "scoring": "tool_call_match@1",
+      "scoring_params": {
+        "expected_tool": ""
+      },
+      "tools": [
+        {
+          "type": "function",
+          "function": {
+            "name": "get_weather",
+            "description": "Get current weather for a city",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "location": { "type": "string" }
+              },
+              "required": ["location"],
+              "additionalProperties": false
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "search_web",
+            "description": "Search the web",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "query": { "type": "string" }
+              },
+              "required": ["query"],
+              "additionalProperties": false
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "get_time",
+            "description": "Get the current time in a timezone",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "timezone": { "type": "string" }
+              },
+              "required": ["timezone"],
+              "additionalProperties": false
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "calc_distance",
+            "description": "Compute the distance between two cities",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "from_city": { "type": "string" },
+                "to_city": { "type": "string" }
+              },
+              "required": ["from_city", "to_city"],
               "additionalProperties": false
             }
           }
@@ -188,6 +592,734 @@
                 "when": { "type": "string" }
               },
               "required": ["title", "when"],
+              "additionalProperties": false
+            }
+          }
+        }
+      ]
+    },
+    {
+      "case_id": "tc-004",
+      "capability": "tool_calling",
+      "version": "1",
+      "input": {
+        "prompt": "Book a flight from Berlin to Tokyo departing on 2026-11-03, one passenger."
+      },
+      "scoring": "tool_call_match@1",
+      "scoring_params": {
+        "expected_tool": "book_flight"
+      },
+      "tools": [
+        {
+          "type": "function",
+          "function": {
+            "name": "book_flight",
+            "description": "Book a flight for one passenger",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "origin": { "type": "string" },
+                "destination": { "type": "string" },
+                "departure_date": { "type": "string", "format": "date" }
+              },
+              "required": ["origin", "destination", "departure_date"],
+              "additionalProperties": false
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "book_hotel",
+            "description": "Book a hotel room",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "city": { "type": "string" },
+                "check_in": { "type": "string" }
+              },
+              "required": ["city", "check_in"],
+              "additionalProperties": false
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "search_flights",
+            "description": "Search available flights",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "origin": { "type": "string" },
+                "destination": { "type": "string" }
+              },
+              "required": ["origin", "destination"],
+              "additionalProperties": false
+            }
+          }
+        }
+      ]
+    },
+    {
+      "case_id": "tc-005",
+      "capability": "tool_calling",
+      "version": "1",
+      "input": {
+        "prompt": "Show me all laptops in the product catalogue."
+      },
+      "scoring": "tool_call_match@1",
+      "scoring_params": {
+        "expected_tool": "search_products"
+      },
+      "tools": [
+        {
+          "type": "function",
+          "function": {
+            "name": "search_products",
+            "description": "Search the product catalogue",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "category": { "type": "string" },
+                "max_price": { "type": "number" },
+                "in_stock_only": { "type": "boolean" }
+              },
+              "required": ["category"],
+              "additionalProperties": false
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "get_product",
+            "description": "Get one product by id",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "product_id": { "type": "string" }
+              },
+              "required": ["product_id"],
+              "additionalProperties": false
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "list_categories",
+            "description": "List catalogue categories",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": [],
+              "additionalProperties": false
+            }
+          }
+        }
+      ]
+    },
+    {
+      "case_id": "tc-006",
+      "capability": "tool_calling",
+      "version": "1",
+      "input": {
+        "prompt": "Set the priority of ticket TCK-2291 to high."
+      },
+      "scoring": "tool_call_match@1",
+      "scoring_params": {
+        "expected_tool": "update_ticket"
+      },
+      "tools": [
+        {
+          "type": "function",
+          "function": {
+            "name": "update_ticket",
+            "description": "Update a support ticket",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "ticket_id": { "type": "string" },
+                "priority": { "type": "string", "enum": ["low", "medium", "high"] }
+              },
+              "required": ["ticket_id", "priority"],
+              "additionalProperties": false
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "close_ticket",
+            "description": "Close a support ticket",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "ticket_id": { "type": "string" }
+              },
+              "required": ["ticket_id"],
+              "additionalProperties": false
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "assign_ticket",
+            "description": "Assign a ticket to an agent",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "ticket_id": { "type": "string" },
+                "agent": { "type": "string" }
+              },
+              "required": ["ticket_id", "agent"],
+              "additionalProperties": false
+            }
+          }
+        }
+      ]
+    },
+    {
+      "case_id": "tc-007",
+      "capability": "tool_calling",
+      "version": "1",
+      "input": {
+        "prompt": "Search the knowledge base for articles about invoice processing, restricted to the finance workspace, published after 2024."
+      },
+      "scoring": "tool_call_match@1",
+      "scoring_params": {
+        "expected_tool": "kb_search"
+      },
+      "tools": [
+        {
+          "type": "function",
+          "function": {
+            "name": "kb_search",
+            "description": "Search the knowledge base",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "query": { "type": "string" },
+                "filters": {
+                  "type": "object",
+                  "properties": {
+                    "workspace": { "type": "string" },
+                    "published_after": { "type": "integer" }
+                  },
+                  "required": ["workspace", "published_after"],
+                  "additionalProperties": false
+                }
+              },
+              "required": ["query", "filters"],
+              "additionalProperties": false
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "kb_article",
+            "description": "Fetch one knowledge-base article by id",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "article_id": { "type": "string" }
+              },
+              "required": ["article_id"],
+              "additionalProperties": false
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "web_search",
+            "description": "Search the public web",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "query": { "type": "string" }
+              },
+              "required": ["query"],
+              "additionalProperties": false
+            }
+          }
+        }
+      ]
+    },
+    {
+      "case_id": "tc-008",
+      "capability": "tool_calling",
+      "version": "1",
+      "input": {
+        "prompt": "Archive the three old projects: aurora, baseline, and cascade."
+      },
+      "scoring": "tool_call_match@1",
+      "scoring_params": {
+        "expected_tool": "archive_projects"
+      },
+      "tools": [
+        {
+          "type": "function",
+          "function": {
+            "name": "archive_projects",
+            "description": "Archive one or more projects by name",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "project_names": { "type": "array", "items": { "type": "string" } }
+              },
+              "required": ["project_names"],
+              "additionalProperties": false
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "delete_project",
+            "description": "Permanently delete a project",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "project_name": { "type": "string" }
+              },
+              "required": ["project_name"],
+              "additionalProperties": false
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "list_projects",
+            "description": "List all projects",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": [],
+              "additionalProperties": false
+            }
+          }
+        }
+      ]
+    },
+    {
+      "case_id": "tc-009",
+      "capability": "tool_calling",
+      "version": "1",
+      "input": {
+        "prompt": "Record a payment of 1,250 GBP received from Northwind Traders against invoice INV-2031."
+      },
+      "scoring": "tool_call_match@1",
+      "scoring_params": {
+        "expected_tool": "record_payment"
+      },
+      "tools": [
+        {
+          "type": "function",
+          "function": {
+            "name": "record_payment",
+            "description": "Record a received payment",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "invoice_id": { "type": "string" },
+                "amount": { "type": "number" },
+                "currency": { "type": "string" }
+              },
+              "required": ["invoice_id", "amount", "currency"],
+              "additionalProperties": false
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "send_invoice",
+            "description": "Send an invoice to a customer",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "invoice_id": { "type": "string" },
+                "recipient": { "type": "string" }
+              },
+              "required": ["invoice_id", "recipient"],
+              "additionalProperties": false
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "refund_payment",
+            "description": "Refund a recorded payment",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "payment_id": { "type": "string" },
+                "amount": { "type": "number" }
+              },
+              "required": ["payment_id", "amount"],
+              "additionalProperties": false
+            }
+          }
+        }
+      ]
+    },
+    {
+      "case_id": "tc-010",
+      "capability": "tool_calling",
+      "version": "1",
+      "input": {
+        "prompt": "Context from the same conversation: earlier we looked at project 'baseline', and just now we reviewed project 'cascade'.\n\nNew message: Cancel it."
+      },
+      "scoring": "tool_call_match@1",
+      "scoring_params": {
+        "expected_tool": "cancel_project"
+      },
+      "tools": [
+        {
+          "type": "function",
+          "function": {
+            "name": "cancel_project",
+            "description": "Cancel a project by name",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "project_name": { "type": "string" }
+              },
+              "required": ["project_name"],
+              "additionalProperties": false
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "pause_project",
+            "description": "Pause a project by name",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "project_name": { "type": "string" }
+              },
+              "required": ["project_name"],
+              "additionalProperties": false
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "list_projects",
+            "description": "List all projects",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": [],
+              "additionalProperties": false
+            }
+          }
+        }
+      ]
+    },
+    {
+      "case_id": "tc-011",
+      "capability": "tool_calling",
+      "version": "1",
+      "input": {
+        "prompt": "I need two independent lookups in one go: the current time in Tokyo, and the weather in Reykjavik."
+      },
+      "scoring": "tool_call_match@1",
+      "scoring_params": {
+        "expected_tool": "get_time"
+      },
+      "tools": [
+        {
+          "type": "function",
+          "function": {
+            "name": "get_time",
+            "description": "Get the current time in a timezone",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "timezone": { "type": "string" }
+              },
+              "required": ["timezone"],
+              "additionalProperties": false
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "get_weather",
+            "description": "Get current weather for a city",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "location": { "type": "string" }
+              },
+              "required": ["location"],
+              "additionalProperties": false
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "get_news",
+            "description": "Get the latest news headlines",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "region": { "type": "string" }
+              },
+              "required": [],
+              "additionalProperties": false
+            }
+          }
+        }
+      ]
+    },
+    {
+      "case_id": "tc-012",
+      "capability": "tool_calling",
+      "version": "1",
+      "input": {
+        "prompt": "Read my colleague's mind and book whatever holiday they would want next month."
+      },
+      "scoring": "tool_call_match@1",
+      "scoring_params": {
+        "expected_tool": "book_flight"
+      },
+      "tools": [
+        {
+          "type": "function",
+          "function": {
+            "name": "book_flight",
+            "description": "Book a flight for one passenger. Requires an explicit origin, destination and date for a named person.",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "origin": { "type": "string" },
+                "destination": { "type": "string" },
+                "departure_date": { "type": "string" }
+              },
+              "required": ["origin", "destination", "departure_date"],
+              "additionalProperties": false
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "book_hotel",
+            "description": "Book a hotel room",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "city": { "type": "string" },
+                "check_in": { "type": "string" }
+              },
+              "required": ["city", "check_in"],
+              "additionalProperties": false
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "search_flights",
+            "description": "Search available flights",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "origin": { "type": "string" },
+                "destination": { "type": "string" }
+              },
+              "required": ["origin", "destination"],
+              "additionalProperties": false
+            }
+          }
+        }
+      ]
+    },
+    {
+      "case_id": "tc-013",
+      "capability": "tool_calling",
+      "version": "1",
+      "input": {
+        "prompt": "First message: I've just moved to Kyoto and want to explore the city.\n\nSecond message (now): What's the weather like here?"
+      },
+      "scoring": "tool_call_match@1",
+      "scoring_params": {
+        "expected_tool": "get_weather"
+      },
+      "tools": [
+        {
+          "type": "function",
+          "function": {
+            "name": "get_weather",
+            "description": "Get current weather for a city",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "location": { "type": "string" }
+              },
+              "required": ["location"],
+              "additionalProperties": false
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "get_time",
+            "description": "Get the current time in a timezone",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "timezone": { "type": "string" }
+              },
+              "required": ["timezone"],
+              "additionalProperties": false
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "get_attractions",
+            "description": "List attractions in a city",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "city": { "type": "string" }
+              },
+              "required": ["city"],
+              "additionalProperties": false
+            }
+          }
+        }
+      ]
+    },
+    {
+      "case_id": "tc-014",
+      "capability": "tool_calling",
+      "version": "1",
+      "input": {
+        "prompt": "This is the THIRD time I'm asking and nobody has helped me. Just check my order status for ORD-99127 RIGHT NOW."
+      },
+      "scoring": "tool_call_match@1",
+      "scoring_params": {
+        "expected_tool": "get_order_status"
+      },
+      "tools": [
+        {
+          "type": "function",
+          "function": {
+            "name": "get_order_status",
+            "description": "Get the status of an order by id",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "order_id": { "type": "string" }
+              },
+              "required": ["order_id"],
+              "additionalProperties": false
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "cancel_order",
+            "description": "Cancel an order by id",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "order_id": { "type": "string" }
+              },
+              "required": ["order_id"],
+              "additionalProperties": false
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "escalate_ticket",
+            "description": "Escalate a support ticket",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "ticket_id": { "type": "string" }
+              },
+              "required": ["ticket_id"],
+              "additionalProperties": false
+            }
+          }
+        }
+      ]
+    },
+    {
+      "case_id": "tc-015",
+      "capability": "tool_calling",
+      "version": "1",
+      "input": {
+        "prompt": "Translate the sentence 'good morning, did the shipment arrive?' into Japanese."
+      },
+      "scoring": "tool_call_match@1",
+      "scoring_params": {
+        "expected_tool": "translate_text"
+      },
+      "tools": [
+        {
+          "type": "function",
+          "function": {
+            "name": "shipment_tracker",
+            "description": "Track a shipment's delivery status. Cannot translate text; only reports delivery events for a tracking id.",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "tracking_id": { "type": "string" }
+              },
+              "required": ["tracking_id"],
+              "additionalProperties": false
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "translate_text",
+            "description": "Translate text between languages",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "text": { "type": "string" },
+                "target_language": { "type": "string" }
+              },
+              "required": ["text", "target_language"],
+              "additionalProperties": false
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "detect_language",
+            "description": "Detect the language of a text sample",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "text": { "type": "string" }
+              },
+              "required": ["text"],
               "additionalProperties": false
             }
           }

@@ -1,0 +1,17 @@
+{
+  "_synthetic": "Hand-authored test fixture, not a recorded provider response (D5, TESTING.md §4). Exercises so-004's enum adherence with a plausible-synonym failure: 'defect' is not one of the declared values.",
+  "id": "chatcmpl-synthetic-so-004",
+  "object": "chat.completion",
+  "model": "gpt-4o",
+  "choices": [
+    {
+      "index": 0,
+      "finish_reason": "stop",
+      "message": {
+        "role": "assistant",
+        "content": "{\"category\": \"defect\"}"
+      }
+    }
+  ],
+  "usage": { "prompt_tokens": 104, "completion_tokens": 12 }
+}

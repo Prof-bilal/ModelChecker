@@ -1,0 +1,17 @@
+{
+  "_synthetic": "Hand-authored test fixture, not a recorded provider response (D5, TESTING.md §4).",
+  "id": "chatcmpl-synthetic-so-002",
+  "object": "chat.completion",
+  "model": "gpt-4o",
+  "choices": [
+    {
+      "index": 0,
+      "finish_reason": "stop",
+      "message": {
+        "role": "assistant",
+        "content": "{\"name\": \"Maria Chen\", \"customer_since\": 2021, \"email\": \"maria.chen@example.com\", \"phone\": \"+44 20 7946 0958\"}"
+      }
+    }
+  ],
+  "usage": { "prompt_tokens": 110, "completion_tokens": 55 }
+}

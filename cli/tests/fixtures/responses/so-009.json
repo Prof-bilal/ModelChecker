@@ -1,0 +1,17 @@
+{
+  "_synthetic": "Hand-authored test fixture, not a recorded provider response (D5, TESTING.md §4). Exercises so-009's unicode preservation: accented characters and the star symbol must survive exactly.",
+  "id": "chatcmpl-synthetic-so-009",
+  "object": "chat.completion",
+  "model": "gpt-4o",
+  "choices": [
+    {
+      "index": 0,
+      "finish_reason": "stop",
+      "message": {
+        "role": "assistant",
+        "content": "{\"titles\": [\"L'Étranger\", \"El túnel\"]}"
+      }
+    }
+  ],
+  "usage": { "prompt_tokens": 90, "completion_tokens": 24 }
+}

@@ -1,0 +1,17 @@
+{
+  "_synthetic": "Hand-authored test fixture, not a recorded provider response (D5, TESTING.md §4). Exercises so-014's fence policy: the body is wrapped in a markdown fence, which is a fail by the asserted policy.",
+  "id": "chatcmpl-synthetic-so-014",
+  "object": "chat.completion",
+  "model": "gpt-4o",
+  "choices": [
+    {
+      "index": 0,
+      "finish_reason": "stop",
+      "message": {
+        "role": "assistant",
+        "content": "```json\n{\"meeting\": \"platform review\", \"date\": \"2026-10-14\", \"time\": \"14:30\", \"room\": \"K2\", \"chair\": \"Ingrid Halvorsen\"}\n```"
+      }
+    }
+  ],
+  "usage": { "prompt_tokens": 106, "completion_tokens": 52 }
+}

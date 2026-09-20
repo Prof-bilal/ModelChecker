@@ -1,0 +1,18 @@
+{
+  "_synthetic": "Hand-authored test fixture, not a recorded provider response (D5, TESTING.md §4). Exercises tc-012's refusal-with-tool-available: the model makes no fabricated call and explains instead — an accepted outcome.",
+  "id": "chatcmpl-synthetic-tc-012",
+  "object": "chat.completion",
+  "model": "gpt-4o",
+  "choices": [
+    {
+      "index": 0,
+      "finish_reason": "stop",
+      "message": {
+        "role": "assistant",
+        "content": "I can't book a holiday on your colleague's behalf — I'd need a specific person, destination and date. Ask them where they'd like to go, and I can book it.",
+        "tool_calls": []
+      }
+    }
+  ],
+  "usage": { "prompt_tokens": 108, "completion_tokens": 42 }
+}

@@ -1,0 +1,27 @@
+{
+  "_synthetic": "Hand-authored test fixture, not a recorded provider response (D5, TESTING.md §4). Exercises tc-004's required-argument extraction: both required arguments present and correctly typed.",
+  "id": "chatcmpl-synthetic-tc-004",
+  "object": "chat.completion",
+  "model": "gpt-4o",
+  "choices": [
+    {
+      "index": 0,
+      "finish_reason": "tool_calls",
+      "message": {
+        "role": "assistant",
+        "content": null,
+        "tool_calls": [
+          {
+            "id": "call_synthetic_tc004",
+            "type": "function",
+            "function": {
+              "name": "book_flight",
+              "arguments": "{\"origin\": \"Berlin\", \"destination\": \"Tokyo\", \"departure_date\": \"2026-11-03\"}"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "usage": { "prompt_tokens": 102, "completion_tokens": 34 }
+}

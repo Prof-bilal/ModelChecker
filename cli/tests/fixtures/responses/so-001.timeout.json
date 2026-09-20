@@ -1,0 +1,8 @@
+{
+  "_synthetic": "Error-scenario fixture: timeout shape (D5, TESTING.md §4).",
+  "scenario": "timeout",
+  "error": {
+    "status": null,
+    "message": "Request timed out."
+  }
+}

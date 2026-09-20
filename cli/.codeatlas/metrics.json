@@ -1,0 +1,50 @@
+{
+  "version": 1,
+  "generatedAt": "2026-09-19T14:44:16.082Z",
+  "repository": {
+    "name": "unknown",
+    "files": 42,
+    "lines": 4706,
+    "symbols": 651,
+    "dependencies": 481,
+    "languages": {
+      "typescript": 42
+    },
+    "scanCount": 3,
+    "firstScanAt": "2026-09-19T14:44:16.082Z",
+    "latestScanAt": "2026-09-19T17:29:33.088Z"
+  },
+  "activity": {
+    "scans": 3,
+    "searches": 16,
+    "contextRequests": 4,
+    "mcpRequests": 5,
+    "filesRead": 0,
+    "filesModified": 0
+  },
+  "tokens": {
+    "estimatedBaseline": 0,
+    "estimatedCodeatlas": 0,
+    "estimatedSaved": 0,
+    "savingsPercent": 0
+  },
+  "performance": {
+    "averageScanMs": 800,
+    "averageSearchMs": 17,
+    "averageContextMs": 327
+  },
+  "daily": [
+    {
+      "date": "2026-09-19",
+      "scans": 3,
+      "searches": 16,
+      "contextRequests": 4,
+      "mcpRequests": 5,
+      "filesRead": 0,
+      "filesModified": 0,
+      "tokensUsed": 0,
+      "estimatedBaselineTokens": 0,
+      "estimatedTokensSaved": 0
+    }
+  ]
+}

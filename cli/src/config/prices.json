@@ -48,7 +48,7 @@
       "date": "2026-09-19",
       "source": "https://platform.claude.com/docs/en/models/overview — Claude Haiku 4.5: $1 input / $5 output per MTok"
     },
-    "openrouter/unbiased-pareto": {
+    "openrouter/unbiased/pareto": {
       "input_per_1k": 0.0025,
       "output_per_1k": 0.0075,
       "currency": "USD",
@@ -639,6 +639,128 @@
       "currency": "USD",
       "date": "2026-09-19",
       "source": "https://openrouter.ai/api/v1/models (openai/gpt-5.4: $2.50/M in, $15.00/M out)"
+    },
+
+    "groq/openai/gpt-oss-120b": {
+      "input_per_1k": 0.00015,
+      "output_per_1k": 0.0006,
+      "currency": "USD",
+      "date": "2026-09-19",
+      "source": "https://console.groq.com/docs/models — GPT-OSS 120B: $0.15/M in, $0.60/M out"
+    },
+    "groq/openai/gpt-oss-20b": {
+      "input_per_1k": 0.000075,
+      "output_per_1k": 0.0003,
+      "currency": "USD",
+      "date": "2026-09-19",
+      "source": "https://console.groq.com/docs/models — GPT-OSS 20B: $0.075/M in, $0.30/M out"
+    },
+    "groq/openai/gpt-oss-safeguard-20b": {
+      "input_per_1k": 0.000075,
+      "output_per_1k": 0.0003,
+      "currency": "USD",
+      "date": "2026-09-19",
+      "source": "https://console.groq.com/docs/models — GPT-OSS Safeguard 20B: $0.075/M in, $0.30/M out"
+    },
+    "groq/meta-llama/llama-prompt-guard-2-22m": {
+      "input_per_1k": 0.00003,
+      "output_per_1k": 0.00003,
+      "currency": "USD",
+      "date": "2026-09-19",
+      "source": "https://console.groq.com/docs/models — Llama Prompt Guard 2 22M: $0.03/M in, $0.03/M out"
+    },
+    "groq/meta-llama/llama-prompt-guard-2-86m": {
+      "input_per_1k": 0.00004,
+      "output_per_1k": 0.00004,
+      "currency": "USD",
+      "date": "2026-09-19",
+      "source": "https://console.groq.com/docs/models — Llama Prompt Guard 2 86M: $0.04/M in, $0.04/M out"
+    },
+    "groq/qwen/qwen3.8-27b": {
+      "input_per_1k": 0.0008,
+      "output_per_1k": 0.004,
+      "currency": "USD",
+      "date": "2026-09-19",
+      "source": "https://console.groq.com/docs/models — Qwen3.8-27B: $0.80/M in, $4.00/M out"
+    },
+
+    "x-ai/grok-4.6": {
+      "input_per_1k": 0.002,
+      "output_per_1k": 0.006,
+      "currency": "USD",
+      "date": "2026-09-19",
+      "source": "https://docs.x.ai/docs/models — Grok 4.6 (<200k): $2.00/M in, $6.00/M out"
+    },
+    "x-ai/grok-4.5": {
+      "input_per_1k": 0.002,
+      "output_per_1k": 0.006,
+      "currency": "USD",
+      "date": "2026-09-19",
+      "source": "https://docs.x.ai/docs/models — Grok 4.5 (<200k): $2.00/M in, $6.00/M out"
+    },
+    "x-ai/grok-4.3": {
+      "input_per_1k": 0.00125,
+      "output_per_1k": 0.0025,
+      "currency": "USD",
+      "date": "2026-09-19",
+      "source": "https://docs.x.ai/docs/models — Grok 4.3 (<200k): $1.25/M in, $2.50/M out"
+    },
+    "x-ai/grok-build-0.1": {
+      "input_per_1k": 0.001,
+      "output_per_1k": 0.002,
+      "currency": "USD",
+      "date": "2026-09-19",
+      "source": "https://docs.x.ai/docs/models — Grok Build 0.1 (<200k): $1.00/M in, $2.00/M out"
+    },
+    "x-ai/grok-4.20": {
+      "input_per_1k": 0.00125,
+      "output_per_1k": 0.0025,
+      "currency": "USD",
+      "date": "2026-09-19",
+      "source": "https://docs.x.ai/docs/models — Grok 4.20 (<200k): $1.25/M in, $2.50/M out"
+    },
+    "x-ai/grok-4.20-multi-agent": {
+      "input_per_1k": 0.00125,
+      "output_per_1k": 0.0025,
+      "currency": "USD",
+      "date": "2026-09-19",
+      "source": "https://docs.x.ai/docs/models — Grok 4.20 Multi-Agent (<200k): $1.25/M in, $2.50/M out"
+    },
+
+    "deepseek/deepseek-chat": {
+      "input_per_1k": 0.00032,
+      "output_per_1k": 0.00089,
+      "currency": "USD",
+      "date": "2026-09-19",
+      "source": "https://openrouter.ai/api/v1/models (deepseek/deepseek-chat: $0.32/M in, $0.89/M out via OpenRouter; direct API pricing in CNY varies by peak/off-peak)"
+    },
+    "deepseek/deepseek-v4-flash": {
+      "input_per_1k": 0.000037,
+      "output_per_1k": 0.000073,
+      "currency": "USD",
+      "date": "2026-09-19",
+      "source": "https://openrouter.ai/api/v1/models (deepseek/deepseek-v4-flash: $0.037/M in, $0.073/M out via OpenRouter)"
+    },
+    "deepseek/deepseek-v4.1-flash": {
+      "input_per_1k": 0.00015,
+      "output_per_1k": 0.0006,
+      "currency": "USD",
+      "date": "2026-09-19",
+      "source": "https://openrouter.ai/api/v1/models (deepseek/deepseek-v4.1-flash: $0.15/M in, $0.60/M out via OpenRouter)"
+    },
+    "deepseek/deepseek-r1": {
+      "input_per_1k": 0.0007,
+      "output_per_1k": 0.0025,
+      "currency": "USD",
+      "date": "2026-09-19",
+      "source": "https://openrouter.ai/api/v1/models (deepseek/deepseek-r1: $0.70/M in, $2.50/M out via OpenRouter)"
+    },
+    "deepseek/deepseek-v4-pro": {
+      "input_per_1k": 0.000422,
+      "output_per_1k": 0.000845,
+      "currency": "USD",
+      "date": "2026-09-19",
+      "source": "https://openrouter.ai/api/v1/models (deepseek/deepseek-v4-pro: $0.422/M in, $0.845/M out via OpenRouter)"
     }
   }
 }

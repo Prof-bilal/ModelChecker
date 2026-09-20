@@ -1,0 +1,72 @@
+{
+  "schemaVersion": 1,
+  "name": "systematic-debugging",
+  "description": "Force root-cause tracing before patching. Source: https://github.com/obra/superpowers/tree/main/skills/systematic-debugging",
+  "toolVersion": "1.0.0",
+  "repository": "https://github.com/obra/superpowers/tree/main/skills/systematic-debugging",
+  "license": "See repository",
+  "categories": [
+    "Testing",
+    "Developer Productivity",
+    "AI Quality"
+  ],
+  "supportedAgents": [],
+  "documentation": "https://github.com/obra/superpowers/tree/main/skills/systematic-debugging",
+  "compatibility": {
+    "os": [],
+    "runtimes": [],
+    "agents": [],
+    "mcp": false,
+    "architecture": [],
+    "permissions": [],
+    "note": null
+  },
+  "installation": {
+    "type": "skill",
+    "package": "https://github.com/obra/superpowers",
+    "source": null,
+    "checksum": null,
+    "versionRange": null,
+    "note": "skills/systematic-debugging"
+  },
+  "configuration": {
+    "type": "none",
+    "applied": [],
+    "agents": [],
+    "note": null
+  },
+  "security": {
+    "status": "unverified",
+    "trust": "unverified",
+    "lastReview": "2026-09-19T14:45:06.101Z",
+    "note": "Not yet reviewed by CodeAtlas. Explicit user override recorded."
+  },
+  "provenance": {
+    "source": "skill",
+    "sourceRef": "https://github.com/obra/superpowers",
+    "method": "skill",
+    "command": [
+      "git",
+      "clone",
+      "--depth",
+      "1",
+      "https://github.com/obra/superpowers",
+      "/home/abdullah/Music/ModelChecker/web/cli/.codeatlas/skills/systematic-debugging"
+    ],
+    "recordedAt": "2026-09-19T14:45:06.101Z"
+  },
+  "verification": {
+    "status": "verified",
+    "checksum": null,
+    "note": "found /home/abdullah/Music/ModelChecker/web/cli/.codeatlas/skills/systematic-debugging/skills/systematic-debugging/SKILL.md"
+  },
+  "integrationState": {
+    "status": "installed",
+    "expectedPath": null,
+    "foundPath": "/home/abdullah/Music/ModelChecker/web/cli/.codeatlas/skills/systematic-debugging/skills/systematic-debugging/SKILL.md",
+    "checkedAt": "2026-09-19T14:45:06.101Z",
+    "note": "found /home/abdullah/Music/ModelChecker/web/cli/.codeatlas/skills/systematic-debugging/skills/systematic-debugging/SKILL.md"
+  },
+  "installedAt": "2026-09-19T14:45:12.452Z",
+  "updatedAt": "2026-09-19T14:45:12.452Z"
+}
