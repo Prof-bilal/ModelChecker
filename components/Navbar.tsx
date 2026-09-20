@@ -3,8 +3,9 @@ import { ActionButton } from "./ActionButton";
 import { Wordmark } from "./Wordmark";
 
 const LINKS = [
+  { href: "/docs", label: "Docs" },
+  { href: "#vs-platforms", label: "Compare" },
   { href: "#example", label: "Example" },
-  { href: "#how", label: "How it works" },
   { href: "#methodology", label: "Methodology" },
   { href: "#faq", label: "FAQ" },
 ] as const;

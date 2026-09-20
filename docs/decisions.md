@@ -254,16 +254,20 @@ Decided before this research pass and **retained**, with the evidence that suppo
 
 This is a three-way contradiction between the design contract, the npm registry, and shipped markup. It is also the class of unverifiable claim that [D5](#d5--no-invented-numbers-anywhere-in-this-repository) forbids.
 
-**Recommended resolution (not applied):** remove `InstallBar` from `Hero.tsx`, or replace the command with a clearly non-executable "CLI — not yet built" statement plus a waitlist link.
-**Owner:** unassigned. **Not fixed here** because this task is scoped to research and documentation; the change is a product decision, not a documentation edit.
+**Resolved 2026-09-20:** the CLI was built (Phases 0–7, `cli/`), published as [`modelcheck-cli@0.1.0`](https://registry.npmjs.org/modelcheck-cli) (MIT, 49 kB tarball, verified `--prefer-online` on the registry), and `InstallBar` now renders the install command without the badge. `../design.md` §8's own condition — promotion waits until the CLI exists — is now satisfied, so the unversioned design file is not contradicted. The `/docs` routes and the Methodology docs callout describe the shipped CLI only.
+
+**Owner:** resolved (this entry kept for the record).
 
 ### U3 — `design.md` asserts hosted privacy behaviour that no implementation can support
 
 **Observed:** `../design.md` §9 proposes "server workers execute runs" with keys passing through ModelCheck; §21 excludes accounts and billing. `components/Faq.tsx` states "Your key is sent over TLS to execute the run".
 **Observed:** no server, route handler, or database exists — `app/` contains only `layout.tsx`, `page.tsx`, `globals.css`, and the `/run` stub.
 
-The site describes a hosted execution architecture that is neither built nor scheduled. Under [D1](#d1--mvp-is-a-local-cli-not-a-hosted-web-run-flow) the MVP makes the specific key-transmission claim moot (the key never leaves the machine), but the shipped copy stays inconsistent with shipped capability.
-**Recommended resolution:** rewrite that FAQ answer for the local-CLI reality when D1 is implemented. **Owner:** unassigned.
+The site described a hosted execution architecture that is neither built nor scheduled. Under [D1](#d1--mvp-is-a-local-cli-not-a-hosted-web-run-flow) the MVP makes the specific key-transmission claim moot (the key never leaves the machine).
+
+**Resolved in copy 2026-09-20:** the FAQ key and cost answers were rewritten for the local-CLI reality — the key is read from an environment variable on the user's machine and sent only to the provider they selected; "There is no ModelCheck server" is stated; reports are local files under `RUNS_DIR`. The `/docs/privacy` page says the same thing in full. `../design.md` §9 remains outside version control and unedited (see U1).
+
+**Owner:** copy resolved; the design contract itself stays with U1's human decision.
 
 ### U4 — The landing page describes a materially broader product than the MVP
 
@@ -275,7 +279,9 @@ The site describes a hosted execution architecture that is neither built nor sch
 
 The marketing surface therefore overstates v1 by a factor of four in capability count and overstates adapter coverage with "any model". Under [D5](#d5--no-invented-numbers-anywhere-in-this-repository) and [PRODUCT §5](../PRODUCT.md#5-product-language), this is the exact claim shape the product forbids.
 
-**Recommended resolution (not applied):** either narrow the capability list to what v1 measures plus an explicit "not yet measured" group, or clearly label the section as the roadmap rather than the shipped suite. **Owner:** unassigned. Deferred because it is a positioning decision, and because the honest fix depends on the outcome of Stage 0 validation.
+**Partially resolved 2026-09-20:** the new documentation surface (`/docs/*`, the Methodology docs callout) states the shipped two-capability suite exactly. The remaining offenders — the eight-item Capabilities grid, the illustrative reasoning row, and the Hero's "any model" phrasing — are **unchanged**: narrowing or relabelling them is a positioning decision that D21 defers until the H7 concierge test says which frame the product leads with. This entry remains open for that rewrite.
+
+**Owner:** unassigned (blocked on the H7 validation experiment, per D21's tradeoffs).
 
 ---
 

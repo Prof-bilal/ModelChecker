@@ -4,11 +4,11 @@ import { SectionHeading } from "./SectionHeading";
 const FAQS = [
   {
     q: "What does a run cost?",
-    a: "ModelCheck charges nothing in this version. Your provider bills you directly for the model calls the suite makes; an estimated charge range is shown before you start, and a spending limit is reserved against it.",
+    a: "ModelCheck charges nothing. Your provider bills you directly for the model calls the suite makes; a pre-flight cost estimate is shown before the run starts, and --spend-limit refuses to start a run above the limit you set.",
   },
   {
     q: "Who can see my API key and results?",
-    a: "Your key is sent over TLS to execute the run and is never included in reports, exports, or logs. Reports are private to you by default; sharing is explicit and revocable.",
+    a: "Your key is read from an environment variable on your machine and sent only to the provider you selected, over TLS. It is never accepted as a command-line argument and never written to reports, exports, or logs. There is no ModelCheck server: reports are local files under RUNS_DIR, private to your machine by default.",
   },
   {
     q: "What does the suite cover?",

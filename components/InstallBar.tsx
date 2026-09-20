@@ -1,6 +1,6 @@
 /**
- * CLI teaser — non-interactive by design (design.md §8: no CLI promotion
- * until a CLI exists). No clipboard logic, purely informational.
+ * CLI install line. The package name matches what npm serves (modelcheck-cli,
+ * published 2026-09-20 — resolves U2). Static text, no clipboard logic.
  */
 export function InstallBar() {
   return (
@@ -9,9 +9,6 @@ export function InstallBar() {
         $
       </span>
       <code className="select-none text-text">npm install -g modelcheck-cli</code>
-      <span className="rounded-pill border border-border-strong px-2.5 py-1 text-[10px] font-medium uppercase tracking-wide text-text">
-        Coming soon
-      </span>
     </div>
   );
 }

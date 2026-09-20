@@ -4,6 +4,7 @@ import { ExampleReport } from "@/components/ExampleReport";
 import { Stepper } from "@/components/Stepper";
 import { Capabilities } from "@/components/Capabilities";
 import { ComparisonExcerpt } from "@/components/ComparisonExcerpt";
+import { PlatformCompare } from "@/components/PlatformCompare";
 import { Methodology } from "@/components/Methodology";
 import { Faq } from "@/components/Faq";
 import { CtaFooter } from "@/components/CtaFooter";
@@ -24,6 +25,7 @@ export default function LandingPage() {
         <Stepper />
         <Capabilities />
         <ComparisonExcerpt />
+        <PlatformCompare />
         <Methodology />
         <Faq />
         <CtaFooter />

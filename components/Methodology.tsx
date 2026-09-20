@@ -1,4 +1,5 @@
 import { Reveal } from "./Reveal";
+import { DocsCallout } from "./DocsCallout";
 import { SectionHeading } from "./SectionHeading";
 
 const ITEMS = [
@@ -36,6 +37,7 @@ export function Methodology() {
             </Reveal>
           ))}
         </dl>
+        <DocsCallout />
       </div>
     </section>
   );
