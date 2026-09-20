@@ -11,19 +11,22 @@ export function DocsShell({ active, children }: { active: string; children: Reac
     <>
       <Navbar />
       <main id="main" className="mx-auto max-w-(--content-max) px-4 py-16 sm:px-6 lg:py-20">
-        <div className="lg:grid lg:grid-cols-[220px_minmax(0,1fr)] lg:gap-12">
-          <nav aria-label="Documentation" className="mb-12 lg:mb-0">
-            <ul className="flex flex-wrap gap-x-6 gap-y-2 border-b border-border pb-4 text-sm lg:block lg:space-y-1 lg:border-b-0 lg:pb-0">
+        <div className="lg:grid lg:grid-cols-[260px_minmax(0,1fr)] lg:gap-14">
+          <nav aria-label="Documentation" className="mb-12 lg:mb-0 lg:sticky lg:top-24">
+            <p className="mb-4 font-mono text-[11px] uppercase tracking-[0.15em] text-text-muted">
+              Docs
+            </p>
+            <ul className="space-y-0.5 border-l border-border pl-5 text-sm">
               {ITEMS.map((item) => (
                 <li key={item.href}>
                   <a
                     href={item.href}
                     aria-current={item.href === active ? "page" : undefined}
-                    className={
+                    className={`block border-l-2 py-1.5 pr-4 -ml-px font-medium transition-colors ${
                       item.href === active
-                        ? "font-medium text-text"
-                        : "text-text-muted hover:text-text"
-                    }
+                        ? "border-accent text-text"
+                        : "border-transparent text-text-muted hover:border-border hover:text-text"
+                    }`}
                   >
                     {item.label}
                   </a>

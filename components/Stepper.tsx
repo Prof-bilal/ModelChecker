@@ -1,21 +1,25 @@
 import { Reveal } from "./Reveal";
 import { SectionHeading } from "./SectionHeading";
+import { IconPlugCircle, IconSettingsMinimalistic, IconEye } from "@devigner-ui/icons";
 
 const STEPS = [
   {
     n: "01",
     t: "Connect",
     d: "Paste your provider API key. It travels over TLS to execute the run and is never included in reports.",
+    icon: IconPlugCircle,
   },
   {
     n: "02",
     t: "Configure",
     d: "Pin the exact model ID and a versioned suite. See case counts, coverage, omissions, and estimated charge before anything runs.",
+    icon: IconSettingsMinimalistic,
   },
   {
     n: "03",
     t: "Inspect",
     d: "Watch cases settle live, then read the report: per-capability scores with n, sample outputs, latency, cost, failures.",
+    icon: IconEye,
   },
 ] as const;
 
@@ -40,7 +44,7 @@ export function Stepper() {
                 aria-hidden="true"
                 className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-pill border border-border-strong bg-bg font-mono text-[10px] text-text"
               >
-                {i + 1}
+                <s.icon className="size-3.5" />
               </span>
               <div>
                 <h3 className="font-medium">{s.t}</h3>

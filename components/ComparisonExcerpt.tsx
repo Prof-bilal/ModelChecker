@@ -1,5 +1,6 @@
 import { Reveal } from "./Reveal";
 import { SectionHeading } from "./SectionHeading";
+import { IconTrendingUp, IconTrendingDown } from "@devigner-ui/icons";
 
 const ROWS = [
   { m: "Structured output (higher)", a: "90.0% (n=50)", b: "96.0% (n=50)", d: "+6.0pp", up: true, w: 96 },
@@ -62,7 +63,14 @@ export function ComparisonExcerpt() {
                 <td
                   className={`tnum px-5 py-4 text-right font-mono text-xs ${r.up ? "text-success" : "text-danger"}`}
                 >
-                  <span aria-hidden="true">{r.d}</span>
+                  <span aria-hidden="true">
+                    {r.up ? (
+                      <IconTrendingUp className="mr-1 inline size-3 align-text-bottom" />
+                    ) : (
+                      <IconTrendingDown className="mr-1 inline size-3 align-text-bottom" />
+                    )}
+                    {r.d}
+                  </span>
                   <span className="sr-only">
                     {r.d.startsWith("+") ? "increased" : "decreased"} by {r.d.slice(1)}
                   </span>

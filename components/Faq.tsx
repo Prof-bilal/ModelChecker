@@ -1,5 +1,6 @@
 import { Reveal } from "./Reveal";
 import { SectionHeading } from "./SectionHeading";
+import { IconHelp } from "@devigner-ui/icons";
 
 const FAQS = [
   {
@@ -29,8 +30,8 @@ export function Faq() {
           <Reveal key={f.q} delay={i * 60}>
             <details className="group border-b border-border py-5">
               <summary className="cursor-pointer list-none font-medium marker:hidden [&::-webkit-details-marker]:hidden">
-                <span className="mr-3 font-mono text-text-muted" aria-hidden="true">
-                  ?
+                <span className="mr-3 text-text-muted" aria-hidden="true">
+                  <IconHelp className="size-4" />
                 </span>
                 {f.q}
               </summary>

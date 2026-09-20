@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { IconCheck, IconClose, IconArrowRightUp } from "@devigner-ui/icons";
 
 /**
  * Scripted simulation of an evaluation run — explicitly labeled as a simulation
@@ -95,9 +96,10 @@ export function LiveDemo() {
         <button
           type="button"
           onClick={running ? reset : run}
-          className="rounded-pill bg-accent px-3 py-1 text-[11px] font-medium text-on-accent hover:opacity-90"
+          className="inline-flex items-center gap-1.5 rounded-pill bg-accent px-3 py-1 text-[11px] font-medium text-on-accent hover:opacity-90"
         >
           {running ? "Stop" : done ? "Run again" : "Run"}
+          <IconArrowRightUp aria-hidden="true" className="size-3 opacity-70" />
         </button>
       </div>
 
@@ -145,9 +147,11 @@ export function LiveDemo() {
         {CASES.slice(0, settled).map((c) => (
           <li key={c.id} className="log-line flex items-baseline justify-between gap-3">
             <span>
-              <span className={c.verdict === "pass" ? "text-success" : "text-danger"} aria-hidden="true">
-                {c.verdict === "pass" ? "✓" : "✗"}
-              </span>
+              {c.verdict === "pass" ? (
+                <IconCheck aria-hidden="true" className="mr-1 inline size-3 text-success" />
+              ) : (
+                <IconClose aria-hidden="true" className="mr-1 inline size-3 text-danger" />
+              )}
               <span className="sr-only">{c.verdict === "pass" ? "Passed:" : "Failed:"}</span>{" "}
               <span className="text-text-muted">[{c.cap}]</span> {c.prompt}
             </span>

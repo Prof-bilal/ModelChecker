@@ -28,7 +28,7 @@ export function CtaFooter() {
             Run the suite, read the evidence, decide with numbers you can trust.
           </p>
           <div className="mt-9 flex justify-center">
-            <ActionButton href="/run" size="lg" arrow>
+            <ActionButton href="/run" size="lg">
               Run an evaluation
             </ActionButton>
           </div>

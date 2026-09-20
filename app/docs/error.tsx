@@ -1,6 +1,7 @@
 "use client";
 
 import { Navbar } from "@/components/Navbar";
+import { IconArrowRightUp } from "@devigner-ui/icons";
 
 /**
  * Route-level fallback for /docs/*. Docs content is static, so a crash here is
@@ -22,15 +23,17 @@ export default function DocsError({ reset }: { error: Error; reset: () => void }
           <button
             type="button"
             onClick={reset}
-            className="rounded-md border border-border-strong px-4 py-2.5 text-sm font-medium hover:bg-surface"
+            className="inline-flex items-center gap-1.5 rounded-md border border-border-strong px-4 py-2.5 text-sm font-medium hover:bg-surface"
           >
             Try again
+            <IconArrowRightUp aria-hidden="true" className="size-3.5 opacity-70" />
           </button>
           <a
             href="/docs"
-            className="rounded-md border border-border px-4 py-2.5 text-sm font-medium hover:bg-surface"
+            className="inline-flex items-center gap-1.5 rounded-md border border-border px-4 py-2.5 text-sm font-medium hover:bg-surface"
           >
             All documentation
+            <IconArrowRightUp aria-hidden="true" className="size-3.5 opacity-70" />
           </a>
         </div>
       </main>

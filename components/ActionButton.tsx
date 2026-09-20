@@ -1,9 +1,9 @@
 import Link from "next/link";
+import { IconArrowRightUp } from "@devigner-ui/icons";
 
 /**
  * Shared action control (design.md §14/§16).
- * The arrow glyph is decorative — every control keeps its visible text label, and no action is
- * signalled by colour alone.
+ * Every button carries a directional arrow glyph — the visible text label is never omitted.
  */
 const VARIANTS = {
   /** Primary action on the canvas: white pill on onyx, accent pill on light. */
@@ -25,25 +25,19 @@ export function ActionButton({
   children,
   variant = "solid",
   size = "md",
-  arrow = false,
   className = "",
 }: {
   href: string;
   children: React.ReactNode;
   variant?: keyof typeof VARIANTS;
   size?: keyof typeof SIZES;
-  arrow?: boolean;
   className?: string;
 }) {
   const classes = `inline-flex shrink-0 items-center gap-2 rounded-pill font-medium transition-opacity ${VARIANTS[variant]} ${SIZES[size]} ${className}`;
   const label = (
     <>
       {children}
-      {arrow ? (
-        <span aria-hidden="true" className="text-[0.95em] leading-none">
-          ↗
-        </span>
-      ) : null}
+      <IconArrowRightUp aria-hidden="true" className="size-3.5 opacity-70" />
     </>
   );
 

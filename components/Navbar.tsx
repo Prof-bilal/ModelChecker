@@ -32,7 +32,7 @@ export function Navbar() {
               {link.label}
             </a>
           ))}
-          <ActionButton href="/run" variant="capsule" size="sm" arrow>
+          <ActionButton href="/run" variant="capsule" size="sm">
             Run an evaluation
           </ActionButton>
         </div>

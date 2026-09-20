@@ -35,7 +35,7 @@ export function Hero() {
         </p>
 
         <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-          <ActionButton href="/run" size="lg" arrow>
+          <ActionButton href="/run" size="lg">
             Run an evaluation
           </ActionButton>
           <ActionButton href="#example" variant="outline" size="lg" className="lg:hidden">
@@ -51,7 +51,7 @@ export function Hero() {
         {/* The reference anchors one action bottom-right of the first viewport. Exactly one copy of
             this link is visible at any breakpoint, so the accessible name is never duplicated. */}
         <div className="absolute bottom-8 right-0 hidden lg:block">
-          <ActionButton href="#example" size="md" arrow>
+          <ActionButton href="#example" size="md">
             Explore example report
           </ActionButton>
         </div>
