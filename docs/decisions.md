@@ -129,6 +129,116 @@ Decided before this research pass and **retained**, with the evidence that suppo
 - **Reason:** the flags are part of the documented run surface ([MVP §4.1](../MVP.md#41-commands)), cost nothing before execution exists, and make the endpoint+key contract visible and testable ahead of Phase 2. Rejecting an argv-shaped key (`--api-key-env sk-…`) with an explanatory error turns a security rule into user education at the exact moment of mistake.
 - **Tradeoffs:** a provider prefix with no default (a future provider) errors at execution time rather than silently falling back; the set/unset probe reads `process.env` at plan time, before Phase 2's adapter would re-check it.
 - **Revisit when:** Phase 2 adapters consume these values; a fourth provider needs a default endpoint.
+## D17 — Wire-model convention is `gateway/wire-id`, and one adapter covers all four gateways
+
+- **Date:** 2026-09-19
+- **Context:** Phase 2 requires an OpenAI-compatible adapter. Three of the priced gateways (OpenCode Zen, Command Code, OpenRouter) expose OpenAI-compatible endpoints; OpenRouter's wire ids themselves contain a slash (`deepseek/deepseek-v4-flash`), so a bare `--model <wire-id>` convention cannot address them.
+- **Options:** (a) one adapter per gateway; (b) one OpenAI-compatible adapter plus a `<gateway>/<wire-id>` `--model` convention, with per-gateway default base URLs and key env vars (D16); (c) a per-gateway config file.
+- **Decision:** (b). `--model openrouter/deepseek/deepseek-v4-flash` sends `deepseek/deepseek-v4-flash` on the wire to `https://openrouter.ai/api/v1`. Known gateway prefixes: openai, anthropic, openrouter, opencode, commandcode. OpenCode Zen (`https://opencode.ai/zen/v1`) serves most models via chat-completions, so it uses the same adapter; Anthropic-protocol routes (Zen's `/messages`) and the native Anthropic adapter remain Phase 6. The mock adapter is selected only by an explicit `--adapter mock` (TESTING.md §4). Price keys use the same convention (`openrouter/deepseek/deepseek-v4-flash`), renamed from the Phase-1-era key.
+- **Reason:** the four gateways differ only in base URL, key variable, and wire id — not in protocol shape for chat completions. One honest adapter plus a documented id convention is reviewable; four adapters would duplicate it. The explicit-only mock keeps the no-accidental-mock guarantee.
+- **Tradeoffs:** a model id whose vendor segment collides with a gateway name (`openai/…` on OpenRouter) is ambiguous and must be targeted via explicit `--base-url`; Phase 3's provisional `pass = got a response` outcome is replaced by real scoring and must not be quoted as quality; structured error classes moved to `lib/errors.ts` early because the adapter needs them (Phase 7 item pulled forward).
+- **Revisit when:** Zen's Anthropic-protocol models are built (Phase 6); a gateway needs non-chat-completions request shaping. **Update (2026-09-19):** the native Anthropic adapter landed in Phase 6 — see [D20](#d20--the-anthropic-adapter-shares-http-error-classification-and-always-sends-max_tokens); the `anthropic/…` gateway prefix now selects it, so only Zen's `/messages` route remains.
+
+## D18 — Cost basis semantics: absent ≠ unpriced, and mixed totals are refused
+
+- **Date:** 2026-09-19
+- **Context:** Phase 4 aggregation needs a run-level cost from per-case costs. Three distinct states exist at case level: (1) the provider returned usage and a price row exists → a number; (2) usage was returned but no price row exists → `"unpriced"`; (3) no usage was returned at all (request_error, timeout) → nothing to price. Collapsing (2) and (3) into one value, or summing a run that mixes priced and unpriced cases, misreports spend.
+- **Options:** (a) treat missing usage as `unpriced` and sum what exists; (b) distinguish absent (field omitted) from `unpriced` (string), and refuse to write a report whose cost basis mixes priced and unpriced cases.
+- **Decision:** (b). A case outside the cost basis omits `estimated_cost_usd` entirely; `unpriced` is reserved for "tokens known, no price row" (EVALUATIONS.md §8.1). `aggregateCost` throws when a run contains both priced and unpriced cases — a partial sum pretending to be a total is worse than no total (Hard Rule 2). A wholly unpriced run reports `cost: { total_usd: "unpriced", basis: "unpriced" }`; free promos price at $0 because the zero is a real listed price, not a missing one.
+- **Reason:** the report's credibility rests on never presenting a partial number as a total. The three-state distinction is cheap and removes the ambiguity at the type level.
+- **Tradeoffs:** a run where *some* cases error writes no cost at all rather than the cost of what succeeded. Accepted: the error cases' spend is unknown, not zero.
+- **Revisit when:** a use case genuinely needs partial-basis cost reporting, with an explicit `partial_basis` marker rather than a silent sum.
+
+## D19 — The `json_schema@1` validator covers exactly what the suite declares
+
+- **Date:** 2026-09-19
+- **Context:** The 30-case suite (docs/benchmarks.md §2) declares schemas using union types (`["string","null"]` in so-011/so-012), `maxLength` (so-010), and `minItems`/`maxItems` (so-006, so-015). A hand-rolled validator that ignores declared keywords silently passes schemas that should fail — that is a weakened scorer, not a simpler one.
+- **Options:** (a) restrict the suite to keywords the validator already covered; (b) extend the validator to cover the keywords the normative suite declares.
+- **Decision:** (b). The validator supports: `type` (single or union array, with the integer/number distinction), `properties`, `required`, `additionalProperties: false`, `enum`, `items`, `minItems`/`maxItems`, `minLength`/`maxLength`. This is the closed set of keywords used by `core@1.0.0`; a suite case using anything outside it is a suite bug and should fail loudly (via a schema violation or a recorded scoring_error), not pass silently.
+- **Reason:** the rule's definition (EVALUATIONS.md §6.1) is "validates against the case schema" — the validator must honour what the schema says. No dependency was added (CODESTYLE §2.7); the closed keyword set is small and testable.
+- **Tradeoffs:** hand-rolled validation does not implement full JSON Schema (no `oneOf`, `pattern`, `format` enforcement). A suite case that needs more must either wait for `json_schema@2` or drive a recorded decision to add a real validator library.
+- **Revisit when:** a suite case needs a keyword outside the closed set.
+
+## D20 — The Anthropic adapter shares HTTP error classification, and always sends `max_tokens`
+
+- **Date:** 2026-09-19
+- **Context:** Phase 6 completes the last unchecked Phase 2 item: the Anthropic Messages API adapter (MVP §4.3 MUST, deferred by [D17](#d17--wire-model-convention-is-gatewaywire-id-and-one-adapter-covers-all-four-gateways)). Two adapters must classify failures identically — a 401 must be `auth` on both or a cross-model comparison is comparing different things. Separately, the Messages API requires `max_tokens` on every request, whereas the chat-completions gateways have a provider default, so `provider_default` has no wire representation there.
+- **Options:** (a) duplicate the status→error-class mapping, base-URL validation, and Retry-After parsing inside the new adapter; (b) extract them into `adapters/provider-http.ts` and have both adapters use it; (c) send a hardcoded `max_tokens` and keep reporting `provider_default`.
+- **Decision:** (b) and, for `max_tokens`, send a documented ceiling (`ANTHROPIC_DEFAULT_MAX_OUTPUT_TOKENS = 4096`) and record **the value actually sent** in `report.parameters.max_output_tokens` (EVALUATIONS.md §5.4 distinguishes "value sent" from `provider_default`). Adapter selection is: the `anthropic/…` gateway prefix, or an explicit `--adapter anthropic` for a bare `claude-…` id; `--adapter` accepts only `openai-compatible`, `anthropic`, and `mock`, and an unknown name is a usage error rather than a silent fallback. Error messages now name the target **host** (e.g. `Provider "api.anthropic.com" rejected the API key (HTTP 401).`) — a host is not a credential, and TESTING.md §5.3 requires the 401 error to name provider and status.
+- **Reason:** two copies of a security-relevant mapping drift; one shared module keeps the SSRF guard, the redirect refusal, and the error taxonomy identical across adapters by construction. Sending an undocumented `max_tokens` while the report claims `provider_default` would misdescribe the request — a reproducibility defect, not a display detail.
+- **Tradeoffs:** error message text changed (it now includes the host), and a loopback/custom endpoint shows its own host. 4096 output tokens is a request ceiling, not a measurement, and it is not a claim about model quality; a future `--max-output-tokens` flag would make it explicit and is not in v1 scope ([MVP.md §4](../MVP.md)).
+- **Revisit when:** Zen's Anthropic-protocol `/messages` route is targeted through `--base-url`, or a per-run output ceiling becomes a real user need.
+
+## D21 — Two lanes: repository trials (active) and capability suites (shipped)
+
+- **Date:** 2026-09-20
+- **Context:** The product brief asks ModelCheck to evaluate an unfamiliar model against *the developer's own project and task*. That is not what the shipped MVP does: [MVP §4.2](../MVP.md) scopes v1 to two deterministic capabilities over a fixed 30-case suite, and [MVP §6](../MVP.md) excludes coding, custom suites, judges and sandboxing. [MVP K3](../MVP.md) pre-committed the response to exactly this situation: *"Re-scope to coding-first and accept a sandbox project, or stop."* [U5](#u5--the-project-trial-direction-contradicts-the-shipped-mvp-and-its-icp) records the conflict rather than hiding it.
+- **Options:** (a) replace Lane B entirely with repository trials; (b) add repository trials as **Lane A**, keep the capability suite as **Lane B** (shipped, maintenance-only); (c) treat repository trials as a Stage 3 experiment behind the existing sandbox gate.
+- **Decision:** (b). Lane A is the active build line; Lane B keeps its contract, its suite and its report format unchanged and receives no new capabilities.
+- **Reason:** the two lanes share the same trust machinery — adapter boundary, report schema discipline, mandatory limitations, denominator invariants, redaction, cost basis. Nothing shipped is discarded, and K3's pre-committed action is *executed and recorded* instead of quietly reworded. Option (c) was rejected because the evidence ([E12–E17](./research.md#2-evidence-register)) says the capability-suite framing is not what the market is asking for, so deferring the pivot defers the learning.
+- **Tradeoffs:** documentation surface widens; the landing page must be rewritten (it already overstates v1 — [U4](#u4--the-landing-page-describes-a-materially-broader-product-than-the-mvp)); one developer now maintains two contracts. Lane A's first milestone is a validation experiment, not a feature.
+- **Revisit when:** the five-repository concierge test ([H7](./research.md#4-hypotheses-unvalidated--must-not-drive-scope)) concludes. If ≥ 3 of 5 participants act on the evidence, continue Lane A; if not, treat Lane A as a free utility and reconsider the business framing.
+
+## D22 — The measurement unit is the setup, not the model
+
+- **Date:** 2026-09-20
+- **Context:** One model was reported at pass@1 50 / 45 / 40 under three harnesses ([E16](./research.md#2-evidence-register)), and a production pipeline reports that *"no single setup won everywhere"* ([E15](./research.md#2-evidence-register)).
+- **Options:** (a) report per-model results as the headline; (b) require the harness, context bundle, parameters and route to be part of every claim.
+- **Decision:** (b). A trial records `model + harness + context bundle hash + parameters + route` as its identity, and every comparison statement names the setup.
+- **Reason:** anything less is a claim the evidence cannot support, and it is the exact claim shape that makes public benchmarks useless for a team's decision ([E12](./research.md#2-evidence-register), [E14](./research.md#2-evidence-register)).
+- **Tradeoffs:** more verbose reports; users must understand that they are comparing setups.
+- **Revisit when:** a harness-independent measure of model capability appears with evidence behind it.
+
+## D23 — No score without a validated verifier
+
+- **Date:** 2026-09-20
+- **Context:** The industry-standard coding benchmark was retired partly because **≥ 59.4% of an audited subset had flawed tests** ([E12](./research.md#2-evidence-register)); the most detailed public practitioner pipeline states hidden-test pass rates are *"an incomplete measure of code quality"* ([E15](./research.md#2-evidence-register)).
+- **Options:** (a) score whatever the user's test command returns; (b) require pass-with, fail-without, stability and a green control run before any task is scorable.
+- **Decision:** (b). A task failing the gate is `case_invalid`: excluded from every denominator, displayed as excluded, and never converted into a zero.
+- **Reason:** without the gate, ModelCheck would inherit the credibility failure it exists to avoid, and a passing test suite that cannot detect a missing fix is worse than no measurement.
+- **Tradeoffs:** more setup work per task, slower trials, and some repositories will have no usable verifier — a truthful finding, not a product failure.
+- **Revisit when:** a task type emerges where a deterministic verifier provably cannot exist (then the T4 judge tier applies, labelled).
+
+## D24 — Execution requires isolation, or it does not happen
+
+- **Date:** 2026-09-20
+- **Context:** Model-generated code must be executed to produce the evidence that makes a trial useful. [SECURITY T7](../SECURITY.md) already names this as a sandbox problem, and [E25](./research.md#2-evidence-register) shows isolation options are commodity infrastructure.
+- **Options:** (a) run tests on the host; (b) require a container and mark the trial `not_executed` when none is available; (c) require a hosted sandbox service.
+- **Decision:** (b), with `--allow-host-execution` as an explicit, documented, recorded opt-in that marks the trial `isolation: none`.
+- **Reason:** (a) silently runs untrusted code with the user's privileges, contradicting the project's own security posture; (c) reintroduces the server that [D1](#d1--mvp-is-a-local-cli-not-a-hosted-web-run-flow) removed from the critical path.
+- **Tradeoffs:** without a container, a trial yields static evidence only — a real capability reduction in exchange for a defensible default.
+- **Revisit when:** a local zero-configuration sandbox primitive exists, or a hosted runner passes the [SECURITY §8](../SECURITY.md#8-what-changes-when-a-server-exists-stage-2-re-review-gate) gate.
+
+## D25 — `no measurable difference` and `inconclusive` are verdicts
+
+- **Date:** 2026-09-20
+- **Context:** Agent evaluations at small n are unreliable ([E24](./research.md#2-evidence-register): one leading agent below 50% success and pass^8 < 25% in one domain); models differ by harness ([E16](./research.md#2-evidence-register)); public pipelines still publish conclusions from 4 tasks with ±0.14 SE ([E15](./research.md#2-evidence-register)).
+- **Options:** (a) always print a winner; (b) print a comparison state with `no measurable difference` and `inconclusive (underpowered)` as first-class outcomes, plus a pre-run minimum detectable difference.
+- **Decision:** (b). Repeats default to 3; comparisons are paired per task; pass^k is reported; the pre-run estimate states what the chosen `tasks × repeats` can detect.
+- **Reason:** an honest "we cannot tell yet" is the core differentiator and the only statement a small trial can defend.
+- **Tradeoffs:** some users will be disappointed by "no measurable difference"; the statistics module needs its own tests and review.
+- **Revisit when:** users report the verdict language is confusing, or thresholds prove miscalibrated.
+
+## D26 — Context contents are not persisted by default
+
+- **Date:** 2026-09-20
+- **Context:** A repository trial copies source files in order to build a prompt and a snapshot. [SECURITY §1.1](../SECURITY.md) treats raw model outputs as potentially sensitive; repository contents are at least as sensitive, and a competitor in this space warns that its task exports are *"sensitive and unencrypted"* ([E25](./research.md#2-evidence-register)).
+- **Options:** (a) persist the bundle and snapshot for reproducibility; (b) persist manifests, hashes and diffs only, with `--persist-context` as an explicit opt-in.
+- **Decision:** (b). The manifest, hashes and the returned patch are retained; file contents require `--persist-context`, and the trial report records which mode was used.
+- **Reason:** reproducibility comes from hashes and identity, not from keeping a second copy of the user's source code in a runs directory.
+- **Tradeoffs:** an exact re-run requires the repository at the recorded commit; a deleted branch cannot be re-run byte-for-byte.
+- **Revisit when:** users report that they cannot re-run a meaningful trial because the source moved.
+
+## D27 — Judge output is a separate tier with bias controls
+
+- **Date:** 2026-09-20
+- **Context:** Judge bias is measured rather than hypothetical — position bias varies by judge and task and depends on the quality gap, and self-preference tracks familiarity ([E23](./research.md#2-evidence-register)).
+- **Options:** (a) use a judge for "requirements met" and fold it into the headline; (b) keep judged evidence in its own labelled tier with versioned judge, prompt and rubric, and disclose disagreement.
+- **Decision:** (b). A judged result is never called an accuracy or a pass rate, never merged into a deterministic aggregate, and never the sole basis for a `better`/`worse` verdict.
+- **Reason:** it preserves the invariant that a ModelCheck number is either a fact or an opinion, and never both ([PRODUCT P2](../PRODUCT.md#2-product-principles)).
+- **Tradeoffs:** less convenient summaries; judges cannot rescue task types with no deterministic verifier.
+- **Revisit when:** a documented rubric is shown to agree with human raters well enough on one named task type ([EVALUATIONS §12](../EVALUATIONS.md#12-what-would-change-this-methodology)).
+
 ## 4. Unresolved contradictions (must not be silently fixed)
 
 ### U1 — `design.md` and the source evidence live outside version control

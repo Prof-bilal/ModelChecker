@@ -1,8 +1,10 @@
 # ModelCheck — Testing Strategy
 
-**Version:** 0.2 · **Date:** 2026-09-18
+**Version:** 0.3 · **Date:** 2026-09-20
 **This file owns:** how correctness is established, and what may never run in an automated test.
 **Related:** [ARCHITECTURE.md](./ARCHITECTURE.md), [EVALUATIONS.md](./EVALUATIONS.md), [MVP §7](./MVP.md#7-acceptance-criteria).
+
+> **Lane A (2026-09-20).** Repository trials add their own correctness surface: the verifier-validity gate, the leakage guards, the statistics module and bundle redaction. Section **§9** defines what must be tested there and what may never be. Nothing in Lane A relaxes the one rule below.
 
 > ## The one rule that matters most
 >
@@ -181,3 +183,42 @@ npm run test:live     # opt-in contract smoke test; requires a key and --live
 
 The default command must pass on a machine with no credentials and no network
 access beyond package installation. If it cannot, the test is wrong.
+---
+
+## 9. Lane A — repository trials (target, new 2026-09-20)
+
+Normative once the trial pipeline exists ([docs/trials.md](./docs/trials.md)); the
+acceptance criteria are [trials §12](./docs/trials.md#12-acceptance-criteria-for-the-trial-mvp).
+The same layering applies: pure functions get unit tests, the pipeline gets
+fixture-driven integration tests, and nothing touches a real repository or a real
+provider without an explicit opt-in.
+
+### 9.1 What must be tested
+
+| Area | Test | Level |
+|---|---|---|
+| Verifier-validity gate ([D23](./docs/decisions.md#d23--no-score-without-a-validated-verifier)) | A task whose tests pass on the pre-change tree, fail on the reference solution, and are stable across repeats is scorable; any deviation yields `case_invalid` and is excluded from every denominator — **never counted as a zero** | Unit + fixture integration |
+| Leakage guards ([E13](./docs/research.md#2-evidence-register)) | A history-derived bundle containing `.git`, a gold patch, or added tests is refused (`case_invalid`), not warned about | Unit, per guard |
+| Secrets scanning | A file that trips the scanner is redacted, excluded, or fails the trial — its contents never reach a request fixture ([SECURITY §11.2](./SECURITY.md#112-rules-all-mandatory)) | Unit |
+| Bundle manifest + hash | Same tree → same `bundle_hash`; manifest lists every included file and every redaction | Unit |
+| Persistence mode | Default run persists manifests and hashes only; `--persist-context` persists contents; the report records which mode was used ([D26](./docs/decisions.md#d26--context-contents-are-not-persisted-by-default)) | Unit + integration |
+| Isolation policy | No container and no opt-in → `not_executed`; host opt-in → `isolation: none` recorded ([D24](./docs/decisions.md#d24--execution-requires-isolation-or-it-does-not-happen)) | Unit |
+| Statistics ([D25](./docs/decisions.md#d25--no-measurable-difference-and-inconclusive-are-verdicts)) | Repeats aggregate correctly; paired comparison pairs per task; pass^k computed per its definition; the MDE estimator matches a hand-computed example; `no measurable difference` and `inconclusive (underpowered)` fire on their documented thresholds | Unit, with golden tables |
+| Outcome vocabulary | `apply_failed`, `not_executed`, `case_invalid`, `completed_with_gaps` are distinct outcomes and each renders in the report; denominators exclude `case_invalid` and `not_executed` | Unit + report golden test |
+| Trial identity | `model + harness + bundle hash + params + route` changes → comparison is refused or labelled as a different setup ([D22](./docs/decisions.md#d22--the-measurement-unit-is-the-setup-not-the-model)) | Unit |
+
+### 9.2 What may never be tested
+
+- **A trial against the developer's real repositories.** Trial fixtures are synthetic
+  small trees with known verifiers, committed under `cli/tests/`.
+- **Model quality on any task.** Same rule as §6, unchanged for Lane A.
+- **Judge quality** ([D27](./docs/decisions.md#d27--judge-output-is-a-separate-tier-with-bias-controls)).
+  No test asserts that a judge's score is *correct*; tests cover only that judged
+  results are versioned, labelled, and never merged into a deterministic aggregate.
+
+### 9.3 Real-repository smoke test (opt-in)
+
+Like the `test:live` provider smoke test, a `test:trial` script may run one trial
+against one small, designated throwaway repository — explicit flag, requires Docker,
+never part of the default command, and it writes to a temp directory so it cannot
+leak into a run store.

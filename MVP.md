@@ -1,8 +1,10 @@
 # ModelCheck — MVP Specification
 
-**Version:** 0.2 · **Date:** 2026-09-18 · **Status:** binding scope contract
+**Version:** 0.3 · **Date:** 2026-09-20 · **Status:** binding scope contract
 **This file owns:** what is being built *now*. If a feature is not in §4, it is not in the MVP, regardless of how it appears in [PRD.md](./PRD.md) or [ROADMAP.md](./ROADMAP.md).
 **Precedence:** [AGENTS.md](./AGENTS.md) §4 defines the source-of-truth order. For *scope*, this file wins.
+
+> **Scope note (2026-09-20).** This document now governs **Lane B — capability suites** only (shipped). **Lane A — repository trials** is the active build line and is governed by [docs/trials.md](./docs/trials.md) and [docs/web-app.md](./docs/web-app.md); the lane split itself is decision [D21](./docs/decisions.md#d21--two-lanes-repository-trials-active-and-capability-suites-shipped). Lane A has its own acceptance criteria ([trials §12](./docs/trials.md#12-acceptance-criteria-for-the-trial-mvp)) and does not amend the Lane B contract below. K3's pre-committed response to "coding is required" is hereby **executed** — as the Lane A split — not renegotiated.
 
 ---
 

@@ -35,7 +35,11 @@ discussion volume.
 - No competitor product was used end-to-end. Feature claims come from
   documentation and repository metadata, which are vendor statements, not
   independent verification.
-- No benchmark was run. ModelCheck has produced **zero** measurements.
+- **A dated measurement history exists, and is thin.** As of 2026-09-20 the CLI has run
+  one real 30-case capability run against `openrouter/poolside/laguna-s-2.1:free`
+  (recorded in [TEST-REPORT.md](../TEST-REPORT.md)); it produced outcomes on 20 of 30 cases
+  and is **not** a validation of the product. No repository trial has ever been run by
+  anyone. Any "zero measurements" phrasing elsewhere in the older documents is now stale.
 - Search-engine articles were not used as authority. Vendor marketing pages are
   labelled as vendor claims when cited.
 
@@ -56,6 +60,20 @@ Confidence is our judgment, not a measured quantity.
 | E9 | Practitioners do author private evaluation suites. | Inspect formalizes a Task as "dataset + solver + scorer" with log artefacts and resumption; this repo's evidence file records promptfoo's declarative YAML configs and local viewing; lm-evaluation-harness is a task-authoring harness. | `.codeatlas` evidence `17-inspect-oppper.md`, `10-vercel.md`; GitHub API | 2026-09-18 | Private suites are normal, but today they are authored in Python/YAML by specialists. The underserved user is the one who will never write one. | Medium |
 | E10 | Provider-side version resolution (an alias moving under a pinned name) is a recognised hazard. | This repository's own design contract requires recording "resolved version or unresolved alias" for every run and separates "requested/resolved model ID" in the methodology manifest. | `../design.md` §6, §10 | 2026-09-17 | The project already assumes this problem. **It is a design assumption, not yet evidence.** | Low — see H3 |
 | E11 | The prior in-repo research concluded the concept is *not* proven unique. | "Research does **not** prove ModelCheck's concept unique, or that it can evaluate every model within minutes. These are positioning and performance hypotheses to validate." | `../design.md` §2 | 2026-09-17 | The project's own contract already forbids treating uniqueness as established. Our verdict must be consistent with it. | High — direct quote |
+| E12 | The industry's most-used coding benchmark was retired by its own publisher for invalid tests and contamination. | OpenAI stopped reporting SWE-bench Verified (2026-02-23): in an audit of a 27.6% subset, **≥ 59.4% of problems had flawed tests that reject functionally correct submissions**; all frontier models tested could reproduce the human gold patch verbatim or its specifics; the recommendation is SWE-bench Pro and privately authored benchmarks. The HN submission reached **343 points / 181 comments**. | `https://openai.com/index/why-we-no-longer-evaluate-swe-bench-verified/`; HN Algolia API (story, 2026-04-26) | 2026-02-23 (page) / 2026-04-26 (HN) | "Your tests on your snapshot" is the only ground truth a team can audit. A verifier that cannot detect the fix must refuse to score ([trials §6.1](./trials.md#61-the-gate-normative)). | High — primary source with method |
+| E13 | Memorization inflates coding-benchmark scores. | *The SWE-Bench Illusion*: models identify the buggy file from the issue description alone with **up to 76%** accuracy on SWE-bench Verified versus **≤ 53%** on tasks from repositories outside it; verbatim function reproduction is likewise higher on SWE-bench. | `https://arxiv.org/html/2506.12286v2` (arXiv:2506.12286v2) | 2025-06-27 | Tasks derived from a repository's own history must strip the answer (no `.git`, no gold diff, no added tests) — leakage guards are mandatory ([trials §7](./trials.md#7-leakage-guards-for-tasks-derived-from-history)). | High — preprint, peer-reviewable, two institutions |
+| E14 | Practitioners report their internal repo-based evals correlate loosely with public coding benchmarks. | Databricks, "Managing AI Coding Costs at Scale" (HN **317 points / 268 comments**): cost levers, harness/model flexibility, routing, budgets. Author's comment on the thread: *"We built evals on our own codebase … We found our own evals correlated loosely with public generic SWE benchmarks. In large user populations … the ultimate answer will come from experimentation instead of offline evals."* | `https://www.databricks.com/blog/managing-ai-coding-costs-scale`; HN Algolia comment 2026-08-07 | 2026-08-07 | A published score is not a predictor of a team's workload; the workload itself must be measured. | Medium — vendor post plus one author comment; not verified by us |
+| E15 | A public practitioner pipeline turns merged PRs into private benchmarks, and it is statistically modest and self-described as non-conclusive. | BYOB (byobench.ai, Sep 2026; HN 11 points / 2 comments): a merged PR passing five trust gates yields ticket + pre-merge tree + gold diff; the agent sees the ticket, never the patch; hidden-test pass rates are called *"an incomplete measure of code quality"*; grading uses ten specialized agents plus three grading agents; quality is measured alongside cost and time; results carry error bars ("4 PRs · 12 runs", "±0.14 SE"); *"No single setup won everywhere"*; *"Treat this as an exploration of an approach, not a leaderboard."* Reported ~5×–100× cost reductions at comparable quality, and ~7× lower cost on 15 additional PRs. | `https://byobench.ai/buildyourownbenchmark/`; HN Algolia API | 2026-09-10 | The method is third-party validated; the *statistics* are not. Small task sets produce wide error bars, so ModelCheck must print the minimum detectable difference before spending ([trials §9.3](./trials.md#93-power-stated-before-spending)). | Medium-High — public method and data; self-published |
+| E16 | One model scores materially differently under different harnesses. | HN comment (2026-08-16) citing an Artificial Analysis comparison: Claude Opus 4.7 pass@1 of **50 / 45 / 40** under OpenCode / Cursor / Claude Code respectively. | HN Algolia comment (story: "Testing Moonshot AI's Kimi K3 Inside Claude Code") | 2026-08-16 | The measurement unit is the **setup** (model + harness + context + parameters + route), never the model alone ([trials §1](./trials.md#1-what-a-trial-is--and-what-it-is-not)). | Low-Medium — second-hand comment; not verified in this session |
+| E17 | Repository-aware coding-agent evaluation is already being built in the open (six projects, all early). | GitHub REST API (2026-09-20): `mupt-ai/self-bench` 28★ MIT, TS, pushed 2026-09-20 — private benchmarks from local coding sessions and merged PRs, hidden tests + reference solution, fail-without/pass-with validation, Harbor export, Docker/Modal/Vercel Sandbox/E2B/Daytona, exports *"sensitive and unencrypted"*; `sjarmak/codeprobe` 10★ Apache-2.0 on PyPI — merged PRs → evals, measures the whole setup incl. cost; `s1liconcow/repogauge` 3★ — private eval dataset for token cost; `tugrakaymakcioglu/RepoArena` 1★ alpha — "SWE-bench for your private repo" in Docker; `RobertKodes/repoeval` 0★ — tests (70%) + patch similarity (30%) and a "leaderboard"; plus a YC-backed founder comment (2026-07-22) building "a bench that you can't benchmaxx". | GitHub REST API; repository READMEs; HN Algolia API | 2026-09-20 | The *idea* is not novel and is not defensible by itself. Differentiation must come from evidence discipline: verified verifiers, refusal to score, honest statistics, context auditability, local-first privacy. | High for metadata; READMEs are vendor claims |
+| E18 | Public engagement with those repository-eval projects is very low. | HN: "Show HN: Self-bench – build SWE-bench style evals from private repos" (2026-08-14) = **3 points, 0 comments**; "Show HN: RepoGauge" (2026-04-17) = **1 point, 0 comments**; RepoArena = 1★; repoeval = 0★. | HN Algolia API; GitHub REST API | 2026-09-20 | **Counter-evidence to the demand thesis.** Many builders, little audience. The problem may be real while the product is not: validate the loop before building the platform. | High for the counts; low for any conclusion drawn from them |
+| E19 | Model performance degrades non-uniformly as input length grows, so "more context" is not automatically better. | Chroma technical report *Context Rot*: 18 models (incl. GPT-4.1, Claude 4, Gemini 2.5, Qwen3) evaluated on extended needle-in-a-haystack tasks, LongMemEval and a repeated-words task; performance becomes increasingly unreliable as input length grows, in non-uniform ways; standard NIAH is insufficient as a long-context benchmark. | `https://research.trychroma.com/context-rot` | 2025-07-14 | The context bundle must be recorded and comparable, and a context-sensitivity trial is a legitimate, evidence-backed experiment ([trials §9.4](./trials.md#94-context-sensitivity-v1)). | Medium-High — vendor technical report; single source |
+| E20 | Model identity, pricing and usage accounting are exposed by the gateway and are usable as measurement inputs. | OpenRouter `/api/v1/models` returned **446 models** with `id`, `canonical_slug` (dated, e.g. `…-20260918`), `created`, `context_length`, `pricing{prompt,completion}` (per-token strings), `top_provider{context_length,max_completion_tokens,is_moderated}`, `supported_parameters`, `default_parameters`, `knowledge_cutoff`, `expiration_date`, `links`; **21** `:free` variants. Usage accounting is always on (the `usage.include` / `stream_options.include_usage` flags are deprecated): `prompt_tokens`, `completion_tokens`, `reasoning_tokens`, `cached_tokens`, `cache_write_tokens`, `cost`, `cost_details.upstream_inference_cost`. | Live API call and OpenRouter documentation | 2026-09-20 | Cost and token counts are provider-reported, not estimated; alias identity has a dated canonical slug to record. | High — primary docs plus an observed API response |
+| E21 | The request route can be controlled and must therefore be recorded, because route is part of the measurement identity. | OpenRouter provider-routing controls: `order`, `allow_fallbacks`, percentile-based latency/throughput sorting (`:nitro`, `:floor`), performance thresholds, `max_price`, `only`/`ignore`, quantization levels, required-parameter support (`require_parameters`), and **`zdr: true`** for per-request zero-data-retention enforcement plus data-policy filtering. Provider logging/training policies vary per provider, with separate account settings for paid and free models; in-region routing is enterprise-only. | `https://openrouter.ai/docs/guides/routing/provider-selection`; `https://openrouter.ai/docs/features/privacy-and-logging` | 2026-09-20 | A trial records the route (provider, quantization, ZDR flag) and can pin it; a change of route invalidates comparison ([trials §10](./trials.md#10-versioning-lifecycle-and-reuse)). | High — primary documentation |
+| E22 | The gateway itself now publishes provenance-linked benchmarks, so provenance alone is no longer differentiating. | OpenRouter `/benchmarks`: *"Independent, reproducible measurements of the knobs you can actually set on an OpenRouter request: models, providers, search engines, and tool budgets. Every score links to the configuration, costs, and telemetry behind it."* 11 benchmarks, **2,453,260 task evaluations**, last run 2026-09-20, with Quality / Value / Speed columns and a Benchmarks API (e.g. τ²-Bench Airline, GPQA Diamond, search suites). | `https://openrouter.ai/benchmarks` | 2026-09-20 | The unclaimed axis is *the user's repository, task and tests* — not provenance, cost or speed reporting in general. | High — vendor page, observed |
+| E23 | LLM-judge bias is measured, not hypothetical, so judged evidence must be a separate, labelled tier. | Position bias: 15 judges, MTBench/DevBench, ~40 solution-generating models, >150,000 evaluation instances; bias is not random, varies by judge and task, and is strongly affected by the quality gap (AACL-IJCNLP 2025). Self-preference: GPT-4 shows significant self-preference, tracking lower perplexity / greater familiarity (NeurIPS 2024 Safe GenAI workshop). Survey of judging opportunities and challenges (EMNLP 2025). | `https://arxiv.org/abs/2406.07791`; `https://arxiv.org/abs/2410.21819`; `https://arxiv.org/abs/2411.16594` | 2024-06-12 / 2024-10-29 / 2024-11-25 (v7 2025-09-29) | Judge-derived numbers live in their own tier, with judge, prompt and rubric versions recorded, and never merge into a deterministic aggregate ([trials §6](./trials.md#6-checks-and-the-verifier-validity-gate)). | Medium-High — peer-reviewed/workshop papers |
+| E24 | Small-n and single-run agent evaluations are unreliable, and evaluations are experiments that require power planning. | τ-bench introduces **pass^k** and reports one leading function-calling agent below 50% success and **pass^8 < 25%** in retail. *AI Agents That Matter*: accuracy-only evaluation yields needlessly complex and costly agents; recommends joint cost-accuracy optimisation, adequate holdouts, and standardised reporting. *Adding Error Bars to Evals*: evaluations are experiments; provides analysis and planning formulas for comparing models. A public critique of a benchmark that ran n = 1 per model per prompt: *"it is not a statistical benchmark."* | `https://arxiv.org/abs/2406.12045`; `https://arxiv.org/abs/2407.01502`; `https://arxiv.org/abs/2411.00640`; HN Algolia comment 2026-06-12 | 2024-06-17 / 2024-07-01 / 2024-11-01 | Repeats, paired comparison, pass^k, a pre-run minimum detectable difference, and `no measurable difference` / `inconclusive` as first-class verdicts ([trials §9](./trials.md#9-statistics-for-trials)). | High — published papers; Medium for the HN critique |
+| E25 | Secrets scanning and code-execution isolation are commodity infrastructure; ModelCheck should integrate, not invent. | GitHub REST API (2026-09-20): gitleaks 29,397★ MIT; trufflehog 27,999★ AGPL-3.0; detect-secrets 4,635★ Apache-2.0; E2B 13,889★; Daytona 71,742★ (API-reported). `mupt-ai/self-bench` documents sandbox backends Docker, Modal, Vercel Sandbox, E2B and Daytona, and warns its task exports are *"sensitive and unencrypted"*. | GitHub REST API; `https://github.com/mupt-ai/self-bench` | 2026-09-20 | Do not write a scanner or a sandbox runtime; choose an explicit isolation policy instead ([SECURITY §11](../SECURITY.md#11-repository-data-and-context-bundles-new-2026-09-20)). | High for counts; README is a vendor claim |
 
 ## 3. Interpretation of the evidence
 
@@ -79,6 +97,9 @@ Confidence is our judgment, not a measured quantity.
 | H4 | A saved baseline plus a recurring trigger produces repeat usage without prompting. | I4. This is the retention thesis; if false, Stage 3+ is dead. | Instrument CLI usage: of users with a saved baseline, how many run again within 30 days unprompted? | Untested |
 | H5 | Deterministic-only coverage (structured output + tool calling) covers enough of the ICP's workload to be useful. | Chosen to make the trust claim defensible ([decisions D3](./decisions.md)). | Show a real report to 10 ICP engineers; ask whether it answers their question. | Untested — **highest-risk assumption in the MVP** |
 | H6 | Teams will pay for regression prevention once a baseline exists. | E6 (budget already sits in production quality tooling) + I4. | Price-sensitivity interviews *after* usage, never before. | Untested |
+| H7 | An engineer who owns a repository and is about to adopt a coding model or agent will run a repository trial **once**, and will re-run it when the model, harness or version changes. | E12/E13 (public coding benchmarks are invalid or memorized), E14 (internal evals do not track public ones), E16 (harness dominates), E17 (six independent projects are being built). **Counter-evidence:** E18 (very low engagement), E15 (the best public pipeline reports n = 4 PRs with ±0.14 SE). | Concierge test: 5 hand-run trials on 5 real repositories. Success = ≥ 3 of 5 report a decision made differently; failure = they cannot produce a runnable test command, or the evidence does not move them. | Untested — **the assumption that must be validated first** |
+| H8 | A verdict that is only a judge score will not change a decision; verifier-validated tests plus scope evidence will. | E23 (judge bias is measured), E15 (practitioners still measure tests + cost + time despite using judges), E12 (flawed tests are the named failure mode). | In the same 5 trials, ask which artefact they would show a colleague: the check table or a judged score. | Untested |
+| H9 | Developers will supply a test command and an explicit file list; automatic discovery is not required for a first yes. | E15/E17 (every existing pipeline requires a verifier command or discovers one imperfectly; RepoArena documents language-specific profiles as a limitation). | Ask each of the 5 participants to produce the command unprompted; record how long it took. | Untested |
 
 ## 5. Competitor research
 
@@ -117,6 +138,26 @@ at high quality — see E3/E5/E6 and the table above.
 4. **A neutral third party** — every credible alternative is a vendor (OpenAI), a
    research institute, or a platform selling into the same teams (E4, I5).
 
+### 5.3 Repository-aware evaluation entrants (observed 2026-09-20)
+
+The Lane A idea — evaluate a model on *your* repository — is **actively being built and
+poorly differentiated today**. Six projects, all early, none with meaningful traction
+([E17](#2-evidence-register), [E18](#2-evidence-register)):
+
+| Project | Stars | Claim | What it does not do |
+|---|---|---|---|
+| `mupt-ai/self-bench` | 28 | Builds private benchmarks from local coding sessions and merged PRs; hidden tests + reference solution; fail-without/pass-with validation; multiple sandbox backends | No evidence-first report; no honest-statistics verdict; exports are unencrypted snapshots |
+| `sjarmak/codeprobe` | 10 | Merged PRs → evals; measures model, tools, retrieval, cost, harness | Harness-first framing; no verifier-validity gate as a first-class refusal |
+| `s1liconcow/repogauge` | 3 | Private eval dataset to optimise token cost | Cost-only; no correctness evidence |
+| `tugrakaymakcioglu/RepoArena` | 1 | "SWE-bench for your private repo" in isolated Docker | Alpha; GitHub-only metadata; needs separable source/test patches; prints an agent leaderboard |
+| `RobertKodes/repoeval` | 0 | Repo history → benchmark; tests 70% + patch similarity 30% | Patch similarity is not correctness; prints a leaderboard from small n |
+| (unreleased) | — | A YC-backed founder's "bench that you can't benchmaxx" | — |
+
+**Interpretation.** The concept is not the moat. The defensible differences are the ones
+this repository already enforces elsewhere: a claim that links to its measurement (P1),
+refusal to score when the verifier is invalid, `not measured` as a first-class answer, and
+local-first data handling. Everything else in the table above is copyable in a week.
+
 ## 6. User-pain evidence — honest assessment
 
 **We have weak direct evidence of user pain.** This is the most important
@@ -131,6 +172,39 @@ Per the reading rules in §0, this gap is recorded as hypothesis
 primary objective of Stage 0 in [ROADMAP.md](../ROADMAP.md). **No demand thesis in
 this repository should be treated as evidenced until those interviews exist.**
 
+### 6.1 Update 2026-09-20 — demand-side signals exist, and they cut both ways
+
+The 2026-09-18 assessment above stands for *Lane B* (capability suites). For *Lane A*
+(repository trials) there is now real, if indirect, demand evidence — and real
+counter-evidence.
+
+**Observed, supporting H7**
+
+- The publisher of the industry's standard coding benchmark retired it for **invalid tests
+  and contamination**, in a post that reached 343 points and 181 comments, whose top
+  response tells developers to build a harness from their **own private repositories and
+  personal projects** ([E12](#2-evidence-register)).
+- Two independent production write-ups describe the same internal pipeline — merged PRs as
+  tasks, pre-change tree, ticket-as-prompt, tests plus cost plus time ([E14](#2-evidence-register), [E15](#2-evidence-register)).
+- Six open-source projects independently attack the same problem in 2026 ([E17](#2-evidence-register)) — revealed preference that the problem is felt.
+
+**Observed, against H7**
+
+- **Engagement is negligible**: the most complete entrant's Show HN drew 3 points and 0
+  comments; another drew 1 point; the repositories have 0–28 stars ([E18](#2-evidence-register)).
+- The best public pipeline reports **n = 4 PRs with ±0.14 standard error** and explicitly
+  calls itself *"an exploration of an approach, not a leaderboard"* ([E15](#2-evidence-register)).
+  Small task sets cannot produce confident decisions, which may be why these tools do not
+  spread.
+- The harness confound ([E16](#2-evidence-register)) means a repo trial may measure the
+  *harness* more than the model — a result that does not answer the question the user asked.
+
+**Interpretation.** The problem is real; the product is not yet proven. The most likely
+explanation for low engagement is that existing tools deliver a *leaderboard* (which
+nobody needs for 4 tasks) instead of a *decision with evidence and honest error bars*.
+That is a product hypothesis, not a fact, and H7 is the assumption that the first
+experiment must test.
+
 ## 7. Explicitly not verified
 
 - Any competitor's **pricing, plan limits, or free-tier boundaries**.
@@ -139,4 +213,14 @@ this repository should be treated as evidenced until those interviews exist.**
   own repository description.
 - The Artificial Analysis model count, which is a vendor-published figure.
 - Whether provider aliases silently drift (H3) — no observation was recorded.
-- Any claim about ModelCheck's own performance. None exists.
+- **Any competitor's product end-to-end.** Every entry in
+  [§5.3](#53-repository-aware-evaluation-entrants-observed-2026-09-20) is described from its
+  README or repository metadata; none was installed or run, and none of their claims is
+  independently verified here.
+- **OpenRouter's internal latency/throughput percentiles** as a measurement of ours. They
+  are provider telemetry used for routing; ModelCheck measures its own wall-clock latency
+  and does not present gateway metrics as its own.
+- **Whether a route or alias changed what was served** in any past run (H3 remains open).
+- **The single capability run recorded in [TEST-REPORT.md](../TEST-REPORT.md)** as evidence
+  of product fit: it is one model, one suite version, one route, one day, and it was
+  performed for verification, not validation.

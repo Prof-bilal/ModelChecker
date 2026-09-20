@@ -1,8 +1,10 @@
 # ModelCheck — Evaluation Methodology
 
-**Version:** 0.2 · **Date:** 2026-09-18 · **Status:** binding domain contract
+**Version:** 0.3 · **Date:** 2026-09-20 · **Status:** binding domain contract
 **This file owns:** terminology, scoring, metrics, reproducibility, and the limits of what a ModelCheck number means.
 **Related:** concrete cases are in [docs/benchmarks.md](./docs/benchmarks.md); execution is in [ARCHITECTURE.md](./ARCHITECTURE.md); scope is in [MVP.md](./MVP.md).
+
+> **Lane A (2026-09-20).** Repository trials extend this methodology: a trial unit is a **setup** (model + harness + context bundle + params + route — [D22](./docs/decisions.md#d22--the-measurement-unit-is-the-setup-not-the-model)), outcomes are extended with `apply_failed`, `not_executed`, `case_invalid` and `completed_with_gaps`, and no score exists without a validated verifier ([D23](./docs/decisions.md#d23--no-score-without-a-validated-verifier)). The normative specification is [docs/trials.md](./docs/trials.md); everything below remains binding for Lane B capability runs.
 
 > **The governing sentence:** a ModelCheck result describes *one model, on one
 > versioned set of cases, at one time, through one provider route*. It is not a

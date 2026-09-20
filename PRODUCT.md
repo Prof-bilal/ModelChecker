@@ -8,7 +8,26 @@
 > **ModelCheck measures what a model change does to the capability you ship —
 > and shows its evidence.**
 
-Not "a benchmark platform". Not "an eval framework". Not "an AI leaderboard".
+**Added 2026-09-20 — the repository-aware framing (Lane A):**
+
+> **ModelCheck runs one real task from your repository against an unfamiliar model and
+> shows you the evidence — the tests it broke, the files it touched, and what it cost —
+> before you trust it with your code.**
+
+Both sentences describe one product: *a decision, with the evidence attached*. Lane B
+measures a **named capability** on a fixed, versioned suite. Lane A measures **one real
+task on your repository**. Lane A is the active build line ([MVP.md](./MVP.md)); Lane B is
+shipped and keeps its contract ([docs/benchmarks.md](./docs/benchmarks.md)). The unit is
+the same in both: a **delta against a pinned reference**, never a score on its own
+([D2](./docs/decisions.md)).
+
+**Primary user, Lane A:** the engineer who owns an existing repository and is about to
+adopt a coding model or agent for it.
+**Primary user, Lane B (unchanged):** the early engineer who owns a structured or
+tool-using LLM feature ([PRD §2](./PRD.md#2-target-user)).
+
+Not "a benchmark platform". Not "an eval framework". Not "an AI leaderboard". Not "a
+repository leaderboard" either — see §7.
 
 The comparison that matters is always **two runs against each other**, and the
 default candidate is *the model you already run*. A single score is an

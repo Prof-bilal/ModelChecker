@@ -1,8 +1,10 @@
 # ModelCheck — Roadmap
 
-**Version:** 0.2 · **Date:** 2026-09-18
+**Version:** 0.3 · **Date:** 2026-09-20
 **This file owns:** future direction. It is **not** scope.
 **Precedence:** [MVP.md](./MVP.md) always wins. Nothing here may be started before its stage is entered, and no stage is entered without the evidence named in its gate.
+
+> **Lane split (2026-09-20).** The stage map below describes **Lane B — capability suites**, which is shipped. **Lane A — repository trials** now runs as a parallel build line with its own gates in [docs/trials.md](./docs/trials.md) and its own sequencing in [docs/web-app.md](./docs/web-app.md); the split is decision [D21](./docs/decisions.md#d21--two-lanes-repository-trials-active-and-capability-suites-shipped). Lane A's first gate is the five-repository concierge test ([H7](./docs/research.md#4-hypotheses-unvalidated--must-not-drive-scope)); Stage 1's gate is unchanged.
 
 > **No dates.** Estimates of when something will ship have no evidence behind them.
 > Stages advance on **gates**, not calendars.
@@ -256,3 +258,12 @@ artefact, and a plausible compounding asset that only starts compounding after
 retention is proven. The defensible parts — **workflow position and accumulated
 history** — are both downstream of the Stage 2 retention gate. That is a reason to
 validate cheaply, not a reason to believe the idea is safe.
+
+**Lane A note (2026-09-20).** For repository trials the moat question has a
+different answer: the concept is already being built by at least six independent
+projects ([E17](./docs/research.md#2-evidence-register)) with negligible engagement
+([E18](./docs/research.md#2-evidence-register)), so *the concept is not the moat*
+there either. The defensible differences are the trust behaviours —
+verifier-validity refusal, honest small-n verdicts ([D25](./docs/decisions.md#d25--no-measurable-difference-and-inconclusive-are-verdicts)),
+setup identity ([D22](./docs/decisions.md#d22--the-measurement-unit-is-the-setup-not-the-model)) —
+which are cheap to copy but expensive to copy *credibly*.

@@ -1,6 +1,8 @@
 # ModelCheck — Product Requirements
 
-**Version:** 0.2 · **Date:** 2026-09-18 · **Status:** research-derived; supersedes the implicit PRD in `../design.md`
+**Version:** 0.3 · **Date:** 2026-09-20 · **Status:** research-derived; supersedes the implicit PRD in `../design.md`
+
+> **Lane A (2026-09-20).** ModelCheck now has two lanes: **Lane A — repository trials** (evaluate a model against the developer's own repository, tasks and tests; the active build line, specified in [docs/trials.md](./docs/trials.md) with decisions [D21–D27](./docs/decisions.md)) and **Lane B — capability suites** (the fixed 30-case suite described below; shipped, maintenance-only). This document's §2–§12 describe Lane B unless stated otherwise. The two lanes share the same trust machinery and the same evidence register.
 
 **Canonical-home rules:** evidence lives in [docs/research.md](./docs/research.md). Scope lives in [MVP.md](./MVP.md). Evaluation methodology lives in [EVALUATIONS.md](./EVALUATIONS.md). This document owns *intent* only.
 
@@ -188,6 +190,7 @@ interview transcript, a telemetry query, or a run.
 - **H4** — a saved baseline produces unprompted repeat usage. **This is the business.**
 - **H5** — deterministic-only coverage is useful to ICP #1. **Highest-risk assumption in v1.**
 - **H6** — teams will pay for regression prevention once a baseline exists.
+- **H7 — Lane A, the first assumption to test.** An engineer who owns a repository and is adopting a coding model will run a repository trial, and re-run it when the model, harness or version changes. Counter-evidence exists and is recorded ([E18](./docs/research.md#2-evidence-register) — negligible engagement for every existing entrant; [E15](./docs/research.md#2-evidence-register) — small-n pipelines do not produce confident decisions). Validation method: the five-repository concierge test ([research §4, H7](./docs/research.md#4-hypotheses-unvalidated--must-not-drive-scope)).
 
 ### 11.3 Unknown
 
@@ -206,3 +209,4 @@ interview transcript, a telemetry query, or a run.
 | Q3 | Should the default suite include coding (requires sandboxing) before Stage 3? | v2 scope | unassigned |
 | Q4 | Does a report need a URL to be shared at all? | Stage 2 | unassigned |
 | Q5 | What do competitors charge? Required before any pricing decision | Stage 4 | unassigned |
+| Q6 | Does the Lane A ICP (a repository owner adopting a coding model, [trials §1](./docs/trials.md#1-what-a-trial-is)) overlap ICP #1 enough to share one funnel, or do the lanes need separate onboarding? | Lane A onboarding design | unassigned |

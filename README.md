@@ -14,14 +14,18 @@ model changes → run against a capability → delta vs your baseline → decide
 
 ## Status — read this first
 
-**The product does not exist yet.** This repository currently contains:
+**The CLI is built; the hosted product does not exist.** This repository contains:
 
 - a **Next.js landing page** (`app/`, `components/`)
+- the **CLI** (`cli/`) — built through Phase 7 in [PHASES.md](./PHASES.md), with
+  install and usage in [cli/README.md](./cli/README.md)
 - a **complete product and engineering specification** (the documents below)
-- **no CLI, no API route, no database, no evaluation engine, and no test runner**
+- **no API route, no database, no hosted service, no telemetry, and no CI
+  evaluation** — the CLI writes local files only
 
-ModelCheck has produced **zero measurements**. Every figure shown on the landing
-page is labelled illustrative. No number in this repository is a result.
+The CLI's automated suite passes without network access. Run artefacts are written
+to your local `RUNS_DIR` and are not committed; every figure shown on the landing
+page is labelled illustrative.
 
 ## Where to start
 
@@ -62,6 +66,25 @@ npm run build    # production build
 npm run lint     # eslint (eslint-config-next)
 npx tsc --noEmit # type check
 ```
+
+## Running the CLI
+
+From `cli/`, install and build with `npm install`. Provide a provider key through
+the environment (never as a command-line argument), then run:
+
+```bash
+export OPENAI_API_KEY='...'
+npx modelcheck run --suite core --model gpt-4o
+modelcheck list
+modelcheck compare <run-a> <run-b>
+```
+
+Read `report.html` in the run directory. Suite prompts are sent to the selected
+provider, so do not evaluate sensitive workloads without checking that provider's
+data policy. Runs are stored locally under `RUNS_DIR` (user-controlled); it may
+contain prompts and model outputs. Prefer a key scoped to evaluation use, rotate
+it if it appears in shell history, and never use a production key with unnecessary
+write privileges.
 
 Stack: Next.js 16.3.5 (App Router), React 19.2.8, Tailwind CSS v4, TypeScript
 (strict). Design tokens live in `app/globals.css` and are defined in the design

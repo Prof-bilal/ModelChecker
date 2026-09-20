@@ -1,8 +1,10 @@
 # ModelCheck — Security & Privacy
 
-**Version:** 0.2 · **Date:** 2026-09-18
+**Version:** 0.3 · **Date:** 2026-09-20
 **This file owns:** threat model, secrets handling, data handling, and the MVP/future security split.
 **Architecture context:** [ARCHITECTURE.md](./ARCHITECTURE.md). Scope: [MVP.md](./MVP.md).
+
+> **Lane A (2026-09-20).** Repository trials add a new asset class — the user's repository contents — and a new execution risk: running model-generated code. The normative treatment is [SECURITY §11](#11-repository-data-and-context-bundles-new-2026-09-20); the isolation decision is [D24](./docs/decisions.md#d24--execution-requires-isolation-or-it-does-not-happen) and the no-persist-by-default decision is [D26](./docs/decisions.md#d26--context-contents-are-not-persisted-by-default). Nothing in Lane A re-introduces a server; [D1](./docs/decisions.md) still holds.
 
 > **The MVP has no server.** That single architectural fact removes most of the
 > attack surface this document would otherwise have to mitigate — but only while
@@ -209,3 +211,45 @@ the website must say only what the CLI actually does.
 
 **Rule:** no compliance badge, no security claim, and no privacy promise may appear
 in the product or its marketing until an artefact exists that makes it true.
+## 11. Repository data and context bundles (Lane A, new 2026-09-20)
+
+Normative for repository trials. Specified in [docs/trials.md](./docs/trials.md)
+(secrets scanning, leakage guards, manifest); decided in [D24](./docs/decisions.md#d24--execution-requires-isolation-or-it-does-not-happen),
+[D26](./docs/decisions.md#d26--context-contents-are-not-persisted-by-default) and
+[D27](./docs/decisions.md#d27--judge-output-is-a-separate-tier-with-bias-controls).
+
+### 11.1 New assets
+
+| Asset | Sensitivity | Where it lives |
+|---|---|---|
+| Context bundle (source files, task files, snapshot tree) | **High** — the user's real source code | Temp dir during the run; **deleted** unless `--persist-context` |
+| Bundle manifest + hashes | Low — metadata only | Run directory, always retained |
+| Model-produced patch / diff | Variable — derived from user code and prompts | Run directory as part of the trial record |
+| Test-command execution log | Variable — may echo file paths | Run directory, redaction applies |
+
+### 11.2 Rules (all mandatory)
+
+1. **Secrets are scanned before the bundle is built.** A bundled file that trips the
+   scanner ([E25](./docs/research.md#2-evidence-register) — gitleaks, trufflehog,
+   detect-secrets are commodity tooling) is redacted, excluded, or fails the trial —
+   never sent to the provider. The scanner result is recorded in the manifest.
+2. **No `.git`, no gold patch, no hidden tests** ever enter the context bundle for
+   history-derived tasks ([E13](./docs/research.md#2-evidence-register) — memorisation
+   makes contaminated tasks worthless). Violations are `case_invalid`, not warnings.
+3. **Contents are not persisted by default** ([D26](./docs/decisions.md#d26--context-contents-are-not-persisted-by-default)):
+   manifests and hashes are retained, file contents require an explicit opt-in flag
+   recorded in the report.
+4. **Execution requires a container** ([D24](./docs/decisions.md#d24--execution-requires-isolation-or-it-does-not-happen)).
+   Host execution is an explicit, labelled opt-in (`isolation: none`); absent both,
+   the trial is `not_executed` and may not be presented as a correctness result.
+5. **Network egress from the container is restricted** to the provider endpoint used
+   for the model request, consistent with §4's allow-list principle.
+6. **Provider routing must honour zero data retention where offered**
+   ([E21](./docs/research.md#2-evidence-register) — `zdr: true`); the route used is part
+   of the trial identity and is disclosed in the report.
+
+### 11.3 Residual risk, stated plainly
+
+A model request still sends the user's code (or a derived bundle) to a third-party
+provider. This is the same truth §9 records for prompts, and no Lane A wording may
+claim otherwise ([U3](./docs/decisions.md#u3--designmd-asserts-hosted-privacy-behaviour-that-no-implementation-can-support)).

@@ -1,8 +1,10 @@
 # ModelCheck — Architecture
 
-**Version:** 0.2 · **Date:** 2026-09-18
+**Version:** 0.3 · **Date:** 2026-09-20
 **This file owns:** components, responsibilities, data flow, failure handling and security boundaries.
-**Scope:** [MVP.md](./MVP.md). Methodology: [EVALUATIONS.md](./EVALUATIONS.md). Threats: [SECURITY.md](./SECURITY.md).
+**Scope:** [MVP.md](./MVP.md) (Lane B). Methodology: [EVALUATIONS.md](./EVALUATIONS.md). Threats: [SECURITY.md](./SECURITY.md).
+
+> **Lane A (2026-09-20).** Repository trials add a parallel pipeline (bundle → plan → execute → check → verify → report) sharing the provider adapters, redaction, run-store and report discipline of this document. Its components, data flow and boundaries are specified in [docs/trials.md](./docs/trials.md) and [docs/feature-map.md](./docs/feature-map.md); this file remains the Lane B reference. Lane A introduces the only two places where arbitrary code runs or is generated — governed by [D24](./docs/decisions.md#d24--execution-requires-isolation-or-it-does-not-happen).
 
 > **Rule:** the MVP is a modular monolith — one Node/TypeScript package with clear
 > internal boundaries. No services, no queue, no database, no orchestration layer,
