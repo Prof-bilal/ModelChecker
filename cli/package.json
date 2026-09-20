@@ -1,7 +1,8 @@
 {
-  "name": "@modelcheck/cli",
+  "name": "modelcheck-cli",
   "version": "0.1.0",
-  "private": true,
+  "description": "Measure what a model change does to the capability you ship. Runs a versioned suite against any model with your own API key and writes a report where every number carries its evidence.",
+  "license": "MIT",
   "type": "module",
   "bin": {
     "modelcheck": "dist/index.js"
@@ -9,6 +10,35 @@
   "engines": {
     "node": ">=20"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Prof-bilal/ModelChecker.git",
+    "directory": "cli"
+  },
+  "homepage": "https://github.com/Prof-bilal/ModelChecker#readme",
+  "bugs": {
+    "url": "https://github.com/Prof-bilal/ModelChecker/issues"
+  },
+  "keywords": [
+    "llm",
+    "evaluation",
+    "evals",
+    "benchmark",
+    "model",
+    "cli",
+    "structured-output",
+    "tool-calling",
+    "openai",
+    "anthropic",
+    "openrouter"
+  ],
+  "files": [
+    "dist",
+    "suites",
+    "!dist/**/*.test.js",
+    "!dist/tests",
+    "!**/*.map"
+  ],
   "scripts": {
     "build": "tsc",
     "prepare": "npm run build",

@@ -31,12 +31,22 @@ to install and run it.
 ## Install
 
 ```bash
+npm install -g modelcheck-cli   # published on npm; puts `modelcheck` on your PATH
+```
+
+Or run it without installing globally:
+
+```bash
+npx modelcheck-cli@latest --help
+```
+
+Working from a clone of this repository:
+
+```bash
 cd cli
 npm install        # builds via the prepare script
 npm link           # optional: puts `modelcheck` on your PATH
 ```
-
-From the repository root, `npx modelcheck` also works after `cd cli && npm install`.
 
 ## Provide a key — never as an argument
 
