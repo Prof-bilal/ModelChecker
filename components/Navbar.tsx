@@ -4,6 +4,7 @@ import { Wordmark } from "./Wordmark";
 
 const LINKS = [
   { href: "/docs", label: "Docs" },
+  { href: "/docs/compare-platforms", label: "Comparing platforms" },
   { href: "#vs-platforms", label: "Compare" },
   { href: "#example", label: "Example" },
   { href: "#methodology", label: "Methodology" },
