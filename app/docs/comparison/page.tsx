@@ -64,6 +64,18 @@ modelcheck compare <baseline-id> <candidate-id>`}</Code>
           <code className="font-mono text-xs">report.html</code>. That evidence, not the
           sign of the delta, is what you act on.
         </p>
+
+        <p className="mt-10 text-xs text-text-muted">
+          For a description of the public benchmark platforms — what they
+          measure and how they score — see{" "}
+          <a
+            href="/docs/compare-platforms"
+            className="underline decoration-border underline-offset-4 hover:decoration-text"
+          >
+            Comparing platforms
+          </a>
+          .
+        </p>
       </DocsArticle>
     </DocsShell>
   );

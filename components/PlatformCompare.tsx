@@ -83,7 +83,15 @@ export function PlatformCompare() {
         </Reveal>
         <p className="mt-4 text-xs text-text-muted">
           Comparisons are qualitative and by design: ModelCheck publishes no ranking of
-          other platforms, and the suite — not an index score — is the evidence.
+          other platforms, and the suite — not an index score — is the evidence. A
+          detailed, source-linked description of each surface is in{" "}
+          <a
+            href="/docs/compare-platforms"
+            className="underline decoration-border underline-offset-4 hover:decoration-text"
+          >
+            Comparing platforms
+          </a>
+          .
         </p>
       </div>
     </section>

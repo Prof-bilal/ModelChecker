@@ -44,5 +44,6 @@ const ITEMS = [
   { href: "/docs/quick-start", label: "Quick start" },
   { href: "/docs/usage", label: "How to use" },
   { href: "/docs/comparison", label: "Comparing runs" },
+  { href: "/docs/compare-platforms", label: "Comparing platforms" },
   { href: "/docs/privacy", label: "Privacy & cost" },
 ] as const;

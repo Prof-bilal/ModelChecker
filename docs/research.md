@@ -158,6 +158,22 @@ this repository already enforces elsewhere: a claim that links to its measuremen
 refusal to score when the verifier is invalid, `not measured` as a first-class answer, and
 local-first data handling. Everything else in the table above is copyable in a week.
 
+### 5.4 Public leaderboards and benchmarks (observed 2026-09-20)
+
+Sources for the `/docs/compare-platforms` table. Each row below is a first-party
+page or repository README, retrieved 2026-09-20; descriptions are **observed**,
+not measured. Nothing here ranks one platform above another.
+
+| Project | What it is | Observed facts | Source |
+|---|---|---|---|
+| OpenRouter Benchmarks | Gateway-published benchmark rankings | 11 benchmarks; 2,453,260 task evaluations; last run 2026-09-20; Quality / Value / Speed columns; provenance links per score | `https://openrouter.ai/benchmarks` (E22) |
+| LMArena (Chatbot Arena) | Community preference ranking | Self-describes as "The Official AI Ranking & LLM Leaderboard"; ranking derived from pairwise human votes on anonymous chats; battle mode | `https://lmarena.ai/` |
+| Artificial Analysis | Third-party model index | Intelligence Index v4.3.2 aggregates 10 evaluations; "26 of 653 models"; capability indexes per industry (finance, legal, healthcare…); cost, speed, latency, context columns | `https://artificialanalysis.ai/models` |
+| SWE-bench | Repository-issue resolution benchmark | "2,294 instances"; "real GitHub issues from 12 Python repositories"; verification is by the repository's own tests; family variants (Verified 500, Lite 300, Multilingual, Multimodal) | `https://www.swebench.com/` |
+| Aider leaderboards | Code-editing benchmark | 225 Exercism exercises, six languages; per-run disclosure of edit format, pass rates, cost, seconds per case, token counts, timeouts | `https://aider.chat/docs/leaderboards/` |
+| LiveBench | Contamination-controlled benchmark | ICLR 2025 Spotlight; "designed to limit potential contamination by releasing new questions monthly"; "verifiable, objective ground-truth answers… without the use of an LLM judge"; 18 tasks across 6 categories | `https://github.com/LiveBench/LiveBench` |
+| HELM | Stanford CRFM evaluation framework | "holistic, reproducible and transparent evaluation"; Apache-2.0; leaderboards per domain (Capabilities, Safety, VHELM, MedHELM); **entered maintenance mode on June 1, 2026** | `https://github.com/stanford-crfm/helm` |
+
 ## 6. User-pain evidence — honest assessment
 
 **We have weak direct evidence of user pain.** This is the most important

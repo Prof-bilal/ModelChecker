@@ -239,6 +239,16 @@ Decided before this research pass and **retained**, with the evidence that suppo
 - **Tradeoffs:** less convenient summaries; judges cannot rescue task types with no deterministic verifier.
 - **Revisit when:** a documented rubric is shown to agree with human raters well enough on one named task type ([EVALUATIONS §12](../EVALUATIONS.md#12-what-would-change-this-methodology)).
 
+## D28 — The platform-comparison page is descriptive and evidence-linked, never a ranking
+
+- **Date:** 2026-09-20
+- **Context:** The landing `PlatformCompare` section is qualitative by design ([D5](#d5--no-invented-numbers-anywhere-in-this-repository)). A more detailed `/docs/compare-platforms` page was requested. Hard Rule 1 forbids any claim about another website without a research row, and [PRODUCT §5](../PRODUCT.md#5-product-language) forbids implying a universal ranking.
+- **Options:** (a) a scored or checkmark comparison matrix; (b) a descriptive table — who runs each surface, what it measures, how it is scored, with a source link per row — plus the capability axis none of the surfaces cover.
+- **Decision:** (b). Every descriptive cell traces to an observed first-party source recorded in [research §5.4](./research.md#54-public-leaderboards-and-benchmarks-observed-2026-09-20); no scores, stars-as-verdicts, or "better/worse" language appear; the second table states what no surface measures (the user's task, on their contract, with denominators and raw evidence).
+- **Reason:** it answers the detailed-comparison request without becoming the contested object of E1, and it ages well: each row's source is dated and retrievable.
+- **Tradeoffs:** less scannable than a checkmark grid; the honesty is the point.
+- **Revisit when:** a competitor publishes a methodology that makes a row's description stale.
+
 ## 4. Unresolved contradictions (must not be silently fixed)
 
 ### U1 — `design.md` and the source evidence live outside version control

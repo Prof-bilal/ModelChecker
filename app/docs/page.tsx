@@ -56,6 +56,12 @@ export default function DocsIndexPage() {
             — two runs against each other, with denominators.
           </li>
           <li>
+            <a href="/docs/compare-platforms" className="text-text underline decoration-border underline-offset-4 hover:decoration-text">
+              Comparing platforms
+            </a>{" "}
+            — what public benchmark surfaces measure, with sources.
+          </li>
+          <li>
             <a href="/docs/privacy" className="text-text underline decoration-border underline-offset-4 hover:decoration-text">
               Privacy &amp; cost
             </a>{" "}
