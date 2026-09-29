@@ -104,12 +104,34 @@ export async function loadSuite(suiteId: string, suiteVersion: string): Promise<
     fail(`Suite file "${suitePath}" declares "${id}@${version}" but was loaded as "${suiteId}@${suiteVersion}". Align the meta block with the directory name.`);
   }
 
-  const cases = (parsed.cases as unknown[]).map(validateCase);
+  const validated = validateSuiteObject(id, version, parsed.cases as unknown[]);
+  if (validated.id !== suiteId || validated.version !== suiteVersion) {
+    fail(`Suite file "${suitePath}" declares "${validated.id}@${validated.version}" but was loaded as "${suiteId}@${suiteVersion}". Align the meta block with the directory name.`);
+  }
+  return validated;
+}
+
+/** Validates an in-memory suite using the same rules as a file-backed suite.
+ * Repository benchmarks are generated from a local profile, so they must not
+ * be written into the user's suite directory just to enter the normal engine. */
+export function loadSuiteObject(value: unknown): SuiteMeta {
+  if (!isRecord(value) || !isRecord(value.meta) || !Array.isArray(value.cases)) {
+    fail(`Generated suite must be an object with a "meta" object and a "cases" array.`);
+  }
+  const meta = value.meta as Record<string, unknown>;
+  if (typeof meta.id !== "string" || typeof meta.version !== "string") {
+    fail(`Generated suite meta must include string "id" and "version".`);
+  }
+  return validateSuiteObject(meta.id, meta.version, value.cases);
+}
+
+function validateSuiteObject(id: string, version: string, rawCases: unknown[]): SuiteMeta {
+  const cases = rawCases.map(validateCase);
 
   const ids = new Set<string>();
   for (const c of cases) {
     if (ids.has(c.case_id)) {
-      fail(`Suite "${suitePath}" contains a duplicate case id "${c.case_id}". Case ids must be unique.`);
+      fail(`Suite "${id}@${version}" contains a duplicate case id "${c.case_id}". Case ids must be unique.`);
     }
     ids.add(c.case_id);
   }

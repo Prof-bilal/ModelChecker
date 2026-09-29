@@ -3,6 +3,7 @@
 
 import { compareCommand } from "./commands/compare.js";
 import { listCommand } from "./commands/list.js";
+import { repoCommand } from "./commands/repo.js";
 import { runCommand } from "./commands/run.js";
 import { parseCliArgs, USAGE, UsageError } from "./lib/args.js";
 import { ConfigError, SpendLimitError } from "./lib/errors.js";
@@ -26,6 +27,9 @@ async function main(): Promise<void> {
       return;
     case "list":
       await listCommand();
+      return;
+    case "repo":
+      await repoCommand(args.positionals, args.values);
   }
 }
 

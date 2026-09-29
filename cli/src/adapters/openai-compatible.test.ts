@@ -47,6 +47,28 @@ test("provider_default params are omitted; tools included when present", () => {
   assert.ok(Array.isArray(withTools.tools) && withTools.tools.length === 1);
 });
 
+test("structured-output cases send the declared JSON Schema response format", () => {
+  const adapter = new OpenAICompatibleAdapter(CONFIG);
+  const body = adapter.buildRequest(makeRequest({
+    response_format: {
+      type: "json_schema",
+      json_schema: {
+        name: "invoice",
+        strict: true,
+        schema: { type: "object", properties: { id: { type: "string" } } },
+      },
+    },
+  })).body;
+  assert.deepEqual(body.response_format, {
+    type: "json_schema",
+    json_schema: {
+      name: "invoice",
+      strict: true,
+      schema: { type: "object", properties: { id: { type: "string" } } },
+    },
+  });
+});
+
 test("normaliseResponse extracts content, usage and resolved model", () => {
   const adapter = new OpenAICompatibleAdapter(CONFIG);
   const response = adapter.normaliseResponse(

@@ -54,6 +54,9 @@ export class OpenAICompatibleAdapter implements ModelAdapter {
     if (request.tools !== undefined && request.tools.length > 0) {
       body.tools = request.tools;
     }
+    if (request.response_format !== undefined) {
+      body.response_format = request.response_format;
+    }
     return {
       url: `${this.config.base_url.replace(/\/$/, "")}/chat/completions`,
       headers: {

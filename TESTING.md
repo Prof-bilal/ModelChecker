@@ -222,3 +222,12 @@ Like the `test:live` provider smoke test, a `test:trial` script may run one tria
 against one small, designated throwaway repository — explicit flag, requires Docker,
 never part of the default command, and it writes to a temp directory so it cannot
 leak into a run store.
+
+### 9.4 Static repository profiler
+
+The `repo` command's static profiler uses synthetic temporary trees only. Tests
+cover valid and invalid paths, empty and mixed-language repositories, framework
+and package detection, root `.gitignore`, generated/vendor directories, secret
+file exclusion, deterministic output, scan limits, provider/model normalization,
+missing arguments, insufficient evidence, and both command flows. The explicit
+flow injects the existing runner and never makes a provider request.

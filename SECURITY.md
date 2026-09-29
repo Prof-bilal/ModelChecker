@@ -218,6 +218,15 @@ Normative for repository trials. Specified in [docs/trials.md](./docs/trials.md)
 [D26](./docs/decisions.md#d26--context-contents-are-not-persisted-by-default) and
 [D27](./docs/decisions.md#d27--judge-output-is-a-separate-tier-with-bias-controls).
 
+`modelcheck repo` repository profiling is a narrower static-only path. It reads
+bounded source text for language/line counts and bounded manifest files for
+technology detection, but retains only structured metadata. It follows root
+`.gitignore` rules, skips common generated/vendor directories, symlinks,
+binary/oversized files, `.env` variants, credential files, and private
+keys/certificates. It never executes the repository and never includes repository
+contents in a provider request. The explicit evaluation form sends only the
+committed ModelCheck core-suite prompts, exactly like `modelcheck run`.
+
 ### 11.1 New assets
 
 | Asset | Sensitivity | Where it lives |

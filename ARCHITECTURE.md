@@ -10,6 +10,16 @@
 > internal boundaries. No services, no queue, no database, no orchestration layer,
 > until a validated need exists.
 
+### Repository profiling command (2026-09-29)
+
+`modelcheck repo` adds a small static-analysis entry point beside the two lanes.
+`cli/src/repo/scanner.ts` owns bounded, deterministic repository metadata
+inspection; `cli/src/repo/recommend.ts` owns recommendation evidence; and
+`cli/src/commands/repo.ts` composes those pieces with the existing `run` command.
+The scanner does not build a context bundle, execute repository code, install
+dependencies, or change the Lane B report schema. An explicit model/provider form
+reuses `core@1.0.0` and labels coding/repository fit as not tested.
+
 ---
 
 ## 1. Current state of the system (as of 2026-09-18)

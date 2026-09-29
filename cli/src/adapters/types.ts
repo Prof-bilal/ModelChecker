@@ -7,6 +7,12 @@ export interface AdapterRequest {
   model: string;
   messages: Array<{ role: string; content: string }>;
   tools?: unknown[];
+  /** Provider-native structured-output request, when a suite case declares a
+   * JSON Schema scorer. OpenAI-compatible gateways receive this unchanged. */
+  response_format?: {
+    type: "json_schema";
+    json_schema: { name: string; strict: boolean; schema: Record<string, unknown> };
+  };
   temperature: number | "provider_default";
   max_output_tokens: number | "provider_default";
   timeout_ms: number;

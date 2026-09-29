@@ -44,3 +44,26 @@ test("no command with --help prints usage without error", () => {
   assert.equal(parsed.help, true);
   assert.equal(parsed.command, undefined);
 });
+
+test("parses both repository command forms", () => {
+  const recommendation = parseCliArgs(["repo", "./project"]);
+  assert.equal(recommendation.command, "repo");
+  assert.deepEqual(recommendation.positionals, ["./project"]);
+
+  const evaluation = parseCliArgs([
+    "repo", "./project", "anthropic/claude-sonnet-4.5", "openrouter",
+  ]);
+  assert.equal(evaluation.command, "repo");
+  assert.deepEqual(evaluation.positionals, [
+    "./project", "anthropic/claude-sonnet-4.5", "openrouter",
+  ]);
+});
+
+test("repo requires a path and a complete model/provider pair", () => {
+  assert.throws(() => parseCliArgs(["repo"]), /requires a repository path/);
+  assert.throws(
+    () => parseCliArgs(["repo", "./project", "openai/gpt-4o"]),
+    /missing the provider/,
+  );
+  assert.doesNotThrow(() => parseCliArgs(["repo", "--help"]));
+});

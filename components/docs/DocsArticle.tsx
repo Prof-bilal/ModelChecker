@@ -6,5 +6,5 @@ import type { ReactNode } from "react";
  * reading measure so the sidebar alignment holds across routes.
  */
 export function DocsArticle({ children }: { children: ReactNode }) {
-  return <article className="max-w-3xl">{children}</article>;
+  return <article className="max-w-3xl pb-8">{children}</article>;
 }

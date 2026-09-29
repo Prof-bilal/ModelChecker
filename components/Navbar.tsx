@@ -3,12 +3,13 @@ import { ActionButton } from "./ActionButton";
 import { Wordmark } from "./Wordmark";
 
 const LINKS = [
+  { href: "/benchmarks", label: "Benchmarks" },
   { href: "/docs", label: "Docs" },
   { href: "/docs/compare-platforms", label: "Comparing platforms" },
-  { href: "#vs-platforms", label: "Compare" },
-  { href: "#example", label: "Example" },
-  { href: "#methodology", label: "Methodology" },
-  { href: "#faq", label: "FAQ" },
+  { href: "/#vs-platforms", label: "Compare" },
+  { href: "/#example", label: "Example" },
+  { href: "/#methodology", label: "Methodology" },
+  { href: "/#faq", label: "FAQ" },
 ] as const;
 
 export function Navbar() {

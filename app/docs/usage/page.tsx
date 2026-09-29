@@ -90,7 +90,8 @@ modelcheck run --suite core --model anthropic/claude-sonnet-5`}</Code>
         />
 
         <h2 className="mt-12 text-lg font-semibold tracking-tight">Commands at a glance</h2>
-        <Code>{`modelcheck run      load a suite, plan, estimate, execute, score, aggregate, write
+        <Code>{`modelcheck repo     inspect a local repository and recommend or assess a model
+modelcheck run      load a suite, plan, estimate, execute, score, aggregate, write
 modelcheck compare  per-capability deltas between two local runs, with denominators
 modelcheck list     local runs (run id, label, model, suite version, status)`}</Code>
 
@@ -104,4 +105,3 @@ modelcheck list     local runs (run id, label, model, suite version, status)`}</
     </DocsShell>
   );
 }
-

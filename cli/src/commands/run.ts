@@ -28,7 +28,7 @@ import {
 import { executeRun } from "../engine/execute.js";
 import { applyScoring } from "../engine/score.js";
 import { planRun } from "../engine/plan.js";
-import { loadSuite } from "../engine/suite-loader.js";
+import { loadSuite, loadSuiteObject } from "../engine/suite-loader.js";
 import { UsageError } from "../lib/args.js";
 import { ConfigError } from "../lib/errors.js";
 import { appendRunIndex, indexEntryFromReport, runsDirectory } from "../lib/runs.js";
@@ -230,7 +230,8 @@ export async function runCommand(values: Record<string, unknown> = {}): Promise<
     throw new UsageError(`--api-key-env "${apiKeyEnv}" is not a valid environment variable name. Pass the NAME of the env var that holds the key, never the key itself.`);
   }
 
-  const suite = await loadSuite(suiteId, "1.0.0");
+  const suiteOverride = values.repoSuite;
+  const suite = suiteOverride === undefined ? await loadSuite(suiteId, "1.0.0") : loadSuiteObject(suiteOverride);
   const planned = planRun(suite, repeat);
 
   const table = loadPriceTable();
@@ -274,6 +275,16 @@ export async function runCommand(values: Record<string, unknown> = {}): Promise<
         model: adapter instanceof MockAdapter ? model : resolveModel(model).wireId,
         messages: [{ role: "user", content: typeof c.input === "object" && c.input !== null && "prompt" in (c.input as Record<string, unknown>) ? String((c.input as Record<string, unknown>).prompt) : JSON.stringify(c.input) }],
         ...(c.tools !== undefined ? { tools: c.tools } : {}),
+        ...(c.scoring === "json_schema@1" ? {
+          response_format: {
+            type: "json_schema" as const,
+            json_schema: {
+              name: c.case_id.replace(/[^a-zA-Z0-9_-]/g, "_").slice(0, 64),
+              strict: true,
+              schema: c.scoring_params.schema as Record<string, unknown>,
+            },
+          },
+        } : {}),
         temperature: "provider_default",
         max_output_tokens: "provider_default",
         timeout_ms: timeout,

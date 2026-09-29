@@ -2,7 +2,7 @@
 
 import { parseArgs } from "node:util";
 
-export const COMMANDS = ["run", "compare", "list"] as const;
+export const COMMANDS = ["run", "compare", "list", "repo"] as const;
 
 export type Command = (typeof COMMANDS)[number];
 
@@ -28,6 +28,17 @@ Commands:
   run       Run a model evaluation
   compare   Compare two local runs
   list      List local runs
+  repo      Profile a repository and recommend or evaluate a model
+
+Repository forms:
+  modelcheck repo <project-repo>
+      Analyze a local repository and recommend from available ModelCheck evidence.
+
+  modelcheck repo <project-repo> <model-name> <provider-name>
+      Analyze the repository and run the existing evaluation suite against the
+      supplied model and provider. Model ids keep the existing gateway/wire-id
+      convention; e.g. "anthropic/claude-sonnet-4.5 openrouter" resolves to
+      "openrouter/anthropic/claude-sonnet-4.5".
 
 Options:
   --suite <id>           Suite to run
@@ -85,10 +96,20 @@ export function parseCliArgs(args: string[]): ParsedArguments {
     );
   }
 
-  if (positionals.length > 0 && commandValue !== "compare") {
+  if (positionals.length > 0 && commandValue !== "compare" && commandValue !== "repo") {
     throw new UsageError(
       `Command "${commandValue}" does not accept positional arguments. Run modelcheck --help for usage.`,
     );
+  }
+
+  if (commandValue === "repo" && parsed.values.help !== true && positionals.length !== 1 && positionals.length !== 3) {
+    if (positionals.length === 0) {
+      throw new UsageError(`Command "repo" requires a repository path. Use modelcheck repo <project-repo> [<model-name> <provider-name>].`);
+    }
+    if (positionals.length === 2) {
+      throw new UsageError(`Command "repo" is missing the provider. Use modelcheck repo <project-repo> <model-name> <provider-name>.`);
+    }
+    throw new UsageError(`Command "repo" accepts either 1 or 3 positional arguments. Use modelcheck repo <project-repo> [<model-name> <provider-name>].`);
   }
 
   return {

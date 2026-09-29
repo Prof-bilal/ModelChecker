@@ -249,6 +249,16 @@ Decided before this research pass and **retained**, with the evidence that suppo
 - **Tradeoffs:** less scannable than a checkmark grid; the honesty is the point.
 - **Revisit when:** a competitor publishes a methodology that makes a row's description stale.
 
+## D29 — `/benchmarks` is a static evidence index, not a hosted benchmark dashboard
+
+- **Date:** 2026-09-29
+- **Context:** A local-machine scan and real `core@1.0.0` runs were requested for three repositories and four Command Code model routes. [web-app.md](./web-app.md) defers a hosted history application, while D5 forbids placeholder results and D28 forbids turning a descriptive comparison into a ranking.
+- **Options:** (a) reject any web representation until the hosted application gate is met; (b) build a static, version-controlled evidence index from completed local scans and run reports; (c) build a database-backed dashboard and import raw local run history.
+- **Decision:** (b). `/benchmarks` and its three project detail routes contain only bounded repository-profile metadata and measured aggregate results copied from completed reports. They do not read credentials, raw responses, or repository contents; do not rank the models; label cost as `unpriced`; and state that the shipped capability suite does not test repository coding fit.
+- **Reason:** the static surface answers which projects and model routes were exercised without introducing a server, secret storage, background execution, or an invented repository score.
+- **Tradeoffs:** the snapshot must be updated manually after a new run; it is not run history, and a capability result associated with a repository profile is not a repository trial.
+- **Revisit when:** Lane A can produce isolated repository trials with validated verifiers, or a hosted-service validation gate explicitly authorises persistence.
+
 ## 4. Unresolved contradictions (must not be silently fixed)
 
 ### U1 — `design.md` and the source evidence live outside version control

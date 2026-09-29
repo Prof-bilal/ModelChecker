@@ -157,3 +157,42 @@ export interface RunOptions {
   apiKeyEnv?: string;
   json: boolean;
 }
+
+export interface RepositorySize {
+  files: number;
+  sourceFiles: number;
+  estimatedLines: number;
+  bytesScanned: number;
+  truncated: boolean;
+}
+
+export interface RepositoryScanExclusions {
+  ignored: number;
+  sensitive: number;
+  binary: number;
+  oversized: number;
+  unreadable: number;
+}
+
+/** Static, local-only repository metadata. File contents are never retained in
+ * this profile or sent to a provider (SECURITY.md §11). */
+export interface RepositoryProfile {
+  root: string;
+  languages: Array<{ name: string; files: number }>;
+  frameworks: string[];
+  projectTypes: string[];
+  packageManagers: string[];
+  databaseTechnologies: string[];
+  repoSize: RepositorySize;
+  hasTests: boolean;
+  hasCi: boolean;
+  architectureSignals: string[];
+  detectedTechnologies: string[];
+  relevantFiles: string[];
+  exclusions: RepositoryScanExclusions;
+  limits: {
+    maxFiles: number;
+    maxFileBytes: number;
+    maxTotalBytes: number;
+  };
+}

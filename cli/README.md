@@ -145,6 +145,39 @@ modelcheck compare <run-a-id> <run-b-id>
 and says why. Every delta it prints carries its denominator, so `+2 of 15` can
 never be mistaken for `+2 of 30`. Differing parameters are flagged.
 
+## Analyze a repository
+
+```bash
+modelcheck repo ./my-project
+```
+
+`repo` performs a bounded, read-only metadata scan and prints a structured
+profile: languages, frameworks, package managers, database technologies, source
+size, tests, CI, and architecture signals. It never runs repository scripts,
+installs dependencies, or sends repository files to a provider. Common build and
+vendor directories, root `.gitignore` matches, binary/oversized files, `.env`
+files, credentials, and private-key/certificate files are excluded.
+
+Repository-only recommendations use comparable reports already present in the
+local ModelCheck run store. If fewer than two comparable models exist, or the
+per-capability evidence has no unambiguous winner, the command says so instead of
+inventing a recommendation. The shipped suite measures structured output and tool
+calling; it does **not** measure coding or repository reasoning.
+
+To evaluate one supplied route with the existing suite:
+
+```bash
+modelcheck repo ./my-project anthropic/claude-sonnet-4.5 openrouter
+```
+
+The positional provider is the access route. ModelCheck normalizes it back into
+the existing `gateway/wire-id` convention, so the example above targets
+`openrouter/anthropic/claude-sonnet-4.5`; no second model naming system is used.
+The output separates repository analysis, model, provider, evaluation results,
+and assessment, and does not call the supplied model “best.” This form makes the
+same provider calls and incurs the same possible cost as `modelcheck run`; the
+pre-flight estimate and API-key rules still apply.
+
 ## Cost is an estimate — and "unpriced" is not zero
 
 Pre-flight estimates use the dated price snapshot in
@@ -202,4 +235,5 @@ opt-in contract smoke test, which is not part of `npm test`.
 modelcheck run      load a suite, plan, estimate, execute, score, aggregate, write
 modelcheck compare  per-capability deltas between two local runs, with denominators
 modelcheck list     local runs (run id, label, model, suite version, status)
+modelcheck repo     statically profile a repository; recommend or evaluate a route
 ```
