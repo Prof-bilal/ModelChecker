@@ -40,7 +40,7 @@ non-existent after they had shipped — recorded in
 | Evaluation engine, suites, scorers | **Exists, in `cli/`** | `cli/src/engine/`, `cli/suites/core/1.0.0` (30 cases), `cli/src/scorers/` |
 | Auth, accounts, sessions | **Do not exist** | None |
 | Tests | **Exists, in `cli/`** | 153 `node:test` cases, no network; `web/package.json` still has no `test` script |
-| CI | **Exists** | `.github/workflows/deno.yml` |
+| CI | **Does not exist** | Excluded from the MVP ([MVP §6](./MVP.md#6-explicitly-excluded-from-the-mvp), Stage 5). The template `deno.yml` workflow was removed 2026-10-05: it ran `deno lint`/`deno test` against an ESLint + `tsc` + `node:test` codebase and failed on every push from 2026-09-19 onward. |
 | CLI / published package | **Exists** | `modelcheck-cli@0.1.1` on npm (2026-10-05; `0.1.0` on 2026-09-20) — [U2](./docs/decisions.md#u2--the-landing-page-advertises-a-cli-package-that-does-not-exist) resolved |
 
 **Consequence:** any document describing hosted execution, a database schema, or a
