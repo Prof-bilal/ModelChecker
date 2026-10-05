@@ -259,6 +259,27 @@ Decided before this research pass and **retained**, with the evidence that suppo
 - **Tradeoffs:** the snapshot must be updated manually after a new run; it is not run history, and a capability result associated with a repository profile is not a repository trial.
 - **Revisit when:** Lane A can produce isolated repository trials with validated verifiers, or a hosted-service validation gate explicitly authorises persistence.
 
+## D30 — The public surface is labelled **beta**, and 0.1.1 ships as a patch release
+
+- **Date:** 2026-10-05
+- **Context:** A beta launch was requested. The repository is pre-GA: `/run` is still a stub, [U4](#u4--the-landing-page-describes-a-materially-broader-product-than-the-mvp) is open, and no hosted service exists. Separately, npm serves `modelcheck-cli@0.1.0` (2026-09-20) which predates the `repo` command and the 2026-09-29 fixes, while local `cli/package.json` was still `0.1.0` and therefore unpublishable.
+- **Options for the badge:** (a) hero-only chip; (b) a shared `Navbar` pill next to the wordmark, reusing the `/benchmarks` chip pattern; (c) label only the install CTA. **Options for the version:** (a) `0.1.1` patch; (b) `0.2.0` minor for the new `repo` command; (c) `0.2.0-beta.0` on a `beta` dist-tag.
+- **Decision:** (b)/(a). A single `Beta` pill in `Navbar` — it renders on `/`, `/docs`, `/benchmarks`, so no route can imply GA — built from design tokens only. npm goes out as **`0.1.1`** under the existing `latest` tag, so the landing's plain `npm install -g modelcheck-cli` keeps working without an `@beta` suffix.
+- **Reason:** pre-1.0 additions shipped under `latest` keep the install line honest and simple; the beta label states the true maturity instead of implying a finished product ([Hard Rule 9](../AGENTS.md#6--hard-rules--never-violate)).
+- **Tradeoffs:** the badge is site-wide, including on pages that describe only the shipped CLI; the version is still hardcoded in `DocsCallout` and `MODELCHECK_VERSION`, so each release edits three places.
+- **Revisit when:** the hosted `/run` flow ships and U4's capability framing is settled — that is the GA conversation.
+
+## D31 — `/run` is a static start-a-run guide, not a hosted run flow
+
+- **Date:** 2026-10-05
+- **Context:** The primary CTA in `Navbar`, `Hero` and `CtaFooter` points at `/run`, which rendered a placeholder calling the hosted flow "the next implementation increment" — a beta launch cannot dead-end its main action. But building that hosted flow is excluded: [MVP §6](../MVP.md#6-explicitly-excluded-from-the-mvp) rules out any hosted service, server or API route under [D1](#d1--mvp-is-a-local-cli-not-a-hosted-web-run-flow), [SECURITY §8](../SECURITY.md#8-what-changes-when-a-server-exists-stage-2-re-review-gate) gates any web form that would hold a provider key, and [web-app.md](./web-app.md) is "designed, not scheduled". Meanwhile `/docs/quick-start` already documents the whole local run, so a second prose copy would duplicate a canonical home.
+- **Options:** (a) build the Connect → Configure → Review-and-run wizard anyway, which requires amending MVP §6 first; (b) repoint the three CTAs at `/docs/quick-start` and redirect `/run` away; (c) make `/run` a static guide — install, key, run, read — that states plainly the page executes nothing and takes no key, and links into the docs for depth.
+- **Decision:** (c). The route stays the CTA's destination; it renders four commands, the pre-flight-estimate and spend-limit behaviour, the local report path, and an explicit "there is no ModelCheck server" note. It creates no route handler, no client component, no key field, and no `app/**/route.ts`. The same change corrected `Stepper.tsx`, which still described the hosted flow ("Paste your provider API key. It travels over TLS", "Watch cases settle live") — the claim [U3](#u3--designmd-asserts-hosted-privacy-behaviour-that-no-implementation-can-support) recorded for the FAQ but never fixed here.
+- **Reason:** the primary action gets a real destination without spending the MVP's scope contract or duplicating the quick start.
+- **Tradeoffs:** `/run` and `/docs/quick-start` answer the same question at different depths — `/run` links rather than repeats, so the two must be kept in step by hand; the landing "How a run works" section now describes CLI steps rather than a product UI, which reads less like an app.
+- **Also corrected in this change:** `ARCHITECTURE.md` §1 still reported the CLI, the engine, the test suite and the npm package as non-existent, and CI as absent while `.github/workflows/deno.yml` exists; `PRD.md` §11.1 still listed "no product code" and "`modelcheck-cli` 404" as validated facts; `AGENTS.md` still called `/run` a stub. All were false statements about shipped code and are corrected with their dated reasons.
+- **Revisit when:** a hosted run flow is genuinely scheduled — that starts by amending [MVP §6](../MVP.md#6-explicitly-excluded-from-the-mvp) and passing the [SECURITY §8](../SECURITY.md#8-what-changes-when-a-server-exists-stage-2-re-review-gate) re-review, not by writing a form.
+
 ## 4. Unresolved contradictions (must not be silently fixed)
 
 ### U1 — `design.md` and the source evidence live outside version control
@@ -299,9 +320,29 @@ The site described a hosted execution architecture that is neither built nor sch
 
 The marketing surface therefore overstates v1 by a factor of four in capability count and overstates adapter coverage with "any model". Under [D5](#d5--no-invented-numbers-anywhere-in-this-repository) and [PRODUCT §5](../PRODUCT.md#5-product-language), this is the exact claim shape the product forbids.
 
-**Partially resolved 2026-09-20:** the new documentation surface (`/docs/*`, the Methodology docs callout) states the shipped two-capability suite exactly. The remaining offenders — the eight-item Capabilities grid, the illustrative reasoning row, and the Hero's "any model" phrasing — are **unchanged**: narrowing or relabelling them is a positioning decision that D21 defers until the H7 concierge test says which frame the product leads with. This entry remains open for that rewrite.
+**Partially resolved 2026-09-20:** the new documentation surface (`/docs/*`, the Methodology docs callout) states the shipped two-capability suite exactly. The remaining offenders — the eight-item Capabilities grid, the illustrative reasoning row, and the Hero's "any model" phrasing — were **unchanged** at that point: narrowing or relabelling them was treated as a positioning decision that D21 deferred until the H7 concierge test said which frame the product leads with.
 
-**Owner:** unassigned (blocked on the H7 validation experiment, per D21's tradeoffs).
+**Resolved 2026-10-05 (beta-launch pre-flight).** The deferral was lifted because the landing page was about to be published to users, and Hard Rule 9 forbids presenting an unbuilt capability as shipped. Narrowing the *count* of claimed capabilities is a factual correction, not the positioning reversal D21 was deferring — the frame (decision artefact, evidence-linked) is untouched. Changes:
+
+- `Capabilities.tsx` — "Eight capabilities, one versioned suite" → **"Two capabilities, one versioned suite"**. Two *Measured* cards (structured output, tool calling, 15 cases each per [MVP §4.2](../MVP.md#42-capabilities-and-scoring-deterministic-only--d3)); latency, cost and relabelling of reliability moved under **"Reported on every run"** — they are facts about the run, not capabilities ([PRODUCT P4](../PRODUCT.md#2-product-principles)); an explicit **"Not tested by this suite"** line names reasoning, instruction following, long context, coding and vision ([D4](#d4--capability-coverage-is-reported-as-passfailnot-tested-never-as-a-zero)).
+- `ComparisonExcerpt.tsx` — the illustrative *Reasoning* row became *Tool calling*, and every denominator was corrected to the shipped suite: `n=15` per capability and `n=30` per run. The old `n=50`/`n=100` could not have come from `core@1.0.0`.
+- `Hero.tsx` — "against any model with your provider API key" → the six gateway prefixes the CLI resolves by default (OpenAI, Anthropic, OpenRouter, Groq, xAI, DeepSeek), plus the two capabilities by name.
+- `ExampleReport.tsx` — the instruction-following and reasoning score rows became structured output and tool calling (`n=15`), the `Long context → not tested` row was kept because it demonstrates [D4](#d4--capability-coverage-is-reported-as-passfailnot-tested-never-as-a-zero), and the header now reads `core@1.0.0 · 30/30 settled` instead of `Core v2.3 · 100/100`.
+- `LiveDemo.tsx` — the simulated log used case ids that do not exist (`if-001`, `re-001`); it now mirrors real `so-*`/`tc-*` ids and prompts from `core@1.0.0`, and its footnote's "150 cases ×2 repeats" became "the 30-case core suite". The `Simulation` chip stays.
+- `CtaFooter.tsx` — the supported-provider marquee listed **Google AI** and **Mistral**, which were never gateways in `cli/src/commands/run.ts`; replaced with OpenRouter, xAI and DeepSeek.
+
+All illustrative figures keep their "Illustrative—not measured model performance" label; no new number was introduced that is not derived from the shipped suite's 15/15/30 denominators.
+
+**Owner:** resolved (this entry kept for the record).
+
+### U5 — `AGENTS.md` described a repository with no product and no CLI
+
+**Observed (2026-09-18 text):** `AGENTS.md` stated "this repository contains a Next.js landing page and **no product**… no CLI… no test runner… **zero measurements**", and its file map marked `cli/` as "TO BUILD".
+**Observed:** the CLI shipped in Phase 7 ([PHASES.md](../PHASES.md)), `modelcheck-cli@0.1.0` has been on npm since 2026-09-20, `cli/README.md` documents install and usage, and `README.md` already described the CLI as built. The entry file every agent reads therefore contradicted both the code and the sibling README.
+
+**Resolved 2026-10-05:** the status paragraph and the `cli/` line in the file map were rewritten to describe the shipped CLI, the stub `/run` route, and the absence of any hosted service. The fix is recorded here rather than made silently, per Hard Rule 4.
+
+**Owner:** resolved (this entry kept for the record).
 
 ---
 

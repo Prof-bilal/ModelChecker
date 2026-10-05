@@ -3,7 +3,7 @@
 **ModelCheck measures what a model change does to the capability you ship — and shows its evidence.**
 Read this file first. It is the entry point for every coding agent working in this repository.
 
-**Current state (2026-09-18):** this repository contains a Next.js landing page and **no product**. There is no CLI, no API route, no database, no evaluation engine, and no test runner. The product is specified in these documents and has produced **zero measurements**.
+**Current state (2026-10-05):** this repository contains a Next.js landing page and the **CLI** (`cli/`, built through Phase 7 of [PHASES.md](./PHASES.md), published on npm as `modelcheck-cli`). There is **no API route, no database, no hosted service, no telemetry, and no CI evaluation** — the CLI writes local files only. The landing page's `/run` route is a static start-a-run guide (no form, no server, no key field). Docs: [README.md](./README.md) is the human entry point; this file is the agent entry point. (This status line previously claimed the repository held no product and no CLI — corrected here and recorded in [docs/decisions.md](./docs/decisions.md).)
 
 ---
 
@@ -44,7 +44,7 @@ When two sources disagree, the higher one wins **for its own domain**:
 
 **If code contradicts a document, do not silently "fix" the document to match the code, and do not rewrite the code to match the document.** Investigate, then either record the resolution in [docs/decisions.md](./docs/decisions.md) or add it to that file's unresolved section.
 
-Existing open contradictions: **U1** (`design.md` is outside version control), **U2** (the landing page advertises an npm package that returns 404), **U3** (hosted-key privacy copy for a server that does not exist), **U4** (the landing page advertises eight capabilities; the MVP measures two).
+Existing contradictions are tracked in [docs/decisions.md §4](./docs/decisions.md#4--unresolved-contradictions-must-not-be-silently-fixed). **Open:** **U1** (`design.md` is outside version control). **Recorded as resolved:** **U2** (the landing page advertised an npm package that returned 404), **U3** (hosted-key privacy copy for a server that does not exist), **U4** (the landing page advertised eight capabilities; the MVP measures two).
 
 ## 3. Before you code
 
@@ -95,10 +95,10 @@ Existing open contradictions: **U1** (`design.md` is outside version control), *
 
 ```text
 web/                    the git repository (the workspace root is NOT a git repo)
-├── app/                Next.js App Router — landing page; /run is a stub
+├── app/                Next.js App Router — landing page; /run is a static run guide
 ├── components/         landing-page components; the report's visual language
 ├── docs/               research.md · decisions.md · benchmarks.md
-├── cli/                TO BUILD — the entire MVP (see ARCHITECTURE.md §2)
+├── cli/                the MVP — CLI + suite (see ARCHITECTURE.md §2)
 └── *.md                this file and its siblings
 ```
 

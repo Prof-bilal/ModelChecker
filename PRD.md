@@ -181,8 +181,8 @@ interview transcript, a telemetry query, or a run.
 - Producing evaluations is commoditized and largely free — [E3, E5](./docs/research.md#2-evidence-register).
 - A vendor-owned eval framework can go stale — [E4](./docs/research.md#2-evidence-register).
 - Aggregate ranking credibility is publicly contested — [E1](./docs/research.md#2-evidence-register).
-- This repository contains a landing page and a `/run` stub, and no product code.
-- `modelcheck-cli` does not exist on npm (HTTP 404, 2026-09-18) — [U2](./docs/decisions.md#u2--the-landing-page-advertises-a-cli-package-that-does-not-exist).
+- This repository contains a landing page, a static `/run` guide, and the `modelcheck-cli` CLI in `cli/`. It has no server, API route or database — [D1](./docs/decisions.md#d1--mvp-is-a-local-cli-not-a-hosted-web-run-flow).
+- `modelcheck-cli` is published on npm: `0.1.0` (2026-09-20) and `0.1.1` (2026-10-05). The HTTP 404 observed on 2026-09-18 that seeded this bullet is superseded — [U2](./docs/decisions.md#u2--the-landing-page-advertises-a-cli-package-that-does-not-exist) resolved.
 
 ### 11.2 Hypothesis (must be tested before it drives scope)
 

@@ -51,8 +51,8 @@ The problem is real and the timing is good, but the product as originally framed
 was self-undermining: a fixed capability suite *is* a benchmark, which is the
 commodity this product exists to replace. The corrected framing is a **decision
 artefact** — a delta against a pinned baseline — not a scorecard. See
-[docs/decisions.md](./docs/decisions.md) for the reasoning and the four unresolved
-contradictions currently recorded.
+[docs/decisions.md](./docs/decisions.md) for the reasoning and the contradictions
+currently recorded — five entries, four of them resolved, **U1** still open.
 
 ## Running the landing page
 

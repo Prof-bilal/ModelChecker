@@ -22,23 +22,26 @@ reuses `core@1.0.0` and labels coding/repository fit as not tested.
 
 ---
 
-## 1. Current state of the system (as of 2026-09-18)
+## 1. Current state of the system (as of 2026-10-05)
 
-Honest inventory. This is all that exists.
+Honest inventory. This is all that exists. Refreshed 2026-10-05: the 2026-09-18
+version of this table still reported the CLI, the test suite and the npm package as
+non-existent after they had shipped — recorded in
+[decisions.md](./docs/decisions.md) rather than silently rewritten at the time.
 
 | Component | Status | Notes |
 |---|---|---|
 | Next.js 16.3.5 App Router app in `web/` | **Exists** | React 19.2.8, Tailwind v4, TypeScript strict, `@/*` → `./*` path alias |
-| Landing page (`app/page.tsx` + 12 components) | **Exists** | Implements `../design.md` §8; illustrative figures labelled |
-| `/run` route | **Exists, stub** | Renders a placeholder; no form, no logic |
-| API routes, server actions, route handlers | **Do not exist** | `app/` has no `api/` directory |
+| Landing page (`app/page.tsx` + `components/`) | **Exists** | Implements `../design.md` §8; illustrative figures labelled |
+| `/run` route | **Exists, static guide** | Start-a-run page: install → key → run → read. No form, no logic, no server, no key field (MVP §6, [D1](./docs/decisions.md#d1--mvp-is-a-local-cli-not-a-hosted-web-run-flow)) |
+| API routes, server actions, route handlers | **Do not exist** | `app/` has no `route.ts` and no `api/` directory |
 | Database, ORM, migrations | **Do not exist** | No persistence of any kind |
-| Model adapters | **Do not exist** | No provider SDK in `package.json` |
-| Evaluation engine, suites, scorers | **Do not exist** | No `lib/`, no `cli/` |
+| Model adapters in `web/` | **Do not exist** | No provider SDK in `web/package.json`; the adapters are `cli/src/adapters/` |
+| Evaluation engine, suites, scorers | **Exists, in `cli/`** | `cli/src/engine/`, `cli/suites/core/1.0.0` (30 cases), `cli/src/scorers/` |
 | Auth, accounts, sessions | **Do not exist** | None |
-| Tests | **Do not exist** | No test runner configured; `package.json` has no `test` script |
-| CI | **Do not exist** | No `.github/` |
-| CLI / published package | **Do not exist** | `modelcheck-cli` returns 404 on npm ([U2](./docs/decisions.md#u2--the-landing-page-advertises-a-cli-package-that-does-not-exist)) |
+| Tests | **Exists, in `cli/`** | 153 `node:test` cases, no network; `web/package.json` still has no `test` script |
+| CI | **Exists** | `.github/workflows/deno.yml` |
+| CLI / published package | **Exists** | `modelcheck-cli@0.1.1` on npm (2026-10-05; `0.1.0` on 2026-09-20) — [U2](./docs/decisions.md#u2--the-landing-page-advertises-a-cli-package-that-does-not-exist) resolved |
 
 **Consequence:** any document describing hosted execution, a database schema, or a
 job queue is describing something that does not exist and is not scheduled. Those
