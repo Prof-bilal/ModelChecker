@@ -281,6 +281,16 @@ Decided before this research pass and **retained**, with the evidence that suppo
 - **Also corrected in this change:** `ARCHITECTURE.md` §1 still reported the CLI, the engine, the test suite and the npm package as non-existent, and CI as absent while `.github/workflows/deno.yml` exists; `PRD.md` §11.1 still listed "no product code" and "`modelcheck-cli` 404" as validated facts; `AGENTS.md` still called `/run` a stub. All were false statements about shipped code and are corrected with their dated reasons.
 - **Revisit when:** a hosted run flow is genuinely scheduled — that starts by amending [MVP §6](../MVP.md#6-explicitly-excluded-from-the-mvp) and passing the [SECURITY §8](../SECURITY.md#8-what-changes-when-a-server-exists-stage-2-re-review-gate) re-review, not by writing a form.
 
+## D32 — The navbar is one row above 880px; two anchor links drop out below 1120px
+
+- **Date:** 2026-10-05
+- **Context:** Reported with a screenshot of the deployed site wrapping into two rows at ~1200px. The row is brand (239px incl. logo and Beta pill) + gap + capsule (778px for 7 links + CTA) ≈ 1029px, against `--content-max: 1100px` minus `px-6` — so any viewport below ~1100px wrapped, and the pre-logo capsule was wider still. Below `sm`-to-`lg` the capsule (min-content ≈736px, its CTA label being wrappable) also overflowed the page, making 640–768px scroll sideways — a pre-existing bug, not introduced by the logo. Widths are exact, not estimated: Inter and JetBrains Mono are self-hosted via `next/font`, so text measures the same on every machine.
+- **Options:** (a) spacing-only fix — one line from ~1100px up, wrap (and the sideways scroll) kept below; (b) also hide the two long anchor links (`Example`, `Methodology`) below 1120px; (c) add a hamburger menu below `lg`.
+- **Decision:** (b), chosen with the owner in session. The capsule padding was tightened (`--space-2` all round), the `Comparing platforms` label shortened to `Platforms`, the row gap `gap-x-4`→`gap-x-3`, and the two anchor links gated behind `min-[1120px]:inline-block`.
+- **Reason:** one line from ~880px (covers 1024px iPad landscape and small laptops), all seven links from 1120px, and the 640–768px sideways scroll disappears because the capsule shrinks to 568px — no JS, no menu state, nothing new to maintain before beta.
+- **Tradeoffs:** between 880px and 1119px the nav shows five of seven links; the dropped pair are in-page anchors, so they are the least lossy choice, but nav contents are now viewport-dependent — any future edit to capsule copy must re-measure the 1120px threshold (CDP `Runtime.evaluate` against a local `next start`), not eyeball it.
+- **Revisit when:** a link must be added below 1120px, or `design.md` [U1](#u1--designmd-and-the-source-evidence-live-outside-version-control) prescribes a collapse pattern — then prefer the menu (c) over re-tuning thresholds again.
+
 ## 4. Unresolved contradictions (must not be silently fixed)
 
 ### U1 — `design.md` and the source evidence live outside version control
