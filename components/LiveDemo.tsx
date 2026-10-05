@@ -10,15 +10,17 @@ import { IconCheck, IconClose, IconArrowRightUp } from "@devigner-ui/icons";
 
 type CaseState = "pending" | "pass" | "fail";
 
+/* Case ids and prompts mirror core@1.0.0 (so-* structured output, tc-* tool
+ * calling). Simulated verdicts — the component is labelled as a simulation. */
 const CASES: { id: string; cap: string; prompt: string; verdict: CaseState; ms: number }[] = [
-  { id: "so-001", cap: "Structured output", prompt: "Extract invoice fields → JSON", verdict: "pass", ms: 900 },
-  { id: "so-002", cap: "Structured output", prompt: "Nested schema, required enums", verdict: "pass", ms: 750 },
-  { id: "if-001", cap: "Instruction following", prompt: "Two constraints + length limit", verdict: "pass", ms: 1100 },
-  { id: "if-002", cap: "Instruction following", prompt: "Refuse politely + offer alt", verdict: "fail", ms: 950 },
-  { id: "re-001", cap: "Reasoning", prompt: "3-step arithmetic word problem", verdict: "pass", ms: 1400 },
-  { id: "re-002", cap: "Reasoning", prompt: "Constraint scheduling puzzle", verdict: "fail", ms: 1200 },
-  { id: "so-003", cap: "Structured output", prompt: "Escaped quotes inside strings", verdict: "pass", ms: 800 },
-  { id: "re-003", cap: "Reasoning", prompt: "Unit conversion chain", verdict: "pass", ms: 1000 },
+  { id: "so-001", cap: "Structured output", prompt: "Extract invoice details → JSON", verdict: "pass", ms: 900 },
+  { id: "so-006", cap: "Structured output", prompt: "Line items as an array, exact count", verdict: "pass", ms: 750 },
+  { id: "tc-001", cap: "Tool calling", prompt: "Weather in Lisbon — call the tool", verdict: "pass", ms: 1100 },
+  { id: "tc-004", cap: "Tool calling", prompt: "Book Berlin → Tokyo, one passenger", verdict: "fail", ms: 950 },
+  { id: "so-013", cap: "Structured output", prompt: "Sensor reading, extra keys forbidden", verdict: "pass", ms: 800 },
+  { id: "tc-012", cap: "Tool calling", prompt: "No tool fits this request", verdict: "fail", ms: 1200 },
+  { id: "so-008", cap: "Structured output", prompt: "Escaped Windows path inside JSON", verdict: "pass", ms: 850 },
+  { id: "tc-011", cap: "Tool calling", prompt: "Two independent lookups in one go", verdict: "pass", ms: 1000 },
 ];
 
 export function LiveDemo() {
@@ -88,7 +90,7 @@ export function LiveDemo() {
             aria-hidden="true"
             className={`h-2 w-2 rounded-full ${done ? "bg-success" : running ? "pulse-dot bg-accent" : "bg-text-muted"}`}
           />
-          <span>openai/gpt-5.2-mini · Core v2.3 · 8 cases</span>
+          <span>openai/gpt-5.2-mini · core@1.0.0 · 8 cases</span>
           <span className="rounded-pill border border-border px-2 py-0.5 text-[10px] uppercase tracking-wide text-text-muted">
             Simulation
           </span>
@@ -171,7 +173,7 @@ export function LiveDemo() {
         role="note"
       >
         Scripted simulation — no live model calls, no real charges. A real run
-        executes 150 cases ×2 repeats against your provider and produces a
+        executes the 30-case core suite against your provider and produces a
         report like this, with sample outputs and scoring rationale.
       </p>
     </div>

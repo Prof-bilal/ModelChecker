@@ -2,7 +2,8 @@ import { IconTerminal } from "@devigner-ui/icons";
 
 /**
  * CLI install line. The package name matches what npm serves (modelcheck-cli,
- * published 2026-09-20 — resolves U2). Static text, no clipboard logic.
+ * 0.1.0 published 2026-09-20, 0.1.1 published 2026-10-05 — resolves U2).
+ * Static text, no clipboard logic.
  */
 export function InstallBar() {
   return (

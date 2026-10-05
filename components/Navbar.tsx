@@ -19,9 +19,18 @@ export function Navbar() {
         aria-label="Main"
         className="mx-auto flex min-h-16 max-w-(--content-max) flex-wrap items-center justify-between gap-x-4 gap-y-2 px-4 py-2 sm:px-6"
       >
-        <Link href="/" className="text-text">
-          <Wordmark />
-        </Link>
+        <div className="flex items-center gap-3">
+          <Link href="/" className="text-text">
+            <Wordmark />
+          </Link>
+          {/* Beta status badge. Same pill pattern as the /benchmarks chips, tokens only. */}
+          <span
+            className="rounded-pill border border-border px-2.5 py-1 font-mono text-[11px] uppercase tracking-[0.18em] text-text-muted"
+            title="ModelCheck is in beta"
+          >
+            Beta
+          </span>
+        </div>
         {/* Light capsule carrying dark text, with the primary action nested inside (§14) */}
         <div className="capsule">
           {LINKS.map((link) => (

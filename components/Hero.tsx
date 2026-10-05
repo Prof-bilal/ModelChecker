@@ -29,9 +29,11 @@ export function Hero() {
         </span>
 
         <p className="mt-8 max-w-2xl text-md text-text">
-          ModelCheck runs a versioned benchmark suite against any model with
-          your provider API key — then shows you the answers, the failures,
-          the latency, and the cost. Every number carries its evidence.
+          ModelCheck runs a versioned 30-case suite — structured output and tool
+          calling — against the model you choose, through your provider API key:
+          OpenAI, Anthropic, OpenRouter, Groq, xAI or DeepSeek. Then it shows you
+          the answers, the failures, the latency, and the cost. Every number
+          carries its evidence.
         </p>
 
         <div className="mt-8 flex flex-wrap items-center justify-center gap-3">

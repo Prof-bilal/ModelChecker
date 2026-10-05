@@ -2,11 +2,12 @@ import { Reveal } from "./Reveal";
 import { SectionHeading } from "./SectionHeading";
 import { IconTrendingUp, IconTrendingDown } from "@devigner-ui/icons";
 
+/* Denominators match core@1.0.0: 15 cases per capability, 30 per run. */
 const ROWS = [
-  { m: "Structured output (higher)", a: "90.0% (n=50)", b: "96.0% (n=50)", d: "+6.0pp", up: true, w: 96 },
-  { m: "Reasoning (higher)", a: "78.6% (n=50)", b: "74.0% (n=50)", d: "−4.6pp", up: false, w: 74 },
-  { m: "Latency p50 (lower)", a: "1.4s (n=100)", b: "1.1s (n=100)", d: "−0.3s", up: false, w: 55 },
-  { m: "Est. cost (lower)", a: "$0.41 (n=100)", b: "$0.55 (n=100)", d: "+$0.14", up: false, w: 70 },
+  { m: "Structured output (higher)", a: "12 of 15 (80.0%)", b: "13 of 15 (86.7%)", d: "+6.7pp", up: true, w: 87 },
+  { m: "Tool calling (higher)", a: "11 of 15 (73.3%)", b: "13 of 15 (86.7%)", d: "+13.4pp", up: true, w: 87 },
+  { m: "Latency p50 (lower)", a: "1.4s (n=30)", b: "1.1s (n=30)", d: "−0.3s", up: false, w: 55 },
+  { m: "Est. cost (lower)", a: "$0.41 (n=30)", b: "$0.55 (n=30)", d: "+$0.14", up: false, w: 70 },
 ] as const;
 
 export function ComparisonExcerpt() {

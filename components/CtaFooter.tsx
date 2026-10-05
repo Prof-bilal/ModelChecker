@@ -1,7 +1,10 @@
 import { ActionButton } from "./ActionButton";
 import { Wordmark } from "./Wordmark";
 
-const SUPPORTED = ["OpenAI", "Anthropic", "Google AI", "Mistral", "Groq"] as const;
+/* The six gateway prefixes the CLI actually resolves by default (cli/README —
+ * model ids are gateway/wire-id; any other OpenAI-compatible endpoint works via
+ * --base-url). Google AI and Mistral were listed here and were never gateways. */
+const SUPPORTED = ["OpenAI", "Anthropic", "OpenRouter", "Groq", "xAI", "DeepSeek"] as const;
 /* One marquee half: 4 repetitions ≈ 2600px so the right edge never exposes a gap
    on common viewports; the track renders two identical halves for a seamless loop. */
 const ROW = [...SUPPORTED, ...SUPPORTED, ...SUPPORTED, ...SUPPORTED];

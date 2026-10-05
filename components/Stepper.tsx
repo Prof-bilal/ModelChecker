@@ -5,20 +5,20 @@ import { IconPlugCircle, IconSettingsMinimalistic, IconEye } from "@devigner-ui/
 const STEPS = [
   {
     n: "01",
-    t: "Connect",
-    d: "Paste your provider API key. It travels over TLS to execute the run and is never included in reports.",
+    t: "Provide a key",
+    d: "Export your provider API key as an environment variable. It is read on your machine and sent only to the provider you selected — never to ModelCheck, never as a command-line argument.",
     icon: IconPlugCircle,
   },
   {
     n: "02",
     t: "Configure",
-    d: "Pin the exact model ID and a versioned suite. See case counts, coverage, omissions, and estimated charge before anything runs.",
+    d: "Pin the exact model ID and a versioned suite. Case counts, coverage, omissions, and a pre-flight cost estimate are printed before the first request is billed.",
     icon: IconSettingsMinimalistic,
   },
   {
     n: "03",
     t: "Inspect",
-    d: "Watch cases settle live, then read the report: per-capability scores with n, sample outputs, latency, cost, failures.",
+    d: "Read the local report: per-capability scores with n, sample outputs, latency, estimated cost, failures — every number linked back to its cases.",
     icon: IconEye,
   },
 ] as const;
@@ -29,8 +29,8 @@ export function Stepper() {
       <div className="mx-auto max-w-(--content-max) px-4 py-20 sm:px-6 lg:py-28">
         <SectionHeading
           eyebrow="How a run works"
-          title="Connect → Configure → Inspect"
-          lede="No SDK, no code changes. Configure the run, execute it against your provider, read the evidence."
+          title="Provide → Configure → Inspect"
+          lede="No SDK, no code changes. The run executes on your machine against your provider; the report is a local file."
         />
         <ol className="mt-14 max-w-2xl">
           {STEPS.map((s, i) => (

@@ -1,10 +1,10 @@
 import { Reveal } from "./Reveal";
 import { SectionHeading } from "./SectionHeading";
 
+/* Denominators match core@1.0.0: 15 cases per capability. */
 const CAPS = [
-  { name: "Structured output", pct: 96, note: "48 of 50 scored cases" },
-  { name: "Instruction following", pct: 82, note: "41 of 50 scored cases" },
-  { name: "Reasoning", pct: 78.6, note: "39 of 50 scored cases" },
+  { name: "Structured output", pct: 86.7, note: "13 of 15 scored cases" },
+  { name: "Tool calling", pct: 80, note: "12 of 15 scored cases" },
   { name: "Long context", pct: null, note: "not tested by this suite" },
 ] as const;
 
@@ -13,8 +13,7 @@ export function ExampleReport() {
     <section id="example" className="mx-auto max-w-(--content-max) px-4 py-20 sm:px-6 lg:py-28">
       <SectionHeading
         eyebrow="Example report"
-        title="The artifact, before the credentials"
-        lede="Every run produces a report with per-capability results, sample outputs, latency, cost, and the exact methodology behind each number."
+        title="The artifact, before the credentials"          lede="Every run reports per-capability results for the two measured capabilities, plus sample outputs, latency, cost, and the exact methodology behind each number. Capabilities the suite does not test say so."
       />
 
       <Reveal
@@ -24,7 +23,7 @@ export function ExampleReport() {
         <div className="flex flex-wrap items-center justify-between gap-2 border-b border-border px-5 py-4">
           <p className="font-mono text-sm font-medium">openai/gpt-5.2-mini</p>
           <p className="tnum font-mono text-xs text-text-muted">
-            Core v2.3 · run_8f3 · 100/100 settled
+            core@1.0.0 · run_8f3 · 30/30 settled
           </p>
         </div>
         <ul>
