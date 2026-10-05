@@ -1,6 +1,6 @@
 {
   "name": "modelcheck-cli",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Measure what a model change does to the capability you ship. Runs a versioned suite against any model with your own API key and writes a report where every number carries its evidence.",
   "license": "MIT",
   "type": "module",
