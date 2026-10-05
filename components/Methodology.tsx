@@ -1,52 +1,57 @@
-import { Reveal } from "./Reveal";
+import { SpecSection } from "./SpecSection";
 import { DocsCallout } from "./DocsCallout";
-import { SectionHeading } from "./SectionHeading";
-import { IconKey, IconHistory2, IconClipboardText, IconShieldKeyhole } from "@devigner-ui/icons";
 
+/** §06 provenance — a definition list (no icon chips, no reveal), D33. */
 const ITEMS = [
   {
     t: "Exact model identity",
     d: "Provider, resolved model ID and version are pinned in every report — never an alias.",
-    icon: IconKey,
   },
   {
     t: "Versioned benchmark suite",
     d: "Suite version, case counts, repeats, scorer types, and known omissions are recorded per run.",
-    icon: IconHistory2,
   },
   {
     t: "Sample-level evidence",
     d: "Read the actual model outputs next to references and scoring rationale — not just aggregates.",
-    icon: IconClipboardText,
   },
   {
     t: "Key handling",
-    d: "Your API key is transmitted over TLS to execute the run and is never included in reports, exports, or logs.",
-    icon: IconShieldKeyhole,
+    d: "Your API key is read from an environment variable on your machine and sent only to your provider over TLS — never included in reports, exports, or logs.",
   },
 ] as const;
 
 export function Methodology() {
   return (
-    <section id="methodology" className="border-y border-border">
-      <div className="mx-auto max-w-(--content-max) px-4 py-20 sm:px-6 lg:py-28">
-        <SectionHeading
-          eyebrow="Trust & methodology"
-          title="Every number carries its provenance"
-        />
-        <dl className="mt-14 grid gap-x-10 gap-y-10 sm:grid-cols-2">
-          {ITEMS.map((it, i) => (
-            <Reveal key={it.t} delay={i * 80} className="border-t border-border pt-6">
-              <dt className="flex items-center gap-2 font-medium">
-                <it.icon aria-hidden="true" className="size-4 text-accent" />
-                {it.t}
-              </dt>
-              <dd className="mt-2 text-sm text-text-muted">{it.d}</dd>
-            </Reveal>
-          ))}
-        </dl>
-        <DocsCallout />
-      </div>
-    </section>
+    <SpecSection
+      id="methodology"
+      no="06"
+      eyebrow="Trust & methodology"
+      title="Every number carries its provenance"
+      lede="Identity, version and coverage are pinned in every report; sample-level evidence sits next to the aggregate."
+      rail={
+        <a
+          href="/docs"
+          className="mt-4 inline-block border-b border-accent pb-px text-xs font-bold text-text hover:text-accent"
+        >
+          Methodology docs →
+        </a>
+      }
+    >
+      <dl className="grid gap-x-10 gap-y-8 sm:grid-cols-2">
+        {ITEMS.map((it) => (
+          <div key={it.t} className="border-t-2 border-border pt-4">
+            <dt className="font-bold">
+              <span aria-hidden="true" className="mr-1.5 text-accent">
+                &gt;
+              </span>
+              {it.t}
+            </dt>
+            <dd className="mt-1.5 text-xs text-text-muted">{it.d}</dd>
+          </div>
+        ))}
+      </dl>
+      <DocsCallout />
+    </SpecSection>
   );
 }

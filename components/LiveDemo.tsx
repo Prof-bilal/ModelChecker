@@ -88,7 +88,7 @@ export function LiveDemo() {
         <p className="flex items-center gap-2">
           <span
             aria-hidden="true"
-            className={`h-2 w-2 rounded-full ${done ? "bg-success" : running ? "pulse-dot bg-accent" : "bg-text-muted"}`}
+            className={`h-2 w-2 ${done ? "bg-success" : running ? "bg-accent" : "bg-text-muted"}`}
           />
           <span>openai/gpt-4o-mini · core@1.0.0 · 8 cases</span>
           <span className="rounded-pill border border-border px-2 py-0.5 text-[10px] uppercase tracking-wide text-text-muted">
@@ -130,7 +130,7 @@ export function LiveDemo() {
           <span className="tnum">{(elapsed / 1000).toFixed(1)}s elapsed</span>
         </div>
         <div
-          className="mt-1.5 h-1 w-full overflow-hidden rounded-full"
+          className="mt-1.5 h-1 w-full overflow-hidden"
           style={{ background: "var(--color-border)" }}
           role="progressbar"
           aria-valuenow={pct}
@@ -139,7 +139,7 @@ export function LiveDemo() {
           aria-label="Cases settled"
         >
           <div
-            className="h-full rounded-full bg-accent"
+            className="h-full bg-accent"
             style={{ width: `${pct}%`, transition: "width .3s ease" }}
           />
         </div>
@@ -147,7 +147,7 @@ export function LiveDemo() {
 
       <ul className="max-h-64 space-y-1 overflow-y-auto px-4 py-3" aria-label="Per-case results log">
         {CASES.slice(0, settled).map((c) => (
-          <li key={c.id} className="log-line flex items-baseline justify-between gap-3">
+          <li key={c.id} className="flex items-baseline justify-between gap-3">
             <span>
               {c.verdict === "pass" ? (
                 <IconCheck aria-hidden="true" className="mr-1 inline size-3 text-success" />

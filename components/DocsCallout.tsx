@@ -1,18 +1,18 @@
 import { ActionButton } from "./ActionButton";
-import { Reveal } from "./Reveal";
 import { IconTerminal } from "@devigner-ui/icons";
 
 /**
- * Install + docs handoff. The package name matches what npm actually serves
+ * Install + docs handoff (D33: square, no reveal — visible at first paint).
+ * The package name matches what npm actually serves
  * (modelcheck-cli@0.1.2, published 2026-10-05; 0.1.0 first published
  * 2026-09-20). Static text, no clipboard logic.
  */
 export function DocsCallout() {
   return (
-    <Reveal className="mx-auto mt-14 max-w-3xl rounded-card border border-border bg-surface p-6 text-center">
+    <div className="mt-10 border border-border-strong bg-well p-6 text-center">
       <p className="flex items-center justify-center gap-2 font-mono text-sm text-text">
         <IconTerminal aria-hidden="true" className="size-4 text-text-muted" />
-        <span aria-hidden="true" className="text-text-muted">
+        <span aria-hidden="true" className="font-bold text-accent">
           $
         </span>
         npm install -g modelcheck-cli
@@ -29,6 +29,6 @@ export function DocsCallout() {
           Full documentation
         </ActionButton>
       </div>
-    </Reveal>
+    </div>
   );
 }

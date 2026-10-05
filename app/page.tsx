@@ -1,4 +1,5 @@
 import { Navbar } from "@/components/Navbar";
+import { FactStrip } from "@/components/FactStrip";
 import { Hero } from "@/components/Hero";
 import { ExampleReport } from "@/components/ExampleReport";
 import { Stepper } from "@/components/Stepper";
@@ -19,6 +20,7 @@ export default function LandingPage() {
         Skip to content
       </a>
       <Navbar />
+      <FactStrip />
       <main id="main">
         <Hero />
         <ExampleReport />

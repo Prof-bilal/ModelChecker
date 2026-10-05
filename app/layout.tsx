@@ -1,14 +1,9 @@
 import type { Metadata } from "next";
-import { Inter, JetBrains_Mono } from "next/font/google";
+import { JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
-/* §13 typography contract: Inter (UI) + JetBrains Mono (data/code) */
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
-  display: "swap",
-});
-
+/* D33 typography: JetBrains Mono is the whole UI voice (docs/decisions.md D33,
+   which supersedes ../design.md §13 for this surface — see U1). */
 const jetbrains = JetBrains_Mono({
   variable: "--font-jetbrains",
   subsets: ["latin"],
@@ -25,7 +20,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${jetbrains.variable} h-full antialiased`}
+      className={`${jetbrains.variable} h-full antialiased`}
     >
       <body className="theme-dark min-h-full flex flex-col">{children}</body>
     </html>

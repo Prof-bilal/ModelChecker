@@ -1,6 +1,4 @@
-import { Reveal } from "./Reveal";
-import { SectionHeading } from "./SectionHeading";
-import { IconQuestionCircle } from "@devigner-ui/icons";
+import { SpecSection } from "./SpecSection";
 
 const FAQS = [
   {
@@ -21,29 +19,29 @@ const FAQS = [
   },
 ] as const;
 
+/** §07 — plain <details> rows, no reveal, no icon chips (D33). */
 export function Faq() {
   return (
-    <section id="faq" className="mx-auto max-w-(--content-max) px-4 py-20 sm:px-6 lg:py-28">
-      <SectionHeading eyebrow="FAQ" title="Questions, answered exactly" />
-      <div className="mt-12 max-w-3xl">
-        {FAQS.map((f, i) => (
-          <Reveal key={f.q} delay={i * 60}>
-            <details className="group border-b border-border py-5">
-              <summary className="flex cursor-pointer list-none items-center gap-3 font-medium marker:hidden [&::-webkit-details-marker]:hidden">
-                {/* Inline in a flex row: a bare svg inside an inline span is
-                    forced to display:block by Tailwind preflight and would
-                    drop onto its own line above the question. */}
-                <IconQuestionCircle
-                  aria-hidden="true"
-                  className="size-4 shrink-0 text-text-muted"
-                />
-                {f.q}
-              </summary>
-              <p className="mt-3 text-sm text-text-muted">{f.a}</p>
-            </details>
-          </Reveal>
+    <SpecSection
+      id="faq"
+      no="07"
+      eyebrow="FAQ"
+      title="Questions, answered exactly"
+      lede="Direct answers, no hedging."
+    >
+      <div className="max-w-3xl">
+        {FAQS.map((f) => (
+          <details key={f.q} className="border-b border-border py-4">
+            <summary className="flex cursor-pointer list-none items-baseline gap-3 font-bold marker:hidden [&::-webkit-details-marker]:hidden">
+              <span aria-hidden="true" className="text-accent">
+                &gt;
+              </span>
+              {f.q}
+            </summary>
+            <p className="mt-2 pl-5 text-xs text-text-muted">{f.a}</p>
+          </details>
         ))}
       </div>
-    </section>
+    </SpecSection>
   );
 }

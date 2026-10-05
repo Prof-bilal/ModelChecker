@@ -22,17 +22,17 @@ These are facts about the current codebase. Follow them.
 | Indentation | 2 spaces | all source files |
 | Statements | Semicolons present, always | all source files |
 | Quotes | Double quotes | all source files |
-| Trailing commas | Present in multiline literals | `Reveal.tsx`, `Capabilities.tsx` |
+| Trailing commas | Present in multiline literals | `Capabilities.tsx`, `ComparisonExcerpt.tsx` |
 | Components | **Named** `export function ComponentName()`, never default-exported — except Next.js route files, which Next requires to default-export | `export function Navbar()`; `export default function LandingPage()` |
 | Component files | One component per file, `PascalCase.tsx`, colocated in `components/` | `components/Hero.tsx` |
 | Page files | `app/**/page.tsx`, default export, `export const metadata` when a page is not the root layout | `app/run/page.tsx` |
 | Module constants | `SCREAMING_SNAKE_CASE`, declared above the component, typed `as const` | `const CAPS = [...] as const` |
-| Interfaces | Inline prop types on the component signature; a named `interface` only when shared | `Reveal({...}: {...})` |
+| Interfaces | Inline prop types on the component signature; a named `interface` only when shared | `SpecSection({...}: {...})` |
 | Literal unions | Preferred over enums | `as?: "div" \| "section" \| "li" \| "tr"` |
-| Client components | `"use client"` as the first line, only when hooks or browser APIs are needed | `Reveal.tsx`, `LiveDemo.tsx` |
+| Client components | `"use client"` as the first line, only when hooks or browser APIs are needed | `LiveDemo.tsx` |
 | Styling | Tailwind utility classes via `className`; contract tokens referenced through `style={{ ... }}` with `var(--token)` | pervasive |
 | CSS | Global tokens and keyframes in `app/globals.css`; tokens mapped into the Tailwind theme with `@theme inline` | `globals.css` |
-| Type suppression | `@ts-expect-error` with an adjacent explanatory comment, never bare `@ts-ignore` | `Reveal.tsx` line 49 |
+| Type suppression | `@ts-expect-error` with an adjacent explanatory comment, never bare `@ts-ignore` | avoidance — no suppressions exist today |
 | Comments | `/** ... */` for component contracts; `//` for a rule citation (e.g. `// §13 ...`) | `InstallBar.tsx`, `globals.css` |
 | Accessibility | `aria-hidden` on decorative glyphs, `aria-label` on landmarks, `caption`/`scope` on tables, `sr-only` where required | `Navbar.tsx`, `ComparisonExcerpt.tsx` |
 | Lint | `eslint` flat config from `eslint-config-next/core-web-vitals` + `/typescript` | `eslint.config.mjs` |
@@ -49,9 +49,9 @@ These are facts about the current codebase. Follow them.
 
 Recorded honestly rather than imitated:
 
-- `ExampleReport.tsx` carries a `@ts-expect-error style prop on dynamic tag` on a `Reveal` that has no `style` prop in its signature. New code should extend the `Reveal` signature rather than add another suppression.
-- `Reveal`'s `ref` is typed `HTMLDivElement` regardless of the `as` tag. Acceptable for now; do not copy the pattern into new components.
+
 - `Capabilities.tsx` and `ComparisonExcerpt.tsx` show figures that are illustrative. Any new illustrative figure must carry a visible "Illustrative" note ([D5](./docs/decisions.md)).
+- Motion is removed from the marketing surface by decision ([D33](./docs/decisions.md)): no reveal-on-scroll, no marquee, no pulse. Content is visible at first paint; do not reintroduce autonomous animation without a recorded decision.
 
 ---
 

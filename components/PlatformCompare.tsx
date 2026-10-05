@@ -1,8 +1,7 @@
-import { Reveal } from "./Reveal";
-import { SectionHeading } from "./SectionHeading";
+import { SpecSection } from "./SpecSection";
 
 /**
- * "Where ModelCheck fits" — how it relates to platforms the user already knows.
+ * "Where ModelCheck fits" (§05) — how it relates to platforms the user already knows.
  * Qualitative only: every cell is a definitional difference, not a measured one,
  * so no research row is required (no invented numbers, Hard Rule 1). Excerpt-style
  * sentences, per PRODUCT.md §5; leaderboards are named without scores.
@@ -36,64 +35,68 @@ const ROWS = [
 
 export function PlatformCompare() {
   return (
-    <section id="vs-platforms" className="border-y border-border">
-      <div className="mx-auto max-w-(--content-max) px-4 py-20 sm:px-6 lg:py-28">
-        <SectionHeading
-          eyebrow="Where ModelCheck fits"
-          title="Not a leaderboard. Not a gateway. Not a framework."
-          lede="You already use platforms like these. ModelCheck answers the question none of them answer for your feature: what does this model change do to the capability you ship — with the evidence attached."
-        />
-        <Reveal
-          delay={100}
-          className="mt-12 overflow-x-auto rounded-card border border-border bg-surface"
+    <SpecSection
+      id="vs-platforms"
+      no="05"
+      eyebrow="Where ModelCheck fits"
+      title="Not a leaderboard. Not a gateway. Not a framework."
+      lede="You already use platforms like these. ModelCheck answers the question none of them answer for your feature: what does this model change do to the capability you ship — with the evidence attached."
+      rail={
+        <a
+          href="/docs/compare-platforms"
+          className="mt-4 inline-block border-b border-accent pb-px text-xs font-bold text-text hover:text-accent"
         >
-          <table className="w-full min-w-210 text-left text-sm">
-            <caption className="sr-only">
-              How ModelCheck differs from platforms you may already use
-            </caption>
-            <thead>
-              <tr className="border-b border-border text-xs text-text-muted">
-                <th scope="col" className="px-5 py-4 font-medium uppercase tracking-wide">
-                  Platform
+          Comparing platforms →
+        </a>
+      }
+    >
+      <div className="overflow-x-auto border border-border bg-surface">
+        <table className="w-full min-w-[44rem] border-collapse text-left text-sm">
+          <caption className="sr-only">
+            How ModelCheck differs from platforms you may already use
+          </caption>
+          <thead className="border-b border-border text-xs uppercase tracking-wider text-text-muted">
+            <tr>
+              <th scope="col" className="px-5 py-3.5 font-medium">
+                Platform
+              </th>
+              <th scope="col" className="px-4 py-3.5 font-medium">
+                What it is
+              </th>
+              <th scope="col" className="px-4 py-3.5 font-medium">
+                The difference
+              </th>
+              <th scope="col" className="px-5 py-3.5 text-right font-medium">
+                How to use it together
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {ROWS.map((r) => (
+              <tr key={r.platform} className="border-b border-border last:border-b-0 align-top">
+                <th scope="row" className="px-5 py-4 font-medium">
+                  {r.platform}
                 </th>
-                <th scope="col" className="px-5 py-4 font-medium uppercase tracking-wide">
-                  What it is
-                </th>
-                <th scope="col" className="px-5 py-4 font-medium uppercase tracking-wide">
-                  The difference
-                </th>
-                <th scope="col" className="px-5 py-4 text-right font-medium uppercase tracking-wide">
-                  How to use it together
-                </th>
+                <td className="px-4 py-4 text-text-muted">{r.role}</td>
+                <td className="px-4 py-4 text-text-muted">{r.difference}</td>
+                <td className="px-5 py-4 text-right text-text-muted">{r.you}</td>
               </tr>
-            </thead>
-            <tbody>
-              {ROWS.map((r) => (
-                <tr key={r.platform} className="border-b border-border last:border-b-0 align-top">
-                  <th scope="row" className="px-5 py-4 font-medium">
-                    {r.platform}
-                  </th>
-                  <td className="px-5 py-4 text-text-muted">{r.role}</td>
-                  <td className="px-5 py-4 text-text-muted">{r.difference}</td>
-                  <td className="px-5 py-4 text-right text-text-muted">{r.you}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </Reveal>
-        <p className="mt-4 text-xs text-text-muted">
-          Comparisons are qualitative and by design: ModelCheck publishes no ranking of
-          other platforms, and the suite — not an index score — is the evidence. A
-          detailed, source-linked description of each surface is in{" "}
-          <a
-            href="/docs/compare-platforms"
-            className="underline decoration-border underline-offset-4 hover:decoration-text"
-          >
-            Comparing platforms
-          </a>
-          .
-        </p>
+            ))}
+          </tbody>
+        </table>
       </div>
-    </section>
+      <p className="mt-4 text-xs text-text-muted">
+        Comparisons are qualitative and by design: ModelCheck publishes no ranking of
+        other platforms, and the suite — not an index score — is the evidence. A
+        detailed, source-linked description of each surface is in{" "}
+        <a
+          href="/docs/compare-platforms"
+          className="underline decoration-border underline-offset-4 hover:decoration-text"
+        >
+          Comparing platforms
+        </a>
+        .
+      </p>
+    </SpecSection>
   );
 }

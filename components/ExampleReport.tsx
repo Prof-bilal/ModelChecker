@@ -1,5 +1,4 @@
-import { Reveal } from "./Reveal";
-import { SectionHeading } from "./SectionHeading";
+import { SpecSection } from "./SpecSection";
 
 /* Denominators match core@1.0.0: 15 cases per capability. */
 const CAPS = [
@@ -10,16 +9,15 @@ const CAPS = [
 
 export function ExampleReport() {
   return (
-    <section id="example" className="mx-auto max-w-(--content-max) px-4 py-20 sm:px-6 lg:py-28">
-      <SectionHeading
-        eyebrow="Example report"
-        title="The artifact, before the credentials"          lede="Every run reports per-capability results for the two measured capabilities, plus sample outputs, latency, cost, and the exact methodology behind each number. Capabilities the suite does not test say so."
-      />
-
-      <Reveal
-        delay={100}
-        className="mt-12 overflow-hidden rounded-card border border-border bg-surface"
-      >
+    <SpecSection
+      id="example"
+      no="01"
+      eyebrow="Example report"
+      title="The artifact, before the credentials"
+      lede="Every run reports per-capability results for the two measured capabilities, plus sample outputs, latency, cost, and the exact methodology behind each number. Capabilities the suite does not test say so."
+      bordered={false}
+    >
+      <div className="overflow-hidden border border-border bg-surface">
         <div className="flex flex-wrap items-center justify-between gap-2 border-b border-border px-5 py-4">
           <p className="font-mono text-sm font-medium">openai/gpt-4o-mini</p>
           <p className="tnum font-mono text-xs text-text-muted">
@@ -36,9 +34,10 @@ export function ExampleReport() {
               <span className="text-sm font-medium">{c.name}</span>
               {c.pct !== null ? (
                 <span className="flex items-center gap-3">
-                  <span className="h-1.5 w-full max-w-56 overflow-hidden rounded-pill bg-border">
+                  <span className="h-1.5 w-full max-w-56 overflow-hidden bg-border">
+                    {/* Final width at first paint — no fill animation (D33). */}
                     <span
-                      className="bar-fill block h-full rounded-pill bg-accent"
+                      className="block h-full bg-accent"
                       style={{ width: `${c.pct}%` }}
                     />
                   </span>
@@ -53,13 +52,13 @@ export function ExampleReport() {
             </li>
           ))}
         </ul>
-      </Reveal>
-
-      <Reveal delay={150}>
-        <p className="mt-4 text-xs text-text-muted" role="note">
+        <p
+          className="border-t border-border px-5 py-3 text-xs text-text-muted"
+          role="note"
+        >
           Illustrative—not measured model performance.
         </p>
-      </Reveal>
-    </section>
+      </div>
+    </SpecSection>
   );
 }

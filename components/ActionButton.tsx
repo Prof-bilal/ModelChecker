@@ -6,10 +6,8 @@ import { IconArrowRightUp } from "@devigner-ui/icons";
  * Every button carries a directional arrow glyph — the visible text label is never omitted.
  */
 const VARIANTS = {
-  /** Primary action on the canvas: white pill on onyx, accent pill on light. */
+  /** Primary action on the canvas: accent block (D33: square, terminal green). */
   solid: "bg-accent text-on-accent hover:opacity-90",
-  /** Action nested inside the light navigation capsule (dark pill on onyx). */
-  capsule: "bg-capsule-action text-capsule-action-text hover:opacity-90",
   outline: "border border-border-strong text-text hover:bg-surface",
   quiet: "text-text-muted hover:text-text",
 } as const;

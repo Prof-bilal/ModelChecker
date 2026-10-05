@@ -99,6 +99,7 @@ Decided before this research pass and **retained**, with the evidence that suppo
 - **Reason:** it honours the owner's explicit hover request while staying as close to the motion ban as a hover effect can get — the page is inert unless the visitor moves their pointer. Canvas keeps ~3k dots out of the DOM (contrast with the SVG-node cost cited in `DotField.tsx`).
 - **Tradeoffs:** pointer tracking is still decorative motion, so instrument surfaces (report, run, compare) keep design.md §13 unchanged. Touch devices see the static field only; the `data-dotfield="painted"` CSS fallback keeps the dots present with no JS.
 - **Revisit when:** anyone proposes the same treatment on an instrument surface, or a performance complaint lands against the hero canvas.
+- **Retired 2026-10-05 by [D33](#d33--the-public-web-surface-adopts-the-cli-brutalist-identity-direction-c).** The owner reviewed the landing UI as “AI-ish, slow, airish, not trustable” and chose a committed identity that excludes decorative motion. `components/DotField.tsx` and its `.dot-grid`/`.hero-glow`/`.hero-scrim` fallback layers were removed, not merely disabled.
 
 ## D14 — The CLI bin targets compiled JavaScript
 
@@ -290,6 +291,24 @@ Decided before this research pass and **retained**, with the evidence that suppo
 - **Reason:** one line from ~880px (covers 1024px iPad landscape and small laptops), all seven links from 1120px, and the 640–768px sideways scroll disappears because the capsule shrinks to 568px — no JS, no menu state, nothing new to maintain before beta.
 - **Tradeoffs:** between 880px and 1119px the nav shows five of seven links; the dropped pair are in-page anchors, so they are the least lossy choice, but nav contents are now viewport-dependent — any future edit to capsule copy must re-measure the 1120px threshold (CDP `Runtime.evaluate` against a local `next start`), not eyeball it.
 - **Revisit when:** a link must be added below 1120px, or `design.md` [U1](#u1--designmd-and-the-source-evidence-live-outside-version-control) prescribes a collapse pattern — then prefer the menu (c) over re-tuning thresholds again.
+
+## D33 — The public web surface adopts the "CLI brutalist" identity (direction C)
+
+- **Date:** 2026-10-05
+- **Context:** The owner reviewed the landing page as “looks like an AI, slow, airish, not trustable”, then — after a documentation-grade proposal was mocked up — as “similar to other fast-shipped pages… users won’t remember it”. Research against the [signs-of-ai-design field guide](https://github.com/febbhav/signs-of-ai-design), TeneX's eight-sign audit and [NN/g's credibility factors](https://www.nngroup.com/articles/trustworthy-design/) showed two failure modes in sequence: (1) stacked AI tells (eyebrow label over every heading, giant thin uppercase display type, reveal-on-scroll hiding content, marquee/pulse/caret motion, capsule nav, identical icon cards, pointer-reactive canvas), then (2) after stripping those, no committed decision at all — the migrated default (white page, hairlines, neutral sans) that reads “fast-shipped”. Three identity directions were mocked up in `docs/mockups/ui-proposal.html` (A instrument, B audit report, C CLI brutalist), each with one signature colour, and the owner chose **C**.
+- **Options:** (a) keep the current onyx + dot field (D13); (b) documentation-grade minimal (the v1/v2 mockups); (c) commit to direction C: JetBrains Mono as the whole UI voice, terminal green `#34E27A` as `--color-accent`, radius tokens → `0`, dark base `#0B0B0C`, a fact strip + §-rail layout, and all autonomous/reveal motion removed.
+- **Decision:** (c), landing page first (`app/page.tsx` and the components it composes). Other routes inherit the token layer immediately and receive their own structural pass next. The landing layout moves to: fact strip under the nav, asymmetric hero (claim left, live demo right), sticky `§01–§07` section rails, a horizontal process rail, a tinted comparison band, and an inverted closing band.
+- **Reason:** memorability requires a chosen system repeated on every surface; C is the direction closest to the shipped product (a CLI) and to [PRODUCT §4](../PRODUCT.md#4-ux-principles) — “this is an instrument”, “no decorative motion”. Removing reveal/marquee/pulse also removes the exact behaviour that made the page feel slow (content hidden until IntersectionObserver fires).
+- **Contract impact, stated explicitly:**
+  1. **D13 retired** (see its own entry) — `DotField.tsx` deleted, hero canvas gone.
+  2. `--font-ui` becomes JetBrains Mono. `../design.md` §13’s “Inter (UI) + JetBrains Mono (data/code)” typography contract cannot be edited in-repo ([U1](#u1--designmd-and-the-source-evidence-live-outside-version-control)) and is superseded for the web surface by this entry; `app/layout.tsx` and `globals.css` comments now cite D33 instead of §13.
+  3. `--color-accent` changes from blue/white to green (`#34E27A` on dark; `#0b7a3b` on the retained light set, which keeps AA contrast). The capsule tokens and the `capsule` `ActionButton` variant are removed with the flat nav.
+  4. Radius tokens (`sm/md/lg/card/pill`) become `0` for every surface.
+  5. `Reveal.tsx` is deleted; `CODESTYLE.md` §1 references to it were updated in the same change.
+  6. D32’s measurement discipline still binds: the nav row changed shape (flat, mono, uppercase), so the 1120px threshold must be re-measured by CDP before release, not eyeballed.
+- **Numbers:** the fact strip shows only documented counts — 30 cases and 2 capabilities ([MVP §4.2](../MVP.md#42-capabilities-and-scoring-deterministic-only--d3)), 6 gateways (`CtaFooter.SUPPORTED` / cli README), 0 servers ([FAQ / D1](#d1--mvp-is-a-local-cli-not-a-hosted-web-run-flow)). No new figure was invented ([D5](#d5--no-invented-numbers-anywhere-in-this-repository)).
+- **Tradeoffs:** long-form docs pages inherit the mono voice without a structural pass (follow-up, recorded by the owner as “then we do for other pages”); full-page mono may read poorly for very long prose — if reported, a second typeface for long-form body only may be added by a recorded decision; green-on-white for the light set is a different tint from the dark set and must be re-checked if a surface mixes them.
+- **Revisit when:** docs reading comfort is reported poor; the green accent fails contrast on a new surface; or the owner reopens the identity choice.
 
 ## 4. Unresolved contradictions (must not be silently fixed)
 
