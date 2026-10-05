@@ -1,6 +1,6 @@
 import { Reveal } from "./Reveal";
 import { SectionHeading } from "./SectionHeading";
-import { IconHelp } from "@devigner-ui/icons";
+import { IconQuestionCircle } from "@devigner-ui/icons";
 
 const FAQS = [
   {
@@ -29,10 +29,14 @@ export function Faq() {
         {FAQS.map((f, i) => (
           <Reveal key={f.q} delay={i * 60}>
             <details className="group border-b border-border py-5">
-              <summary className="cursor-pointer list-none font-medium marker:hidden [&::-webkit-details-marker]:hidden">
-                <span className="mr-3 text-text-muted" aria-hidden="true">
-                  <IconHelp className="size-4" />
-                </span>
+              <summary className="flex cursor-pointer list-none items-center gap-3 font-medium marker:hidden [&::-webkit-details-marker]:hidden">
+                {/* Inline in a flex row: a bare svg inside an inline span is
+                    forced to display:block by Tailwind preflight and would
+                    drop onto its own line above the question. */}
+                <IconQuestionCircle
+                  aria-hidden="true"
+                  className="size-4 shrink-0 text-text-muted"
+                />
                 {f.q}
               </summary>
               <p className="mt-3 text-sm text-text-muted">{f.a}</p>
