@@ -37,7 +37,7 @@ import { buildReport, writeReportJson } from "../report/write-json.js";
 
 /** The CLI's own version, read from package.json at build time is overkill for
  * now; kept in step manually with cli/package.json (checked by a test). */
-export const MODELCHECK_VERSION = "0.1.0";
+export const MODELCHECK_VERSION = "0.1.1";
 
 /** Run ids are directory names: keep them filesystem-safe. */
 function sanitizeLabel(raw: string): string {
