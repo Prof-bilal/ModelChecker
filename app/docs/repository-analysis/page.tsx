@@ -33,12 +33,12 @@ export default function RepositoryAnalysisPage() {
           choice. The assessment reflects the measured result; supplying a model does
           not make it the recommendation automatically.
         </p>
-        <Code label="bash">modelcheck repo ./my-project anthropic/claude-sonnet-4.5 openrouter</Code>
+        <Code label="bash">modelcheck repo ./my-project anthropic/claude-sonnet-5 openrouter</Code>
 
         <ApiTable
           rows={[
             ["<project-repo>", "A local repository or project directory to inspect."],
-            ["<model-name>", "A ModelCheck model identifier, such as anthropic/claude-sonnet-4.5."],
+            ["<model-name>", "A ModelCheck model identifier, such as anthropic/claude-sonnet-5."],
             ["<provider-name>", "The provider used to access that model, such as openrouter."],
           ]}
         />
@@ -68,7 +68,7 @@ export default function RepositoryAnalysisPage() {
         <p className="mt-4 text-md leading-7 text-text-muted">
           Use the same model naming system as the rest of the CLI. ModelCheck combines
           the provider and model into its existing gateway/wire identifier—for example,
-          <code className="mx-1 font-mono text-xs">openrouter/anthropic/claude-sonnet-4.5</code>.
+          <code className="mx-1 font-mono text-xs">openrouter/anthropic/claude-sonnet-5</code>.
           Provider and identifier validation is structural; provider-side availability
           is confirmed when the evaluation runs.
         </p>

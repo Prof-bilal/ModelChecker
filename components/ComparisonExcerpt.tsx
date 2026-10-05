@@ -33,10 +33,10 @@ export function ComparisonExcerpt() {
                 Metric (direction)
               </th>
               <th scope="col" className="px-5 py-4 font-medium uppercase tracking-wide">
-                Baseline · gpt-5.2-mini
+                Baseline · gpt-4o-mini
               </th>
               <th scope="col" className="px-5 py-4 font-medium uppercase tracking-wide">
-                Candidate · claude-4.5-haiku
+                Candidate · claude-haiku-4-5
               </th>
               <th scope="col" className="px-5 py-4 text-right font-medium uppercase tracking-wide">
                 Delta

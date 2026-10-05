@@ -21,7 +21,7 @@ export function ExampleReport() {
         className="mt-12 overflow-hidden rounded-card border border-border bg-surface"
       >
         <div className="flex flex-wrap items-center justify-between gap-2 border-b border-border px-5 py-4">
-          <p className="font-mono text-sm font-medium">openai/gpt-5.2-mini</p>
+          <p className="font-mono text-sm font-medium">openai/gpt-4o-mini</p>
           <p className="tnum font-mono text-xs text-text-muted">
             core@1.0.0 · run_8f3 · 30/30 settled
           </p>

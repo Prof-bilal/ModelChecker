@@ -90,7 +90,7 @@ export function LiveDemo() {
             aria-hidden="true"
             className={`h-2 w-2 rounded-full ${done ? "bg-success" : running ? "pulse-dot bg-accent" : "bg-text-muted"}`}
           />
-          <span>openai/gpt-5.2-mini · core@1.0.0 · 8 cases</span>
+          <span>openai/gpt-4o-mini · core@1.0.0 · 8 cases</span>
           <span className="rounded-pill border border-border px-2 py-0.5 text-[10px] uppercase tracking-wide text-text-muted">
             Simulation
           </span>

@@ -23,7 +23,7 @@ export default function ComparisonPage() {
         <h2 className="mt-12 text-lg font-semibold tracking-tight">The loop</h2>
         <Code label="bash">{`modelcheck run --suite core --model openai/gpt-4o --label baseline
 # ...model or provider changes...
-modelcheck run --suite core --model openai/gpt-5.2-mini --label candidate
+modelcheck run --suite core --model openai/gpt-4o-mini --label candidate
 modelcheck list
 modelcheck compare <baseline-id> <candidate-id>`}</Code>
 
