@@ -1,7 +1,7 @@
 {
   "$comment": "Dated price snapshot (EVALUATIONS.md §9, D15). Prices are USD per 1k tokens. Rows are per gateway: the same underlying model can carry different prices on different gateways (observed 2026-09-19, e.g. GLM 5.3 Flash $0.15/$0.50 on OpenCode Zen and Command Code vs $0.09/$0.30 on OpenRouter), so estimates reflect the gateway you target. OpenRouter passes through provider token rates but charges a 5.5% fee on credit purchases, which is NOT included in these rows. free_promo rows are gateway promotions that can end without notice; a zero here is a promotion, not a missing price (missing prices are unpriced, never zero).",
   "currency": "USD",
-  "updated": "2026-09-19",
+  "updated": "2026-10-05",
   "provider_prefixes": {
     "claude-": "anthropic"
   },
@@ -514,126 +514,134 @@
       "source": "https://commandcode.ai/docs/resources/pricing-limits — Ling 3.0 Flash Sante FREE: free, up to 100 requests/day, while it lasts"
     },
 
-    "openrouter/deepseek-v4-flash": {
-      "input_per_1k": 0.0000473,
-      "output_per_1k": 0.0000946,
+    "openrouter/anthropic/claude-sonnet-5": {
+      "input_per_1k": 0.002,
+      "output_per_1k": 0.01,
       "currency": "USD",
-      "date": "2026-09-19",
-      "source": "https://openrouter.ai/api/v1/models (deepseek/deepseek-v4-flash: $0.0473/M in, $0.0946/M out)"
+      "date": "2026-10-05",
+      "source": "https://openrouter.ai/api/v1/models (anthropic/claude-sonnet-5: $2.00/Mtok in, $10.00/Mtok out; observed 2026-10-05)"
     },
-    "openrouter/deepseek-v4.1-flash": {
+
+    "openrouter/deepseek/deepseek-v4-flash": {
+      "input_per_1k": 0.00003,
+      "output_per_1k": 0.00128,
+      "currency": "USD",
+      "date": "2026-10-05",
+      "source": "https://openrouter.ai/api/v1/models (deepseek/deepseek-v4-flash: $0.030/M in, $1.280/M out; observed 2026-10-05)"
+    },
+    "openrouter/deepseek/deepseek-v4.1-flash": {
+      "input_per_1k": 0.0003,
+      "output_per_1k": 0.0012,
+      "currency": "USD",
+      "date": "2026-10-05",
+      "source": "https://openrouter.ai/api/v1/models (deepseek/deepseek-v4.1-flash: $0.300/M in, $1.200/M out; observed 2026-10-05)"
+    },
+    "openrouter/deepseek/deepseek-v4-pro": {
+      "input_per_1k": 0.0002088,
+      "output_per_1k": 0.0004176,
+      "currency": "USD",
+      "date": "2026-10-05",
+      "source": "https://openrouter.ai/api/v1/models (deepseek/deepseek-v4-pro: $0.2088/M in, $0.4176/M out; observed 2026-10-05)"
+    },
+    "openrouter/z-ai/glm-5.3-flash": {
       "input_per_1k": 0.00015,
-      "output_per_1k": 0.0006,
+      "output_per_1k": 0.0005,
       "currency": "USD",
-      "date": "2026-09-19",
-      "source": "https://openrouter.ai/api/v1/models (deepseek/deepseek-v4.1-flash: $0.15/M in, $0.60/M out)"
+      "date": "2026-10-05",
+      "source": "https://openrouter.ai/api/v1/models (z-ai/glm-5.3-flash: $0.15/M in, $0.50/M out; observed 2026-10-05)"
     },
-    "openrouter/deepseek-v4-pro": {
-      "input_per_1k": 0.0005744,
-      "output_per_1k": 0.0011487,
+    "openrouter/z-ai/glm-5.3": {
+      "input_per_1k": 0.00005,
+      "output_per_1k": 0.007,
       "currency": "USD",
-      "date": "2026-09-19",
-      "source": "https://openrouter.ai/api/v1/models (deepseek/deepseek-v4-pro: $0.5744/M in, $1.1487/M out)"
+      "date": "2026-10-05",
+      "source": "https://openrouter.ai/api/v1/models (z-ai/glm-5.3: $0.05/M in, $7.00/M out; observed 2026-10-05)"
     },
-    "openrouter/glm-5.3-flash": {
-      "input_per_1k": 0.00009,
-      "output_per_1k": 0.0003,
-      "currency": "USD",
-      "date": "2026-09-19",
-      "source": "https://openrouter.ai/api/v1/models (z-ai/glm-5.3-flash: $0.09/M in, $0.30/M out)"
-    },
-    "openrouter/glm-5.3": {
-      "input_per_1k": 0.00091,
-      "output_per_1k": 0.00286,
-      "currency": "USD",
-      "date": "2026-09-19",
-      "source": "https://openrouter.ai/api/v1/models (z-ai/glm-5.3: $0.91/M in, $2.86/M out)"
-    },
-    "openrouter/kimi-k2.5": {
+    "openrouter/moonshotai/kimi-k2.5": {
       "input_per_1k": 0.00045,
       "output_per_1k": 0.00225,
       "currency": "USD",
       "date": "2026-09-19",
       "source": "https://openrouter.ai/api/v1/models (moonshotai/kimi-k2.5: $0.45/M in, $2.25/M out)"
     },
-    "openrouter/kimi-k3": {
-      "input_per_1k": 0.0020695,
-      "output_per_1k": 0.0115892,
+    "openrouter/moonshotai/kimi-k3": {
+      "input_per_1k": 0.00067,
+      "output_per_1k": 0.014,
       "currency": "USD",
-      "date": "2026-09-19",
-      "source": "https://openrouter.ai/api/v1/models (moonshotai/kimi-k3: $2.0695/M in, $11.5892/M out)"
+      "date": "2026-10-05",
+      "source": "https://openrouter.ai/api/v1/models (moonshotai/kimi-k3: $0.67/M in, $14.00/M out; observed 2026-10-05)"
     },
-    "openrouter/minimax-m2.5": {
+    "openrouter/minimax/minimax-m2.5": {
       "input_per_1k": 0.00027,
       "output_per_1k": 0.00108,
       "currency": "USD",
       "date": "2026-09-19",
       "source": "https://openrouter.ai/api/v1/models (minimax/minimax-m2.5: $0.27/M in, $1.08/M out)"
     },
-    "openrouter/minimax-m3": {
+    "openrouter/minimax/minimax-m3": {
       "input_per_1k": 0.0003,
       "output_per_1k": 0.0012,
       "currency": "USD",
       "date": "2026-09-19",
       "source": "https://openrouter.ai/api/v1/models (minimax/minimax-m3: $0.30/M in, $1.20/M out)"
     },
-    "openrouter/qwen3.7-max": {
+    "openrouter/qwen/qwen3.7-max": {
       "input_per_1k": 0.001475,
       "output_per_1k": 0.004425,
       "currency": "USD",
       "date": "2026-09-19",
       "source": "https://openrouter.ai/api/v1/models (qwen/qwen3.7-max: $1.475/M in, $4.425/M out)"
     },
-    "openrouter/qwen3.7-plus": {
+    "openrouter/qwen/qwen3.7-plus": {
       "input_per_1k": 0.00032,
       "output_per_1k": 0.00128,
       "currency": "USD",
       "date": "2026-09-19",
       "source": "https://openrouter.ai/api/v1/models (qwen/qwen3.7-plus: $0.32/M in, $1.28/M out)"
     },
-    "openrouter/qwen3.8-flash": {
+    "openrouter/qwen/qwen3.8-flash": {
       "input_per_1k": 0.00015,
       "output_per_1k": 0.00047,
       "currency": "USD",
       "date": "2026-09-19",
       "source": "https://openrouter.ai/api/v1/models (qwen/qwen3.8-flash: $0.15/M in, $0.47/M out)"
     },
-    "openrouter/gemini-3.8-flash": {
+    "openrouter/google/gemini-3.8-flash": {
       "input_per_1k": 0.00075,
       "output_per_1k": 0.00375,
       "currency": "USD",
       "date": "2026-09-19",
       "source": "https://openrouter.ai/api/v1/models (google/gemini-3.8-flash: $0.75/M in, $3.75/M out)"
     },
-    "openrouter/grok-4.6": {
+    "openrouter/x-ai/grok-4.6": {
       "input_per_1k": 0.002,
       "output_per_1k": 0.006,
       "currency": "USD",
       "date": "2026-09-19",
       "source": "https://openrouter.ai/api/v1/models (x-ai/grok-4.6: $2.00/M in, $6.00/M out)"
     },
-    "openrouter/gpt-5.6-terra": {
+    "openrouter/openai/gpt-5.6-terra": {
       "input_per_1k": 0.002,
       "output_per_1k": 0.012,
       "currency": "USD",
       "date": "2026-09-19",
       "source": "https://openrouter.ai/api/v1/models (openai/gpt-5.6-terra: $2.00/M in, $12.00/M out)"
     },
-    "openrouter/gpt-5.6-luna": {
+    "openrouter/openai/gpt-5.6-luna": {
       "input_per_1k": 0.0002,
       "output_per_1k": 0.0012,
       "currency": "USD",
       "date": "2026-09-19",
       "source": "https://openrouter.ai/api/v1/models (openai/gpt-5.6-luna: $0.20/M in, $1.20/M out)"
     },
-    "openrouter/gpt-5.5": {
+    "openrouter/openai/gpt-5.5": {
       "input_per_1k": 0.005,
       "output_per_1k": 0.03,
       "currency": "USD",
       "date": "2026-09-19",
       "source": "https://openrouter.ai/api/v1/models (openai/gpt-5.5: $5.00/M in, $30.00/M out)"
     },
-    "openrouter/gpt-5.4": {
+    "openrouter/openai/gpt-5.4": {
       "input_per_1k": 0.0025,
       "output_per_1k": 0.015,
       "currency": "USD",

@@ -167,12 +167,12 @@ calling; it does **not** measure coding or repository reasoning.
 To evaluate one supplied route with the existing suite:
 
 ```bash
-modelcheck repo ./my-project anthropic/claude-sonnet-4.5 openrouter
+modelcheck repo ./my-project anthropic/claude-sonnet-5 openrouter
 ```
 
 The positional provider is the access route. ModelCheck normalizes it back into
 the existing `gateway/wire-id` convention, so the example above targets
-`openrouter/anthropic/claude-sonnet-4.5`; no second model naming system is used.
+`openrouter/anthropic/claude-sonnet-5`; no second model naming system is used.
 The output separates repository analysis, model, provider, evaluation results,
 and assessment, and does not call the supplied model “best.” This form makes the
 same provider calls and incurs the same possible cost as `modelcheck run`; the

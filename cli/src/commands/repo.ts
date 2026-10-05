@@ -70,7 +70,7 @@ export function modelForProvider(model: string, providerValue: string): { model:
   }
   if (provider === "openrouter") {
     if (trimmed === "openrouter" || !trimmed.includes("/")) {
-      throw new UsageError(`Model "${model}" is unsupported through OpenRouter. Pass a vendor/model id, e.g. anthropic/claude-sonnet-4.5.`);
+      throw new UsageError(`Model "${model}" is unsupported through OpenRouter. Pass a vendor/model id, e.g. anthropic/claude-sonnet-5.`);
     }
     return { model: trimmed.startsWith("openrouter/") ? trimmed : `openrouter/${trimmed}`, provider };
   }

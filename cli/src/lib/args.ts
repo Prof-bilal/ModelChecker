@@ -37,8 +37,8 @@ Repository forms:
   modelcheck repo <project-repo> <model-name> <provider-name>
       Analyze the repository and run the existing evaluation suite against the
       supplied model and provider. Model ids keep the existing gateway/wire-id
-      convention; e.g. "anthropic/claude-sonnet-4.5 openrouter" resolves to
-      "openrouter/anthropic/claude-sonnet-4.5".
+      convention; e.g. "anthropic/claude-sonnet-5 openrouter" resolves to
+      "openrouter/anthropic/claude-sonnet-5".
 
 Options:
   --suite <id>           Suite to run
