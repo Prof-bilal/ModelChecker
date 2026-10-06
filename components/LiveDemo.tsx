@@ -30,12 +30,14 @@ export function LiveDemo() {
   const [elapsed, setElapsed] = useState(0);
   const timers = useRef<ReturnType<typeof setTimeout>[]>([]);
   const raf = useRef<ReturnType<typeof requestAnimationFrame> | null>(null);
+  const runningRef = useRef(false);
 
   const passed = CASES.slice(0, settled).filter((c) => c.verdict === "pass").length;
   const failed = settled - passed;
   const spend = (settled * 0.0041).toFixed(4);
 
   function reset() {
+    runningRef.current = false;
     timers.current.forEach(clearTimeout);
     timers.current = [];
     if (raf.current) cancelAnimationFrame(raf.current);
@@ -48,20 +50,26 @@ export function LiveDemo() {
 
   function run() {
     reset();
+    runningRef.current = true;
     setRunning(true);
     let acc = 0;
     CASES.forEach((c, i) => {
       acc += c.ms;
       timers.current.push(setTimeout(() => setSettled(i + 1), acc));
     });
+    const t0 = performance.now();
     timers.current.push(
       setTimeout(() => {
+        if (raf.current) cancelAnimationFrame(raf.current);
+        raf.current = null;
+        runningRef.current = false;
+        setElapsed(performance.now() - t0);
         setRunning(false);
         setDone(true);
       }, acc + 300),
     );
-    const t0 = performance.now();
     const tick = () => {
+      if (!runningRef.current) return;
       setElapsed(performance.now() - t0);
       raf.current = requestAnimationFrame(tick);
     };
@@ -72,6 +80,7 @@ export function LiveDemo() {
     const ts = timers;
     const r = raf;
     return () => {
+      runningRef.current = false;
       ts.current.forEach(clearTimeout);
       if (r.current) cancelAnimationFrame(r.current);
     };
