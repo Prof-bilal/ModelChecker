@@ -85,6 +85,7 @@ production key that has write privileges it does not need.*
 | Is anything uploaded? | No. There is no upload code path in the MVP |
 | Does the provider see the suite? | **Yes.** The cases are sent to the provider as normal API requests, subject to that provider's data policy. This must be stated in the README, because it is the one place user data leaves the machine |
 | Are results sent to analytics? | No telemetry exists |
+| Does the website phone home? | One request, made in **your** browser: the navbar counter fetches `modelcheck-cli`'s download count from `api.npmjs.org` ([D34](./docs/decisions.md#d34--the-navbar-carries-a-github-link-and-a-live-npm-counter-the-two-in-page-anchor-links-are-removed), [E26](./docs/research.md#2-evidence-register)). It carries no identifier, no cookie and no ModelCheck data — but your IP reaches npm. No analytics, no tracking scripts |
 
 **The honest caveat, which must be documented:** running an evaluation sends the
 suite's prompts to the chosen provider. A user evaluating a private workload in
