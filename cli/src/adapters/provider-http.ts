@@ -70,3 +70,49 @@ export function parseRetryAfter(header: string | null): number | undefined {
   }
   return undefined;
 }
+
+/** A single deadline covers headers and body; raw payloads are bounded at 8 MiB. */
+export async function requestProviderJson(url: string, headers: Record<string, string>, body: Record<string, unknown>, timeoutMs: number): Promise<{ payload: unknown; latency_ms: number }> {
+  const controller = new AbortController();
+  const started = Date.now();
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
+  const target = providerHost(url);
+  let reader: ReadableStreamDefaultReader<Uint8Array> | undefined;
+  const cancel = () => { void reader?.cancel().catch(() => {}); };
+  controller.signal.addEventListener("abort", cancel);
+  try {
+    const response = await fetch(url, { method: "POST", headers, body: JSON.stringify(body), signal: controller.signal, redirect: "manual" });
+    if (response.status >= 300 && response.status < 400) {
+      const location = response.headers.get("location");
+      if (location && new URL(location, url).origin !== new URL(url).origin) throw providerError("network", "Provider redirected to a different origin. Check the base URL and disable the redirect.", response.status);
+      throw providerError("network", "Provider returned a redirect; no credentials were forwarded. Use the final provider endpoint.", response.status);
+    }
+    if (!response.ok) throw classifyStatus(response.status, target, parseRetryAfter(response.headers.get("retry-after")));
+    const chunks: Uint8Array[] = [];
+    let size = 0;
+    if (response.body) {
+      reader = response.body.getReader();
+      if (controller.signal.aborted) cancel();
+      for (;;) {
+        const part = await reader.read();
+        if (controller.signal.aborted) throw providerError("timeout", `Provider "${target}" did not finish within ${timeoutMs} ms. Increase --timeout or check the provider.`);
+        if (part.done) break;
+        size += part.value.byteLength;
+        if (size > 8 * 1024 * 1024) { await reader.cancel(); throw providerError("malformed", "Provider response exceeds the 8 MiB limit. Lower the output token limit."); }
+        chunks.push(part.value);
+      }
+    }
+    let payload: unknown;
+    try { payload = JSON.parse(Buffer.concat(chunks).toString("utf8")); }
+    catch { throw providerError("malformed", `Provider "${target}" returned a non-JSON success response. Check the provider endpoint.`); }
+    return { payload, latency_ms: Date.now() - started };
+  } catch (error) {
+    if (controller.signal.aborted) throw providerError("timeout", `Provider "${target}" did not finish within ${timeoutMs} ms. Increase --timeout or check the provider.`);
+    if (error instanceof ProviderError) throw error;
+    throw providerError("network", `Could not reach the provider at ${target}. Check the base URL and your connection.`);
+  } finally {
+    clearTimeout(timer);
+    controller.signal.removeEventListener("abort", cancel);
+    reader?.releaseLock();
+  }
+}

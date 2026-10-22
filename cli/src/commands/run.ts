@@ -140,7 +140,7 @@ export function selectAdapter(opts: {
 
   // An explicit --adapter fixes the protocol; the model's gateway prefix then
   // only supplies the default endpoint and key variable (D16/D17).
-  const protocolGateway = gateway ?? (opts.adapterName === "anthropic" ? "anthropic" : undefined);
+  const protocolGateway = gateway ?? (opts.adapterName === "anthropic" ? "anthropic" : "openai");
   const baseUrl = opts.baseUrl ?? (protocolGateway !== undefined ? DEFAULT_BASE_URLS[protocolGateway] : undefined);
   const apiKeyEnv = opts.apiKeyEnv ?? (protocolGateway !== undefined ? DEFAULT_API_KEY_ENVS[protocolGateway] : "OPENAI_API_KEY");
 

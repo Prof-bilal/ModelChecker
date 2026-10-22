@@ -152,11 +152,15 @@ test("a retryable failure followed by success retries and records attempts > 1",
   // simulates one 429 then success — the recorded `attempts` is the point of
   // ARCHITECTURE.md §5.2: a retry never silently replaces the original outcome.
   let calls = 0;
+  let clock = 1000;
+  const originalNow = Date.now;
+  Date.now = () => clock;
   const scripted = {
     identify: () => "scripted",
     resolvedModel: () => "gpt-4o",
     send: async () => {
       calls += 1;
+      clock += 250;
       if (calls === 1) {
         throw new ProviderError("rate_limit", "Provider rate limit hit (429).", 429, 1);
       }
@@ -168,10 +172,15 @@ test("a retryable failure followed by success retries and records attempts > 1",
   const units = [
     { case_id: "so-001", repeat_index: 0, capability: "structured_output", request: withCase("so-001") },
   ];
-  const results = await executeRun({ adapter: scripted, units, concurrency: 1, maxRetries: 2 });
-  assert.equal(calls, 2);
-  assert.equal(results[0].attempts, 2);
-  assert.equal(results[0].outcome, "pass");
+  try {
+    const results = await executeRun({ adapter: scripted, units, concurrency: 1, maxRetries: 2 });
+    assert.equal(calls, 2);
+    assert.equal(results[0].attempts, 2);
+    assert.equal(results[0].outcome, "pass");
+    assert.equal(results[0].latency_ms, 500, "latency includes both attempts");
+  } finally {
+    Date.now = originalNow;
+  }
 });
 
 function withCase(caseId: string): AdapterRequest & { case_id: string } {

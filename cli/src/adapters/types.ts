@@ -16,6 +16,8 @@ export interface AdapterRequest {
   temperature: number | "provider_default";
   max_output_tokens: number | "provider_default";
   timeout_ms: number;
+  /** Explicit project runtime setting; adapters must send it or reject it. */
+  reasoning_effort?: string;
 }
 
 export interface AdapterUsage {

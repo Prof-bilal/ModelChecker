@@ -102,7 +102,7 @@ export async function executeRun(options: ExecuteOptions): Promise<CaseResult[]>
         reason: response!.content ?? undefined,
         input_tokens: response!.usage?.input_tokens,
         output_tokens: response!.usage?.output_tokens,
-        latency_ms: response!.latency_ms,
+        latency_ms: elapsed_ms,
         attempts,
       };
     }

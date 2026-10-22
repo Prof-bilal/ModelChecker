@@ -13,6 +13,16 @@ import { UsageError } from "../lib/args.js";
 
 const SENTINEL_KEY = "sentinel-anthropic-key-do-not-leak";
 
+test("a bare model id uses the default OpenAI endpoint", () => {
+  withEnv("OPENAI_API_KEY", SENTINEL_KEY, () => {
+    const { adapter, baseUrl } = selectAdapter({
+      model: "gpt-4o", baseUrl: undefined, apiKeyEnv: undefined, mock: false,
+    });
+    assert.ok(adapter instanceof OpenAICompatibleAdapter);
+    assert.equal(baseUrl, "https://api.openai.com/v1");
+  });
+});
+
 /** Sets an env var for one test and restores the previous value afterwards. */
 function withEnv<T>(name: string, value: string, fn: () => T): T {
   const previous = process.env[name];

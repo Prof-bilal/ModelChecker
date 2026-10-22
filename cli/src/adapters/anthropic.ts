@@ -7,8 +7,7 @@
  * provider-http.ts so the two cannot drift (D20). */
 
 import {
-  classifyStatus,
-  parseRetryAfter,
+  requestProviderJson,
   providerError,
   providerHost,
   validateBaseUrl,
@@ -173,53 +172,7 @@ export class AnthropicAdapter implements ModelAdapter {
 
   async send(request: AdapterRequest): Promise<AdapterResponse> {
     const { url, headers, body } = this.buildRequest(request);
-    const controller = new AbortController();
-    const timer = setTimeout(() => controller.abort(), request.timeout_ms);
-    const started = Date.now();
-
-    let response: Response;
-    try {
-      response = await fetch(url, {
-        method: "POST",
-        headers,
-        body: JSON.stringify(body),
-        signal: controller.signal,
-        // Manual redirects let us reject cross-origin targets before a second
-        // request can carry provider credentials.
-        redirect: "manual",
-      });
-    } catch (error) {
-      if (controller.signal.aborted) {
-        throw providerError("timeout", `Provider "${this.target}" did not respond within ${request.timeout_ms} ms. Increase --timeout or check the provider.`);
-      }
-      const cause = error instanceof Error ? error.message : String(error);
-      throw providerError("network", `Could not reach the provider at ${this.target} (${cause}). Check the base URL and your connection.`);
-    } finally {
-      clearTimeout(timer);
-    }
-
-    const latency_ms = Date.now() - started;
-    const retryAfterMs = parseRetryAfter(response.headers.get("retry-after"));
-
-    if (response.status >= 300 && response.status < 400) {
-      const location = response.headers.get("location");
-      if (location !== null && new URL(location, url).origin !== new URL(url).origin) {
-        throw providerError("network", "Provider redirected to a different origin. Check the base URL and disable the redirect.", response.status);
-      }
-      throw providerError("network", "Provider returned a redirect. Check the base URL and use the final provider endpoint.", response.status);
-    }
-
-    if (!response.ok) {
-      throw classifyStatus(response.status, this.target, retryAfterMs);
-    }
-
-    let payload: unknown;
-    try {
-      payload = await response.json();
-    } catch {
-      throw providerError("malformed", `Provider "${this.target}" returned a non-JSON success response. Record the run and check the provider status.`);
-    }
-
+    const { payload, latency_ms } = await requestProviderJson(url, headers, body, request.timeout_ms);
     return this.normaliseResponse(payload, latency_ms);
   }
 }
