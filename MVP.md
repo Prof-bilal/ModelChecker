@@ -57,6 +57,17 @@ as a category.
 
 ## 4. MUST HAVE
 
+### Project regression workflow (approved 2026-10-22)
+
+The owner approved the ModelCheck sections of the 22 October strategy document
+as an additional v1 build contract. The local project workflow now includes
+`init`, `baseline`, `verify`, and live-target `compare`; user-authored JSONL cases,
+YAML configuration, `modelcheck.lock`, deterministic assertions, and CI verdicts.
+The precise contract and compatibility rules live in [docs/regression-cli.md](./docs/regression-cli.md).
+This supersedes the exclusions below for custom suites and CLI threshold gates
+only. Hosted services, dashboards, model judges, and repository execution remain
+excluded. Existing capability-suite commands remain supported.
+
 Every item below is required to test the hypothesis. Nothing else is.
 
 ### 4.1 Commands

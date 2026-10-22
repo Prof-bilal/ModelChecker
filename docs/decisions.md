@@ -325,6 +325,37 @@ Decided before this research pass and **retained**, with the evidence that suppo
 
 ## 4. Unresolved contradictions (must not be silently fixed)
 
+### Project regression v1 authorization (2026-10-22)
+
+The owner requested completion of the ModelCheck portion of the shared strategy
+document dated 22 October 2026. This explicitly supersedes the previous deferral
+of custom suites and CI thresholds for the local CLI. Preserve the shipped suite
+workflow; add the project regression workflow documented in regression-cli.md.
+YAML configuration needs a real parser and user schemas need complete validation:
+add `yaml` and `ajv` as CLI runtime dependencies rather than silently accepting
+unsupported YAML or JSON Schema keywords in a hand-written parser. Custom scripts
+are explicit trusted local evaluators, never model-generated executable output.
+
+The source's acceptance example (94% to 93% gives WARN) contradicts its default
+task-success threshold (warn only for drops greater than 3 percentage points).
+Use the explicit threshold table; demonstrate the example with a configured lower
+warning threshold. A public migration experiment requires real measured evidence
+and publication authority and is a launch deliverable, not an automated fixture.
+
+The provider hardening pass also found that the old adapters cleared request
+timeouts after headers, before reading JSON. Shared HTTP execution now keeps a
+single deadline through the body and bounds response bodies at 8 MiB. Both
+adapters use it; synthetic tests cover stalled bodies and oversized payloads.
+
+### Implementation reconciliation — v1 runner defaults and latency (2026-10-22)
+
+The v1 implementation review found two deviations from the existing contracts:
+bare model IDs could not use the documented default OpenAI endpoint, and successful
+retried cases recorded only the final adapter's latency. The runner now defaults
+bare IDs to OpenAI (explicit endpoints still override it), and the executor records
+elapsed time across attempts and backoff, as required by EVALUATIONS §8.2. Regression
+tests cover both corrections. No suite, scoring rule, or report schema changes.
+
 ### U1 — `design.md` and the source evidence live outside version control
 
 `../design.md` is the most detailed product artefact in the project and git does not track it. Every document in `web/` that cites it uses a link escaping the repository.
