@@ -1,0 +1,1 @@
+{"id":"example-001","response":{"content":"OK","tool_calls":null,"model":"synthetic-fixture","usage":{"input_tokens":10,"output_tokens":10},"latency_ms":100,"raw":{"synthetic":true}},"latency_ms":100}

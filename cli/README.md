@@ -1,6 +1,29 @@
 # ModelCheck CLI
 
-**Measure what a model change does to the capability you ship — and show the evidence.**
+**Local regression testing for AI applications, with evidence attached.**
+
+The project workflow below requires version 0.2.0 or later. Check the
+[release status](https://github.com/Prof-bilal/ModelChecker/blob/main/docs/releases/0.2.0.md)
+before installing; older versions do not include these commands.
+
+```sh
+modelcheck init --provider openai --model YOUR_MODEL
+# Set OPENAI_API_KEY in the environment and replace the example JSONL cases.
+modelcheck baseline
+# Change the target or runtime settings in modelcheck/config.yaml.
+modelcheck verify --strict
+modelcheck compare --candidate anthropic:YOUR_CANDIDATE
+```
+
+`verify` produces PASS/WARN/FAIL. FAIL exits 1; WARN exits 0, or 2 with `--strict`.
+Private evidence stays in `.modelcheck/runs/`; `modelcheck.lock` is the reviewable
+baseline. The package includes an offline example in `examples/regression/` and
+the full guide in `dist/docs/project-regression.md`. The
+[canonical project guide](https://github.com/Prof-bilal/ModelChecker/blob/main/docs/regression-cli.md)
+documents config, cases, evaluators and CI. A locally packed source build can be
+used before npm publication.
+
+## Existing capability-suite workflow
 
 This directory is the CLI. It loads a versioned suite of cases from disk, sends
 them to a model you choose, scores every response with a declared rule, and writes
@@ -100,8 +123,9 @@ modelcheck run --suite core --model anthropic/claude-sonnet-5
   service (`169.254.169.254`) is refused outright.
 - `--adapter <name>` overrides the adapter explicitly: `openai-compatible`,
   `anthropic`, or `mock`. An unknown name is an error, not a silent fallback.
-- `--adapter mock` runs against recorded fixtures in `tests/fixtures/responses/`
-  with **no network**. It is selected only by that explicit flag.
+- `--adapter mock` is a source-checkout development option using fixtures in
+  `tests/fixtures/responses/`; those development fixtures are not bundled in npm.
+  Installed-package users can replay project responses with `--offline` instead.
 
 The Anthropic Messages API requires `max_tokens` on every request, so it always
 sends one; when a case asks for the provider default, the adapter sends its
@@ -239,9 +263,7 @@ modelcheck repo     statically profile a repository; recommend or evaluate a rou
 ```
 ## Project regression workflow
 
-Implemented in this checkout, pending npm release. Build/install this local
-package before using the new commands; the existing registry release may not
-include them yet.
+Introduced in 0.2.0. Check `modelcheck --version` before using these commands.
 
 Create a project with `modelcheck init --provider openai --model gpt-4o`, replace
 the example JSONL cases, then run `modelcheck baseline` and `modelcheck verify`.

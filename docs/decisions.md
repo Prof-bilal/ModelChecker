@@ -325,6 +325,20 @@ Decided before this research pass and **retained**, with the evidence that suppo
 
 ## 4. Unresolved contradictions (must not be silently fixed)
 
+### Release candidate 0.2.0 and independent CI gates (2026-10-22)
+
+The project regression feature set is prepared as `modelcheck-cli@0.2.0`, a
+pre-GA feature release; this entry does not assert npm publication. The latest
+main CI failed because the web TypeScript project included CLI sources without
+installing the CLI's separate dependencies. Exclude `cli` from web compilation
+and add independent CLI checks and installed-tarball smoke tests on Node 20/22/24.
+Keep the existing engine compatibility floor while verifying it explicitly.
+Use an explicit compiled-test file list: quoted globs fail on Node 20, while
+Node 24 treats `--test dist` as the directory's entrypoint rather than the suite.
+Build the canonical project guide into the npm package and include a
+synthetic offline example. Publication remains a separate final action after
+reviewing the release candidate; real migration evidence is not fabricated.
+
 ### Project regression v1 authorization (2026-10-22)
 
 The owner requested completion of the ModelCheck portion of the shared strategy

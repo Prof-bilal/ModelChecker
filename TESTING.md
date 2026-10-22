@@ -1,5 +1,10 @@
 # ModelCheck — Testing Strategy
 
+Release gates now include the CLI on Node 20/22/24 and an installed-tarball smoke
+test (`npm run test:package` in cli/). It checks package contents, a production-only
+install, version consistency and offline baseline/PASS/FAIL through the public
+binary. The web and CLI have separate TypeScript checks and dependency manifests.
+
 Project regression integration tests in `cli/src/project/project.test.ts` exercise
 the actual CLI subprocess from init through baseline, verify and live-target
 comparison with offline synthetic responses, including exit codes and unchanged
