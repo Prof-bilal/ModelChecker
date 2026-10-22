@@ -1,0 +1,7 @@
+{
+  "synthetic": true,
+  "description": "Policy examples, not measured model performance. WARN uses task_success.warn_drop=0.005.",
+  "fail": { "verdict": "FAIL", "exit": 1, "recommendation": "HOLD" },
+  "warn": { "verdict": "WARN", "exit": 0, "strict_exit": 2, "recommendation": "STAGED MIGRATION" },
+  "cheaper": { "verdict": "PASS", "exit": 0, "recommendation": "MIGRATE" }
+}

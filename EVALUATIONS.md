@@ -1,5 +1,11 @@
 # ModelCheck — Evaluation Methodology
 
+Project regression runs (approved 2026-10-22) use explicit user assertions and
+per-metric denominators described in [regression-cli.md](./docs/regression-cli.md).
+Task success is all assertions passing, distinct from the legacy capability
+aggregates. CI verdicts are configured regression policy, not significance tests.
+Unmeasured metrics remain unavailable; p95 requires at least 20 scored cases.
+
 **Version:** 0.3 · **Date:** 2026-09-20 · **Status:** binding domain contract
 **This file owns:** terminology, scoring, metrics, reproducibility, and the limits of what a ModelCheck number means.
 **Related:** concrete cases are in [docs/benchmarks.md](./docs/benchmarks.md); execution is in [ARCHITECTURE.md](./ARCHITECTURE.md); scope is in [MVP.md](./MVP.md).
