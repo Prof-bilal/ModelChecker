@@ -2,11 +2,25 @@
 
 import { parseArgs } from "node:util";
 
-export const COMMANDS = ["run", "compare", "list", "repo"] as const;
+export const COMMANDS = ["run", "compare", "list", "repo", "init", "baseline", "verify"] as const;
 
 export type Command = (typeof COMMANDS)[number];
 
 const OPTIONS = {
+  config: { type: "string" },
+  provider: { type: "string" },
+  current: { type: "string" },
+  candidate: { type: "string" },
+  format: { type: "string" },
+  strict: { type: "boolean" },
+  "fail-on-warn": { type: "boolean" },
+  baseline: { type: "string" },
+  output: { type: "string" },
+  offline: { type: "boolean" },
+  responses: { type: "string" },
+  "current-responses": { type: "string" },
+  force: { type: "boolean" },
+  yes: { type: "boolean" },
   suite: { type: "string" },
   model: { type: "string" },
   label: { type: "string" },
@@ -25,6 +39,9 @@ const OPTIONS = {
 export const USAGE = `Usage: modelcheck <command> [options]
 
 Commands:
+  init      Create project config and example JSONL cases
+  baseline  Run project cases and save modelcheck.lock
+  verify    Compare project behavior with modelcheck.lock (FAIL exits 1)
   run       Run a model evaluation
   compare   Compare two local runs
   list      List local runs
@@ -41,6 +58,19 @@ Repository forms:
       "openrouter/anthropic/claude-sonnet-5".
 
 Options:
+  --config <path>        Project YAML config (default modelcheck/config.yaml)
+  --provider <name>      Init provider (default openai)
+  --yes                 Initialize without interactive prompts
+  --current <p:model>    Current target for live compare
+  --candidate <p:model>  Candidate target (otherwise compare accepts two run ids)
+  --format <human|json> Project verdict output format
+  --strict              Exit 2 for WARN (alias --fail-on-warn)
+  --baseline <path>     Lockfile path (default modelcheck.lock)
+  --output <path>       New JSONL evidence file; existing files are refused
+  --force               Explicitly replace an existing baseline lock
+  --offline             Replay local normalized responses without network
+  --responses <path>    Offline candidate/baseline JSONL responses
+  --current-responses <path> Offline current-target responses for compare
   --suite <id>           Suite to run
   --model <id>           Model to evaluate
   --label <label>        Run label

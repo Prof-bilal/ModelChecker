@@ -3,7 +3,7 @@
 **ModelCheck measures what a model change does to the capability you ship — and shows its evidence.**
 Read this file first. It is the entry point for every coding agent working in this repository.
 
-**Current state (2026-10-05):** this repository contains a Next.js landing page and the **CLI** (`cli/`, built through Phase 7 of [PHASES.md](./PHASES.md), published on npm as `modelcheck-cli`). There is **no API route, no database, no hosted service, no telemetry, and no CI evaluation** — the CLI writes local files only. The landing page's `/run` route is a static start-a-run guide (no form, no server, no key field). Docs: [README.md](./README.md) is the human entry point; this file is the agent entry point. (This status line previously claimed the repository held no product and no CLI — corrected here and recorded in [docs/decisions.md](./docs/decisions.md).)
+**Current state (2026-10-22):** this repository contains a Next.js landing page and the **CLI** (`cli/`, capability-suite Phases 0–7 and the local [project regression workflow](./docs/regression-cli.md)). The CLI is published on npm as `modelcheck-cli`; the new project workflow is local work pending release. There is **no API route, database, hosted service or telemetry**. Project `verify` supports CI verdicts and local JSONL evidence. The landing page's `/run` route remains a static guide. [README.md](./README.md) is the human entry point. Scope reconciliation is recorded in [docs/decisions.md](./docs/decisions.md).
 
 ---
 

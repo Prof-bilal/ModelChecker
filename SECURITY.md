@@ -1,5 +1,14 @@
 # ModelCheck — Security & Privacy
 
+Project regression v1 is approved as of 2026-10-22. User-authored cases are sent
+only to the selected provider; private local JSONL evidence contains prompts and
+outputs with known credentials redacted. Init ignores `.modelcheck/` in Git.
+The lock contains hashes/metrics and must be reviewed before committing; case
+files are user data and must never be committed by an agent. Explicit custom
+evaluators are trusted local executable scripts with bounded runtime/output;
+they are not sandboxed and must be reviewed by the operator. No model-produced
+code is executed. See [the precise contract](./docs/regression-cli.md).
+
 **Version:** 0.3 · **Date:** 2026-09-20
 **This file owns:** threat model, secrets handling, data handling, and the MVP/future security split.
 **Architecture context:** [ARCHITECTURE.md](./ARCHITECTURE.md). Scope: [MVP.md](./MVP.md).

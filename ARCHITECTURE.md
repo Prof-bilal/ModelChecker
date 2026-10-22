@@ -1,5 +1,12 @@
 # ModelCheck — Architecture
 
+The local project regression pipeline (approved 2026-10-22) is implemented in
+`cli/src/project/`: config/case validation → normalized provider execution →
+deterministic assertions → metrics → lock/verification policy. It reuses provider
+adapters and the pinned price table, with a separate versioned JSONL evidence and
+YAML lock contract documented in [regression-cli.md](./docs/regression-cli.md).
+The existing capability-suite report schema and two-run comparison remain intact.
+
 **Version:** 0.3 · **Date:** 2026-09-20
 **This file owns:** components, responsibilities, data flow, failure handling and security boundaries.
 **Scope:** [MVP.md](./MVP.md) (Lane B). Methodology: [EVALUATIONS.md](./EVALUATIONS.md). Threats: [SECURITY.md](./SECURITY.md).

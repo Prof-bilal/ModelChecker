@@ -19,9 +19,11 @@ model changes → run against a capability → delta vs your baseline → decide
 - a **Next.js landing page** (`app/`, `components/`)
 - the **CLI** (`cli/`) — built through Phase 7 in [PHASES.md](./PHASES.md), with
   install and usage in [cli/README.md](./cli/README.md)
+- the local **project regression workflow** — `init`, `baseline`, `verify` and
+  target `compare`, with [YAML config, JSONL cases and lockfiles](./docs/regression-cli.md)
 - a **complete product and engineering specification** (the documents below)
-- **no API route, no database, no hosted service, no telemetry, and no CI
-  evaluation** — the CLI writes local files only
+- **no API route, no database, no hosted service and no telemetry** — the CLI
+  writes local files and supports CI verdicts without a ModelCheck server
 
 The CLI's automated suite passes without network access. Run artefacts are written
 to your local `RUNS_DIR` and are not committed; every figure shown on the landing

@@ -9,6 +9,7 @@ import { parseCliArgs, USAGE, UsageError } from "./lib/args.js";
 import { ConfigError, SpendLimitError } from "./lib/errors.js";
 import { SuiteLoadError } from "./lib/errors.js";
 import { redactSecrets } from "./lib/redact.js";
+import { projectCommand, projectError } from "./project/commands.js";
 
 async function main(): Promise<void> {
   const args = parseCliArgs(process.argv.slice(2));
@@ -19,10 +20,21 @@ async function main(): Promise<void> {
   }
 
   switch (args.command) {
+    case "init":
+    case "baseline":
+    case "verify":
+      try { process.exitCode = await projectCommand(args.command, args.values); }
+      catch (error) { projectError(error, args.values.format === "json"); process.exitCode = 1; }
+      return;
     case "run":
       await runCommand(args.values);
       return;
     case "compare":
+      if (args.values.candidate !== undefined || args.values.current !== undefined || args.positionals.length === 1) {
+        try { process.exitCode = await projectCommand("compare", args.values, args.positionals); }
+        catch (error) { projectError(error, args.values.format === "json"); process.exitCode = 1; }
+        return;
+      }
       await compareCommand(args.positionals);
       return;
     case "list":

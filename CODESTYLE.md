@@ -112,6 +112,11 @@ The CLI does not exist yet. These rules bind it when it is written.
 
 ### 2.6 Exit codes
 
+The table below remains the capability-suite command contract. Project
+`baseline`/`verify`/target `compare` use the explicitly approved verdict codes in
+[regression-cli.md](./docs/regression-cli.md): FAIL=1 and strict WARN=2. This
+exception supersedes the earlier Stage-5 deferral for those commands only.
+
 | Code | Meaning |
 |---|---|
 | `0` | Execution completed (regardless of whether cases passed) |

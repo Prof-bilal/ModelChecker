@@ -25,8 +25,8 @@ to install and run it.
 ## Requirements
 
 - **Node.js ≥ 20** (uses `node:test`, `fetch`, and `node:util parseArgs`).
-- **No runtime dependencies.** Only `typescript` and `@types/node` are installed,
-  for the build.
+- Runtime dependencies are `yaml` (project configuration) and `ajv` (user schema
+  validation); `typescript` and `@types/node` are build dependencies.
 
 ## Install
 
@@ -237,3 +237,15 @@ modelcheck compare  per-capability deltas between two local runs, with denominat
 modelcheck list     local runs (run id, label, model, suite version, status)
 modelcheck repo     statically profile a repository; recommend or evaluate a route
 ```
+## Project regression workflow
+
+Implemented in this checkout, pending npm release. Build/install this local
+package before using the new commands; the existing registry release may not
+include them yet.
+
+Create a project with `modelcheck init --provider openai --model gpt-4o`, replace
+the example JSONL cases, then run `modelcheck baseline` and `modelcheck verify`.
+Compare a migration with `modelcheck compare --candidate provider:model`.
+`verify` returns PASS/WARN/FAIL; FAIL exits 1, WARN exits 2 with `--strict`.
+See [the project CLI contract](../docs/regression-cli.md) for configuration,
+lockfiles, deterministic assertions, offline fixtures, evidence and CI usage.
