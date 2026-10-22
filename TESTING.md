@@ -1,5 +1,11 @@
 # ModelCheck — Testing Strategy
 
+Project regression integration tests in `cli/src/project/project.test.ts` exercise
+the actual CLI subprocess from init through baseline, verify and live-target
+comparison with offline synthetic responses, including exit codes and unchanged
+baseline locks. They validate the source strategy's acceptance scenarios without
+provider calls; generated success percentages are fixtures, never model evidence.
+
 **Version:** 0.3 · **Date:** 2026-09-20
 **This file owns:** how correctness is established, and what may never run in an automated test.
 **Related:** [ARCHITECTURE.md](./ARCHITECTURE.md), [EVALUATIONS.md](./EVALUATIONS.md), [MVP §7](./MVP.md#7-acceptance-criteria).
