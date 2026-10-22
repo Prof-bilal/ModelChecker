@@ -71,10 +71,10 @@ npx tsc --noEmit # type check
 
 ## Running the CLI
 
-The prepared 0.2.0 candidate adds `init → baseline → verify` and target comparison.
+Version 0.2.0 is published on npm and adds `init → baseline → verify` and target
+comparison. Install it with `npm install -g modelcheck-cli@0.2.0`.
 See [release notes](./docs/releases/0.2.0.md) and the
-[release procedure](./docs/releasing.md). The npm registry still serves 0.1.2
-until the new version is published; local candidate packages contain the new commands.
+[release procedure](./docs/releasing.md).
 
 From `cli/`, install and build with `npm install`. Provide a provider key through
 the environment (never as a command-line argument), then run:

@@ -325,6 +325,17 @@ Decided before this research pass and **retained**, with the evidence that suppo
 
 ## 4. Unresolved contradictions (must not be silently fixed)
 
+### 0.2.0 publication verified (2026-10-22)
+
+The owner authorized publication. `modelcheck-cli@0.2.0` is published as npm
+`latest`, with the reviewed tarball's integrity verified against the public
+registry and a clean registry install checked through offline baseline/verify.
+The release PR was merged; CLI matrix and web checks passed. A small live Agnes
+adapter and JSON-schema baseline/verify diagnostic passed before publication;
+this is not a comparative migration benchmark. The version claim on the public
+site is updated only after registry verification. Artifact digest, release links
+and remaining comparative validation are recorded in [release notes](./releases/0.2.0.md).
+
 ### Release candidate 0.2.0 and independent CI gates (2026-10-22)
 
 The project regression feature set is prepared as `modelcheck-cli@0.2.0`, a
