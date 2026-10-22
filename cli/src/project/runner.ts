@@ -3,7 +3,7 @@ import { randomUUID } from "node:crypto";
 import { execFile } from "node:child_process";
 import { mkdir, readFile, writeFile, rename, realpath } from "node:fs/promises";
 import path from "node:path";
-import { selectAdapter } from "../commands/run.js";
+import { selectAdapter, MODELCHECK_VERSION } from "../commands/run.js";
 import { findPrice, loadPriceTable, caseCost, estimateCost, printEstimate, assertWithinSpendLimit, PRICE_TABLE_REF } from "../engine/estimate.js";
 import { backoffDelay, isRetryable, sleep } from "../engine/retry.js";
 import { ProviderError } from "../lib/errors.js";
@@ -79,7 +79,7 @@ export async function runProject(options: RunProjectOptions): Promise<ProjectRun
   const results: ProjectResult[] = new Array(cases.length);
   let cursor = 0;
   // Persist an incomplete header before execution; interrupted runs cannot pass.
-  const header = { type: "run", version: 1, run_id: runId, target, mode: options.responses ? "offline" : "live", config_hash: configHash, suite_hash: suiteHash, application_hash: applicationHash, configuration: config, cases: cases.length, price_table_ref: PRICE_TABLE_REF, price: price ?? null };
+  const header = { type: "run", version: 1, modelcheck_version: MODELCHECK_VERSION, run_id: runId, target, mode: options.responses ? "offline" : "live", config_hash: configHash, suite_hash: suiteHash, application_hash: applicationHash, configuration: config, cases: cases.length, price_table_ref: PRICE_TABLE_REF, price: price ?? null };
   await atomicWrite(artifact, `${safe(header)}\n`, true);
   const persist = async () => atomicWrite(artifact, [safe(header), ...results.filter(Boolean).map((r) => safe({ type: "case", ...r }))].join("\n") + "\n");
   // One serialization chain prevents workers overwriting one another's evidence.
@@ -129,7 +129,7 @@ export async function runProject(options: RunProjectOptions): Promise<ProjectRun
     }
   }
   await Promise.all(Array.from({ length: Math.min(config.runtime.concurrency, cases.length) }, worker));
-  const run: ProjectRun = { version: 1, run_id: runId, created_at: new Date().toISOString(), target, mode: options.responses ? "offline" : "live", config_hash: configHash, suite_hash: suiteHash, application_hash: applicationHash, valid: results.every((r) => r.status === "scored"), cases: cases.length, metrics: aggregate(results), results, artifact, price_table_ref: PRICE_TABLE_REF, price: price ?? null };
+  const run: ProjectRun = { version: 1, modelcheck_version: MODELCHECK_VERSION, run_id: runId, created_at: new Date().toISOString(), target, mode: options.responses ? "offline" : "live", config_hash: configHash, suite_hash: suiteHash, application_hash: applicationHash, valid: results.every((r) => r.status === "scored"), cases: cases.length, metrics: aggregate(results), results, artifact, price_table_ref: PRICE_TABLE_REF, price: price ?? null };
   await atomicWrite(artifact, [safe(header), ...results.map((r) => safe({ type: "case", ...r })), safe({ type: "summary", ...run, results: undefined })].join("\n") + "\n");
   return run;
 }

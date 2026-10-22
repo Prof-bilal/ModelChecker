@@ -1,7 +1,7 @@
 {
   "name": "modelcheck-cli",
-  "version": "0.1.2",
-  "description": "Measure what a model change does to the capability you ship. Runs a versioned suite against any model with your own API key and writes a report where every number carries its evidence.",
+  "version": "0.2.0",
+  "description": "Local regression testing for AI applications: baseline, verify and compare model or configuration changes with deterministic assertions and CI verdicts.",
   "license": "MIT",
   "type": "module",
   "bin": {
@@ -35,6 +35,8 @@
   "files": [
     "dist",
     "suites",
+    "examples",
+    "CHANGELOG.md",
     "!dist/**/*.test.js",
     "!dist/tests",
     "!**/*.map"
@@ -42,9 +44,12 @@
   "scripts": {
     "build": "tsc",
     "prepare": "npm run build",
+    "prepack": "npm run build && node scripts/prepare-package.mjs",
+    "prepublishOnly": "npm run lint && npm test && npm run test:package",
     "typecheck": "tsc --noEmit",
     "pretest": "npm run build",
-    "test": "node --test \"dist/**/*.test.js\"",
+    "test": "node scripts/test.mjs",
+    "test:package": "npm run prepack && node scripts/test-package.mjs",
     "lint": "tsc --noEmit"
   },
   "devDependencies": {

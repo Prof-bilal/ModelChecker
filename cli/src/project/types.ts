@@ -30,7 +30,7 @@ export interface ProjectResult {
 export interface MetricValue { value: number | null; n: number; reason?: string }
 export type Metrics = Record<Metric, MetricValue>;
 export interface ProjectRun {
-  version: 1; run_id: string; created_at: string; target: Target; mode: "live" | "offline";
+  version: 1; modelcheck_version: string; run_id: string; created_at: string; target: Target; mode: "live" | "offline";
   config_hash: string; suite_hash: string; application_hash: string;
   valid: boolean; cases: number; metrics: Metrics; results: ProjectResult[]; artifact: string;
   price_table_ref: string; price?: unknown;

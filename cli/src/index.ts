@@ -4,7 +4,7 @@
 import { compareCommand } from "./commands/compare.js";
 import { listCommand } from "./commands/list.js";
 import { repoCommand } from "./commands/repo.js";
-import { runCommand } from "./commands/run.js";
+import { runCommand, MODELCHECK_VERSION } from "./commands/run.js";
 import { parseCliArgs, USAGE, UsageError } from "./lib/args.js";
 import { ConfigError, SpendLimitError } from "./lib/errors.js";
 import { SuiteLoadError } from "./lib/errors.js";
@@ -13,6 +13,8 @@ import { projectCommand, projectError } from "./project/commands.js";
 
 async function main(): Promise<void> {
   const args = parseCliArgs(process.argv.slice(2));
+
+  if (args.values.version === true) { console.log(MODELCHECK_VERSION); return; }
 
   if (args.help || args.command === undefined) {
     console.error(USAGE);

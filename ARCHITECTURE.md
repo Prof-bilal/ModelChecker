@@ -1,5 +1,10 @@
 # ModelCheck — Architecture
 
+Web compilation excludes `cli/`; its independent manifest and compiler are checked
+by the CLI CI job. Packaging copies the canonical project guide into generated
+`cli/dist/docs/`, bundles synthetic examples and validates an actual tarball
+installation. See [releasing.md](./docs/releasing.md).
+
 The local project regression pipeline (approved 2026-10-22) is implemented in
 `cli/src/project/`: config/case validation → normalized provider execution →
 deterministic assertions → metrics → lock/verification policy. It reuses provider

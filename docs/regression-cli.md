@@ -4,8 +4,9 @@ This is the implementation contract for the ModelCheck sections of the owner's
 22 October 2026 strategy document. Scope approval is recorded in
 [decisions.md](./decisions.md); [MVP.md §4](../MVP.md#4-must-have) explicitly permits
 this project workflow. The shipped capability-suite commands remain available.
-This workflow is implemented in the source checkout and has not been published
-to npm yet. Use a locally built/installed package to try the commands below.
+These commands require 0.2.0 or a corresponding source build; older package
+versions do not contain them. See [release status](./releases/0.2.0.md) before
+installing from npm.
 
 ## Quick start
 
@@ -130,8 +131,9 @@ unmeasured values are null with a reason. No cross-capability composite is added
 ## Evidence, lockfile and verdicts
 
 Runs write private local `.modelcheck/runs/<unique-id>.jsonl` files. A run header
-records the normalized configuration, hashes, mode and dated price row, followed
-by ordered case records (inputs, expectations, normalized/raw response, attempts,
+records the normalized configuration, hashes, mode, producing `modelcheck_version`
+and dated price row, followed by ordered case records (inputs, expectations,
+normalized/raw response, attempts,
 latency, assertions, estimated charge or null), and a terminal summary. Partial
 evidence is updated during execution; a killed run lacks a terminal summary and
 cannot be used as a complete baseline. Known credential values are redacted

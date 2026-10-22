@@ -21,6 +21,7 @@ const OPTIONS = {
   "current-responses": { type: "string" },
   force: { type: "boolean" },
   yes: { type: "boolean" },
+  version: { type: "boolean", short: "v" },
   suite: { type: "string" },
   model: { type: "string" },
   label: { type: "string" },
@@ -85,6 +86,7 @@ Options:
   --adapter <name>       Adapter to use: openai-compatible (default), anthropic,
                          or mock (fixture-backed, offline testing)
   --json                 Emit machine-readable output
+  -v, --version          Print the installed CLI version
   -h, --help             Show this help message`;
 
 export class UsageError extends Error {}
